@@ -10,5 +10,35 @@ services:
       - ./data:/tmp/hls
 
   api:
-    build: ./api
+    depends_on:
+      - postgres
+    build: 
+      dockerfile: ./api/Dockerfile
+      context: .
+      # Only will build development stage from our dockerfile
+      target: dev
+     # Enables the data to be persisted and is what makes the hot reloading possible.
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    # load the .env file into the container
+    env_file:
+      - ./.env
+    # Run a command against the development stage of the image
+    command:  yarn start:dev
+    ports:
+      - 3000:3000
     container_name: api_server
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    volumes:
+      - docker-nest-postgres:/var/lib/postgresql/data
+volumes:
+  docker-nest-postgres:
