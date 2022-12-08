@@ -12,7 +12,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/live')
-  authLiveStream(@Body() body: AuthObjectt): any {
+  authLive(@Body() body: AuthObjectt): any {
     const streamSecretKey = body.name;
 
     if (streamSecretKey !== 'eliv_test_stream_key') {
@@ -21,6 +21,18 @@ export class AuthController {
 
     console.log(
       'An user started a live stream session with key',
+      streamSecretKey,
+    );
+
+    return { ok: true };
+  }
+
+  @Post('/live/end')
+  endLive(@Body() body: AuthObjectt): any {
+    const streamSecretKey = body.name;
+
+    console.log(
+      'An user ended a live stream session with key',
       streamSecretKey,
     );
 
