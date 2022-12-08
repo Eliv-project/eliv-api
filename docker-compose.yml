@@ -13,13 +13,13 @@ services:
     depends_on:
       - postgres
     build: 
-      dockerfile: ./api/Dockerfile
-      context: .
+      dockerfile: Dockerfile
+      context: ./api
       # Only will build development stage from our dockerfile
       target: dev
      # Enables the data to be persisted and is what makes the hot reloading possible.
     volumes:
-      - .:/usr/src/app
+      - ./api:/usr/src/app
       - /usr/src/app/node_modules
     # load the .env file into the container
     env_file:

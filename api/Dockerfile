@@ -8,15 +8,13 @@ FROM node:18-alpine As base
 
 FROM base as dev
 
-RUN npm i -g @nestjs/cli
-
 WORKDIR /usr/src/app
 
-COPY --chown=node:node ./api/package*.json ./
-COPY --chown=node:node ./api/yarn*.lock ./
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node yarn*.lock ./
 RUN   yarn
 
-COPY --chown=node:node  ./api .
+COPY --chown=node:node . .
 
 USER node
 
