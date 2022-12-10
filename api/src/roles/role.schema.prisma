@@ -1,0 +1,7 @@
+model Role {
+    id   Int    @id @unique @default(autoincrement())
+    name String @unique
+
+    permissions PermissionsOnRoles[]
+    users       User[]
+}

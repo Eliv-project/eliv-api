@@ -1,0 +1,11 @@
+// Base prisma file, use prisma-merge (https://www.npmjs.com/package/prisma-merge) 
+// to find *.schema.prisma files  automatically in directory and generate final schema.prisma file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}

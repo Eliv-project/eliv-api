@@ -1,0 +1,9 @@
+model OAuthLink {
+    provider String
+    providerId String
+
+    user User @relation(fields: [userId], references: [id])
+    userId Int
+
+    @@id([provider, userId])
+}
