@@ -11,8 +11,8 @@ export class User {
   @Field()
   username: string;
 
-  @Field({ nullable: true })
-  password?: string;
+  // @Field({ nullable: true })
+  // password?: string;
 
   @Field()
   email: string;
@@ -20,9 +20,9 @@ export class User {
   @Field((type) => GraphQLJSON, { nullable: true })
   avatar?: JSON;
 
-  @Field((type) => [Role], { nullable: true })
+  @Field((type) => Role, { nullable: true })
   role?: Role;
 
   @Field((type) => [OAuthLink])
-  oauthLinks?: OAuthLink[];
+  oauthLinks: OAuthLink[];
 }

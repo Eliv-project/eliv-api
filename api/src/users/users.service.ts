@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -13,19 +12,21 @@ export class UsersService {
     return 'This action adds a new user';
   }
 
-  findAll() {
-    return `This action returns all users`;
+  findAll(where: Prisma.UserWhereInput) {
+    return this.prisma.user.findMany({
+      where,
+      include: {
+        role: true,
+        oauthLinks: true,
+      },
+    });
   }
 
-  findOne(where: Prisma.UserWhereInput): User {
-    return {
-      username: 'dnntung',
-      email: 'dnntung@gmail.com',
-      password: 'dnntung',
-      id: 0,
-      role: null,
-      oauthLinks: [],
-    };
+  findOne(where: Prisma.UserWhereInput, include?: Prisma.UserInclude) {
+    return this.prisma.user.findFirst({
+      where,
+      include,
+    });
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {

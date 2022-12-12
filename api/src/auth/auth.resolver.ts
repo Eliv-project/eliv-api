@@ -12,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { IsPublic } from './decorators/is-public/is-public.decorator';
 import { LoginInputDto } from './dto/login-input.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { GqlAuthGuard } from './guards/gql-auth.guard';
@@ -26,6 +27,7 @@ export class AuthResolver {
   ) {}
 
   @Mutation((returns) => LoginResponseDto)
+  @IsPublic()
   @UseGuards(GqlAuthGuard)
   login(
     @Args('loginInput') loginInput: LoginInputDto /** Define it on graphql */,

@@ -5,8 +5,8 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { Prisma } from '@prisma/client';
 import { GraphQLJSON } from 'graphql-scalars';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { NeedPermissions } from 'src/permissions/decorators/need-permissions/need-permissions.decorator';
+import Permissions from 'src/constants/permissions';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -18,9 +18,9 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  @UseGuards(JwtAuthGuard)
-  findAll() {
-    return this.usersService.findAll();
+  @NeedPermissions(Permissions.user.read)
+  async findAll() {
+    return this.usersService.findAll({});
   }
 
   @Query(() => User, { name: 'user' })

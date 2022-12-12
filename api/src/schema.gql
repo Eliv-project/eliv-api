@@ -134,8 +134,7 @@ type User {
   email: String!
   id: ID!
   oauthLinks: [OAuthLink!]!
-  password: String
-  role: [Role!]
+  role: Role
   username: String!
 }
 
