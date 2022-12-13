@@ -1,0 +1,16 @@
+model Video {
+    id Int @id @default(autoincrement())
+
+    name String
+    thumbnail Json?
+    slug String @unique
+    privacy Int @default(1) 
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    liveSession LiveSession?
+    user User @relation(fields: [userId], references: [id])
+    userId Int
+
+}

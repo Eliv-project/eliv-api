@@ -3,8 +3,8 @@ import { Role } from 'src/roles/entities/role.entity';
 
 @ObjectType()
 export class Permission {
-  @Field((type) => ID)
-  id: number;
+  // @Field((type) => ID)
+  // id: number;
 
   @Field()
   name: string;

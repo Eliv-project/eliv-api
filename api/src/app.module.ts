@@ -17,6 +17,8 @@ import jwtConfig from './config/jwt.config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from './permissions/guards/permissions.guard';
+import { VideosModule } from './videos/videos.module';
+import { LiveSessionsModule } from './live-sessions/live-sessions.module';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { PermissionsGuard } from './permissions/guards/permissions.guard';
     OauthLinksModule,
     PermissionsOnRolesModule,
     OauthLinksModule,
+    VideosModule,
+    LiveSessionsModule,
   ],
   controllers: [AppController],
   providers: [

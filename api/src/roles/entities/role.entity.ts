@@ -4,8 +4,8 @@ import { User } from 'src/users/entities/user.entity';
 
 @ObjectType()
 export class Role {
-  @Field(() => ID)
-  id: number;
+  // @Field(() => ID)
+  // id: number;
 
   @Field()
   name: string;
