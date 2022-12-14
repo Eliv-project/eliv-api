@@ -1,5 +1,5 @@
 import { Field, ObjectType, PickType } from '@nestjs/graphql';
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/prisma/@generated/user/user.model';
 
 @ObjectType()
 class UserDto extends PickType(User, ['email', 'username']) {}

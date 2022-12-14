@@ -2,50 +2,163 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateLiveSessionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
 }
 
-input CreateOauthLinkInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
-input CreatePermissionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
 }
 
-input CreatePermissionsOnRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
 }
 
-input CreateRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input IntFieldUpdateOperationsInput {
+  decrement: Int
+  divide: Int
+  increment: Int
+  multiply: Int
+  set: Int
 }
 
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input CreateVideoInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
 }
 
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
-scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+scalar JSON
+
+input JsonNullableFilter {
+  array_contains: JSON
+  array_ends_with: JSON
+  array_starts_with: JSON
+  equals: JSON
+  gt: JSON
+  gte: JSON
+  lt: JSON
+  lte: JSON
+  not: JSON
+  path: [String!]
+  string_contains: String
+  string_ends_with: String
+  string_starts_with: String
+}
 
 type LiveSession {
-  status: Boolean!
+  createdAt: DateTime!
+  id: ID!
+  status: Int!
   streamKey: String!
+  updatedAt: DateTime!
   video: Video!
+  videoId: Int!
+}
+
+input LiveSessionCreateInput {
+  createdAt: DateTime
+  status: Int
+  streamKey: String!
+  updatedAt: DateTime
+  video: VideoCreateNestedOneWithoutLiveSessionInput!
+}
+
+input LiveSessionCreateNestedOneWithoutVideoInput {
+  connect: LiveSessionWhereUniqueInput
+  connectOrCreate: LiveSessionCreateOrConnectWithoutVideoInput
+  create: LiveSessionCreateWithoutVideoInput
+}
+
+input LiveSessionCreateOrConnectWithoutVideoInput {
+  create: LiveSessionCreateWithoutVideoInput!
+  where: LiveSessionWhereUniqueInput!
+}
+
+input LiveSessionCreateWithoutVideoInput {
+  createdAt: DateTime
+  status: Int
+  streamKey: String!
+  updatedAt: DateTime
+}
+
+input LiveSessionRelationFilter {
+  is: LiveSessionWhereInput
+  isNot: LiveSessionWhereInput
+}
+
+input LiveSessionUpdateInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  status: IntFieldUpdateOperationsInput
+  streamKey: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  video: VideoUpdateOneRequiredWithoutLiveSessionNestedInput
+}
+
+input LiveSessionUpdateOneWithoutVideoNestedInput {
+  connect: LiveSessionWhereUniqueInput
+  connectOrCreate: LiveSessionCreateOrConnectWithoutVideoInput
+  create: LiveSessionCreateWithoutVideoInput
+  delete: Boolean
+  disconnect: Boolean
+  update: LiveSessionUpdateWithoutVideoInput
+  upsert: LiveSessionUpsertWithoutVideoInput
+}
+
+input LiveSessionUpdateWithoutVideoInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  status: IntFieldUpdateOperationsInput
+  streamKey: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input LiveSessionUpsertWithoutVideoInput {
+  create: LiveSessionCreateWithoutVideoInput!
+  update: LiveSessionUpdateWithoutVideoInput!
+}
+
+input LiveSessionWhereInput {
+  AND: [LiveSessionWhereInput!]
+  NOT: [LiveSessionWhereInput!]
+  OR: [LiveSessionWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  status: IntFilter
+  streamKey: StringFilter
+  updatedAt: DateTimeFilter
+  video: VideoRelationFilter
+  videoId: IntFilter
+}
+
+input LiveSessionWhereUniqueInput {
+  id: Int
+  streamKey: String
+  videoId: Int
 }
 
 input LoginInputDto {
@@ -60,116 +173,717 @@ type LoginResponseDto {
 }
 
 type Mutation {
-  createLiveSession(createLiveSessionInput: CreateLiveSessionInput!): LiveSession!
-  createOauthLink(createOauthLinkInput: CreateOauthLinkInput!): OAuthLink!
-  createPermission(createPermissionInput: CreatePermissionInput!): Permission!
-  createPermissionsOnRole(createPermissionsOnRoleInput: CreatePermissionsOnRoleInput!): PermissionsOnRole!
-  createRole(createRoleInput: CreateRoleInput!): Role!
-  createUser(createUserInput: CreateUserInput!): User!
-  createVideo(createVideoInput: CreateVideoInput!): Video!
+  createLiveSession(data: LiveSessionCreateInput!): LiveSession!
+  createOAuthLink(data: OAuthLinkCreateInput!): OAuthLink!
+  createPermission(data: PermissionCreateInput!): Permission!
+  createPermissionsOnRoles(data: PermissionsOnRolesCreateInput!): PermissionsOnRoles!
+  createRole(data: RoleCreateInput!): Role!
+  createUser(data: UserCreateInput!): User!
+  createVideo(data: VideoCreateInput!): Video!
   login(loginInput: LoginInputDto!): LoginResponseDto!
-  removeLiveSession(id: Int!): LiveSession!
-  removeOauthLink(id: Int!): OAuthLink!
-  removePermission(id: Int!): Permission!
-  removePermissionsOnRole(id: Int!): PermissionsOnRole!
-  removeRole(id: Int!): Role!
-  removeUser(id: Int!): User!
-  removeVideo(id: Int!): Video!
-  updateLiveSession(updateLiveSessionInput: UpdateLiveSessionInput!): LiveSession!
-  updateOauthLink(updateOauthLinkInput: UpdateOauthLinkInput!): OAuthLink!
-  updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
-  updatePermissionsOnRole(updatePermissionsOnRoleInput: UpdatePermissionsOnRoleInput!): PermissionsOnRole!
-  updateRole(updateRoleInput: UpdateRoleInput!): Role!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  updateVideo(updateVideoInput: UpdateVideoInput!): Video!
+  removeLiveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
+  removeOAuthLink(where: OAuthLinkWhereUniqueInput!): OAuthLink!
+  removePermission(where: PermissionWhereUniqueInput!): Permission!
+  removePermissionsOnRoles(where: PermissionsOnRolesWhereUniqueInput!): PermissionsOnRoles!
+  removeRole(where: RoleWhereUniqueInput!): Role!
+  removeUser(where: UserWhereUniqueInput!): User!
+  removeVideo(where: VideoWhereUniqueInput!): Video!
+  updateLiveSession(data: LiveSessionUpdateInput!, where: LiveSessionWhereUniqueInput!): LiveSession!
+  updateOAuthLink(data: OAuthLinkUpdateInput!, where: OAuthLinkWhereUniqueInput!): OAuthLink!
+  updatePermission(data: PermissionUpdateInput!, where: PermissionWhereUniqueInput!): Permission!
+  updatePermissionsOnRoles(data: PermissionsOnRolesUpdateInput!, where: PermissionsOnRolesWhereUniqueInput!): PermissionsOnRoles!
+  updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 type OAuthLink {
   provider: String!
   providerId: String!
   user: User!
+  userId: Int!
+}
+
+input OAuthLinkCreateInput {
+  provider: String!
+  providerId: String!
+  user: UserCreateNestedOneWithoutOauthLinksInput!
+}
+
+input OAuthLinkCreateManyUserInput {
+  provider: String!
+  providerId: String!
+}
+
+input OAuthLinkCreateManyUserInputEnvelope {
+  data: [OAuthLinkCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input OAuthLinkCreateNestedManyWithoutUserInput {
+  connect: [OAuthLinkWhereUniqueInput!]
+  connectOrCreate: [OAuthLinkCreateOrConnectWithoutUserInput!]
+  create: [OAuthLinkCreateWithoutUserInput!]
+  createMany: OAuthLinkCreateManyUserInputEnvelope
+}
+
+input OAuthLinkCreateOrConnectWithoutUserInput {
+  create: OAuthLinkCreateWithoutUserInput!
+  where: OAuthLinkWhereUniqueInput!
+}
+
+input OAuthLinkCreateWithoutUserInput {
+  provider: String!
+  providerId: String!
+}
+
+input OAuthLinkListRelationFilter {
+  every: OAuthLinkWhereInput
+  none: OAuthLinkWhereInput
+  some: OAuthLinkWhereInput
+}
+
+input OAuthLinkProviderUserIdCompoundUniqueInput {
+  provider: String!
+  userId: Int!
+}
+
+input OAuthLinkScalarWhereInput {
+  AND: [OAuthLinkScalarWhereInput!]
+  NOT: [OAuthLinkScalarWhereInput!]
+  OR: [OAuthLinkScalarWhereInput!]
+  provider: StringFilter
+  providerId: StringFilter
+  userId: IntFilter
+}
+
+input OAuthLinkUpdateInput {
+  provider: StringFieldUpdateOperationsInput
+  providerId: StringFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutOauthLinksNestedInput
+}
+
+input OAuthLinkUpdateManyMutationInput {
+  provider: StringFieldUpdateOperationsInput
+  providerId: StringFieldUpdateOperationsInput
+}
+
+input OAuthLinkUpdateManyWithWhereWithoutUserInput {
+  data: OAuthLinkUpdateManyMutationInput!
+  where: OAuthLinkScalarWhereInput!
+}
+
+input OAuthLinkUpdateManyWithoutUserNestedInput {
+  connect: [OAuthLinkWhereUniqueInput!]
+  connectOrCreate: [OAuthLinkCreateOrConnectWithoutUserInput!]
+  create: [OAuthLinkCreateWithoutUserInput!]
+  createMany: OAuthLinkCreateManyUserInputEnvelope
+  delete: [OAuthLinkWhereUniqueInput!]
+  deleteMany: [OAuthLinkScalarWhereInput!]
+  disconnect: [OAuthLinkWhereUniqueInput!]
+  set: [OAuthLinkWhereUniqueInput!]
+  update: [OAuthLinkUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [OAuthLinkUpdateManyWithWhereWithoutUserInput!]
+  upsert: [OAuthLinkUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input OAuthLinkUpdateWithWhereUniqueWithoutUserInput {
+  data: OAuthLinkUpdateWithoutUserInput!
+  where: OAuthLinkWhereUniqueInput!
+}
+
+input OAuthLinkUpdateWithoutUserInput {
+  provider: StringFieldUpdateOperationsInput
+  providerId: StringFieldUpdateOperationsInput
+}
+
+input OAuthLinkUpsertWithWhereUniqueWithoutUserInput {
+  create: OAuthLinkCreateWithoutUserInput!
+  update: OAuthLinkUpdateWithoutUserInput!
+  where: OAuthLinkWhereUniqueInput!
+}
+
+input OAuthLinkWhereInput {
+  AND: [OAuthLinkWhereInput!]
+  NOT: [OAuthLinkWhereInput!]
+  OR: [OAuthLinkWhereInput!]
+  provider: StringFilter
+  providerId: StringFilter
+  user: UserRelationFilter
+  userId: IntFilter
+}
+
+input OAuthLinkWhereUniqueInput {
+  provider_userId: OAuthLinkProviderUserIdCompoundUniqueInput
 }
 
 type Permission {
+  _count: PermissionCount!
+  id: ID!
   name: String!
-  roles: [Role!]!
+  roles: [PermissionsOnRoles!]
 }
 
-type PermissionsOnRole {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type PermissionCount {
+  roles: Int!
+}
+
+input PermissionCreateInput {
+  name: String!
+  roles: PermissionsOnRolesCreateNestedManyWithoutPermissionInput
+}
+
+input PermissionCreateNestedOneWithoutRolesInput {
+  connect: PermissionWhereUniqueInput
+  connectOrCreate: PermissionCreateOrConnectWithoutRolesInput
+  create: PermissionCreateWithoutRolesInput
+}
+
+input PermissionCreateOrConnectWithoutRolesInput {
+  create: PermissionCreateWithoutRolesInput!
+  where: PermissionWhereUniqueInput!
+}
+
+input PermissionCreateWithoutRolesInput {
+  name: String!
+}
+
+input PermissionRelationFilter {
+  is: PermissionWhereInput
+  isNot: PermissionWhereInput
+}
+
+input PermissionUpdateInput {
+  name: StringFieldUpdateOperationsInput
+  roles: PermissionsOnRolesUpdateManyWithoutPermissionNestedInput
+}
+
+input PermissionUpdateOneRequiredWithoutRolesNestedInput {
+  connect: PermissionWhereUniqueInput
+  connectOrCreate: PermissionCreateOrConnectWithoutRolesInput
+  create: PermissionCreateWithoutRolesInput
+  update: PermissionUpdateWithoutRolesInput
+  upsert: PermissionUpsertWithoutRolesInput
+}
+
+input PermissionUpdateWithoutRolesInput {
+  name: StringFieldUpdateOperationsInput
+}
+
+input PermissionUpsertWithoutRolesInput {
+  create: PermissionCreateWithoutRolesInput!
+  update: PermissionUpdateWithoutRolesInput!
+}
+
+input PermissionWhereInput {
+  AND: [PermissionWhereInput!]
+  NOT: [PermissionWhereInput!]
+  OR: [PermissionWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  roles: PermissionsOnRolesListRelationFilter
+}
+
+input PermissionWhereUniqueInput {
+  id: Int
+  name: String
+}
+
+type PermissionsOnRoles {
+  createdAt: DateTime!
+  permission: Permission!
+  permissionId: Int!
+  role: Role!
+  roleId: Int!
+}
+
+input PermissionsOnRolesCreateInput {
+  createdAt: DateTime
+  permission: PermissionCreateNestedOneWithoutRolesInput!
+  role: RoleCreateNestedOneWithoutPermissionsInput!
+}
+
+input PermissionsOnRolesCreateManyPermissionInput {
+  createdAt: DateTime
+  roleId: Int!
+}
+
+input PermissionsOnRolesCreateManyPermissionInputEnvelope {
+  data: [PermissionsOnRolesCreateManyPermissionInput!]!
+  skipDuplicates: Boolean
+}
+
+input PermissionsOnRolesCreateManyRoleInput {
+  createdAt: DateTime
+  permissionId: Int!
+}
+
+input PermissionsOnRolesCreateManyRoleInputEnvelope {
+  data: [PermissionsOnRolesCreateManyRoleInput!]!
+  skipDuplicates: Boolean
+}
+
+input PermissionsOnRolesCreateNestedManyWithoutPermissionInput {
+  connect: [PermissionsOnRolesWhereUniqueInput!]
+  connectOrCreate: [PermissionsOnRolesCreateOrConnectWithoutPermissionInput!]
+  create: [PermissionsOnRolesCreateWithoutPermissionInput!]
+  createMany: PermissionsOnRolesCreateManyPermissionInputEnvelope
+}
+
+input PermissionsOnRolesCreateNestedManyWithoutRoleInput {
+  connect: [PermissionsOnRolesWhereUniqueInput!]
+  connectOrCreate: [PermissionsOnRolesCreateOrConnectWithoutRoleInput!]
+  create: [PermissionsOnRolesCreateWithoutRoleInput!]
+  createMany: PermissionsOnRolesCreateManyRoleInputEnvelope
+}
+
+input PermissionsOnRolesCreateOrConnectWithoutPermissionInput {
+  create: PermissionsOnRolesCreateWithoutPermissionInput!
+  where: PermissionsOnRolesWhereUniqueInput!
+}
+
+input PermissionsOnRolesCreateOrConnectWithoutRoleInput {
+  create: PermissionsOnRolesCreateWithoutRoleInput!
+  where: PermissionsOnRolesWhereUniqueInput!
+}
+
+input PermissionsOnRolesCreateWithoutPermissionInput {
+  createdAt: DateTime
+  role: RoleCreateNestedOneWithoutPermissionsInput!
+}
+
+input PermissionsOnRolesCreateWithoutRoleInput {
+  createdAt: DateTime
+  permission: PermissionCreateNestedOneWithoutRolesInput!
+}
+
+input PermissionsOnRolesListRelationFilter {
+  every: PermissionsOnRolesWhereInput
+  none: PermissionsOnRolesWhereInput
+  some: PermissionsOnRolesWhereInput
+}
+
+input PermissionsOnRolesRoleIdPermissionIdCompoundUniqueInput {
+  permissionId: Int!
+  roleId: Int!
+}
+
+input PermissionsOnRolesScalarWhereInput {
+  AND: [PermissionsOnRolesScalarWhereInput!]
+  NOT: [PermissionsOnRolesScalarWhereInput!]
+  OR: [PermissionsOnRolesScalarWhereInput!]
+  createdAt: DateTimeFilter
+  permissionId: IntFilter
+  roleId: IntFilter
+}
+
+input PermissionsOnRolesUpdateInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  permission: PermissionUpdateOneRequiredWithoutRolesNestedInput
+  role: RoleUpdateOneRequiredWithoutPermissionsNestedInput
+}
+
+input PermissionsOnRolesUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+}
+
+input PermissionsOnRolesUpdateManyWithWhereWithoutPermissionInput {
+  data: PermissionsOnRolesUpdateManyMutationInput!
+  where: PermissionsOnRolesScalarWhereInput!
+}
+
+input PermissionsOnRolesUpdateManyWithWhereWithoutRoleInput {
+  data: PermissionsOnRolesUpdateManyMutationInput!
+  where: PermissionsOnRolesScalarWhereInput!
+}
+
+input PermissionsOnRolesUpdateManyWithoutPermissionNestedInput {
+  connect: [PermissionsOnRolesWhereUniqueInput!]
+  connectOrCreate: [PermissionsOnRolesCreateOrConnectWithoutPermissionInput!]
+  create: [PermissionsOnRolesCreateWithoutPermissionInput!]
+  createMany: PermissionsOnRolesCreateManyPermissionInputEnvelope
+  delete: [PermissionsOnRolesWhereUniqueInput!]
+  deleteMany: [PermissionsOnRolesScalarWhereInput!]
+  disconnect: [PermissionsOnRolesWhereUniqueInput!]
+  set: [PermissionsOnRolesWhereUniqueInput!]
+  update: [PermissionsOnRolesUpdateWithWhereUniqueWithoutPermissionInput!]
+  updateMany: [PermissionsOnRolesUpdateManyWithWhereWithoutPermissionInput!]
+  upsert: [PermissionsOnRolesUpsertWithWhereUniqueWithoutPermissionInput!]
+}
+
+input PermissionsOnRolesUpdateManyWithoutRoleNestedInput {
+  connect: [PermissionsOnRolesWhereUniqueInput!]
+  connectOrCreate: [PermissionsOnRolesCreateOrConnectWithoutRoleInput!]
+  create: [PermissionsOnRolesCreateWithoutRoleInput!]
+  createMany: PermissionsOnRolesCreateManyRoleInputEnvelope
+  delete: [PermissionsOnRolesWhereUniqueInput!]
+  deleteMany: [PermissionsOnRolesScalarWhereInput!]
+  disconnect: [PermissionsOnRolesWhereUniqueInput!]
+  set: [PermissionsOnRolesWhereUniqueInput!]
+  update: [PermissionsOnRolesUpdateWithWhereUniqueWithoutRoleInput!]
+  updateMany: [PermissionsOnRolesUpdateManyWithWhereWithoutRoleInput!]
+  upsert: [PermissionsOnRolesUpsertWithWhereUniqueWithoutRoleInput!]
+}
+
+input PermissionsOnRolesUpdateWithWhereUniqueWithoutPermissionInput {
+  data: PermissionsOnRolesUpdateWithoutPermissionInput!
+  where: PermissionsOnRolesWhereUniqueInput!
+}
+
+input PermissionsOnRolesUpdateWithWhereUniqueWithoutRoleInput {
+  data: PermissionsOnRolesUpdateWithoutRoleInput!
+  where: PermissionsOnRolesWhereUniqueInput!
+}
+
+input PermissionsOnRolesUpdateWithoutPermissionInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  role: RoleUpdateOneRequiredWithoutPermissionsNestedInput
+}
+
+input PermissionsOnRolesUpdateWithoutRoleInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  permission: PermissionUpdateOneRequiredWithoutRolesNestedInput
+}
+
+input PermissionsOnRolesUpsertWithWhereUniqueWithoutPermissionInput {
+  create: PermissionsOnRolesCreateWithoutPermissionInput!
+  update: PermissionsOnRolesUpdateWithoutPermissionInput!
+  where: PermissionsOnRolesWhereUniqueInput!
+}
+
+input PermissionsOnRolesUpsertWithWhereUniqueWithoutRoleInput {
+  create: PermissionsOnRolesCreateWithoutRoleInput!
+  update: PermissionsOnRolesUpdateWithoutRoleInput!
+  where: PermissionsOnRolesWhereUniqueInput!
+}
+
+input PermissionsOnRolesWhereInput {
+  AND: [PermissionsOnRolesWhereInput!]
+  NOT: [PermissionsOnRolesWhereInput!]
+  OR: [PermissionsOnRolesWhereInput!]
+  createdAt: DateTimeFilter
+  permission: PermissionRelationFilter
+  permissionId: IntFilter
+  role: RoleRelationFilter
+  roleId: IntFilter
+}
+
+input PermissionsOnRolesWhereUniqueInput {
+  roleId_permissionId: PermissionsOnRolesRoleIdPermissionIdCompoundUniqueInput
 }
 
 type Query {
-  liveSession(id: Int!): LiveSession!
-  liveSessions: [LiveSession!]!
-  oauthLink(id: Int!): OAuthLink!
-  oauthLinks: [OAuthLink!]!
-  permission(id: Int!): Permission!
-  permissions: [Permission!]!
-  permissionsOnRole(id: Int!): PermissionsOnRole!
-  permissionsOnRoles: [PermissionsOnRole!]!
-  role(id: Int!): Role!
-  roles: [Role!]!
-  user(where: JSON!): User!
-  users: [User!]!
-  video(id: Int!): Video!
-  videos: [Video!]!
+  liveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
+  liveSessions(where: LiveSessionWhereInput!): [LiveSession!]!
+  oauthLink(where: OAuthLinkWhereUniqueInput!): OAuthLink!
+  oauthLinks(where: OAuthLinkWhereInput!): [OAuthLink!]!
+  permission(where: PermissionWhereUniqueInput!): Permission!
+  permissions(where: PermissionWhereInput!): [Permission!]!
+  permissionsOnRoles(where: PermissionsOnRolesWhereUniqueInput!): PermissionsOnRoles!
+  permissionsOnRoless(where: PermissionsOnRolesWhereInput!): [PermissionsOnRoles!]!
+  role(where: RoleWhereUniqueInput!): Role!
+  roles(where: RoleWhereInput!): [Role!]!
+  user(where: UserWhereUniqueInput!): User!
+  users(where: UserWhereInput!): [User!]!
+  video(where: VideoWhereUniqueInput!): Video!
+  videos(where: VideoWhereInput!): [Video!]!
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 type Role {
+  _count: RoleCount!
+  id: ID!
   name: String!
-  permissions: [Permission!]!
-  users: [User!]!
+  permissions: [PermissionsOnRoles!]
+  users: [User!]
 }
 
-input UpdateLiveSessionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+type RoleCount {
+  permissions: Int!
+  users: Int!
 }
 
-input UpdateOauthLinkInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input RoleCreateInput {
+  name: String!
+  permissions: PermissionsOnRolesCreateNestedManyWithoutRoleInput
+  users: UserCreateNestedManyWithoutRoleInput
 }
 
-input UpdatePermissionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input RoleCreateNestedOneWithoutPermissionsInput {
+  connect: RoleWhereUniqueInput
+  connectOrCreate: RoleCreateOrConnectWithoutPermissionsInput
+  create: RoleCreateWithoutPermissionsInput
 }
 
-input UpdatePermissionsOnRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input RoleCreateNestedOneWithoutUsersInput {
+  connect: RoleWhereUniqueInput
+  connectOrCreate: RoleCreateOrConnectWithoutUsersInput
+  create: RoleCreateWithoutUsersInput
 }
 
-input UpdateRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input RoleCreateOrConnectWithoutPermissionsInput {
+  create: RoleCreateWithoutPermissionsInput!
+  where: RoleWhereUniqueInput!
 }
 
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input RoleCreateOrConnectWithoutUsersInput {
+  create: RoleCreateWithoutUsersInput!
+  where: RoleWhereUniqueInput!
 }
 
-input UpdateVideoInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input RoleCreateWithoutPermissionsInput {
+  name: String!
+  users: UserCreateNestedManyWithoutRoleInput
+}
+
+input RoleCreateWithoutUsersInput {
+  name: String!
+  permissions: PermissionsOnRolesCreateNestedManyWithoutRoleInput
+}
+
+input RoleRelationFilter {
+  is: RoleWhereInput
+  isNot: RoleWhereInput
+}
+
+input RoleUpdateInput {
+  name: StringFieldUpdateOperationsInput
+  permissions: PermissionsOnRolesUpdateManyWithoutRoleNestedInput
+  users: UserUpdateManyWithoutRoleNestedInput
+}
+
+input RoleUpdateOneRequiredWithoutPermissionsNestedInput {
+  connect: RoleWhereUniqueInput
+  connectOrCreate: RoleCreateOrConnectWithoutPermissionsInput
+  create: RoleCreateWithoutPermissionsInput
+  update: RoleUpdateWithoutPermissionsInput
+  upsert: RoleUpsertWithoutPermissionsInput
+}
+
+input RoleUpdateOneRequiredWithoutUsersNestedInput {
+  connect: RoleWhereUniqueInput
+  connectOrCreate: RoleCreateOrConnectWithoutUsersInput
+  create: RoleCreateWithoutUsersInput
+  update: RoleUpdateWithoutUsersInput
+  upsert: RoleUpsertWithoutUsersInput
+}
+
+input RoleUpdateWithoutPermissionsInput {
+  name: StringFieldUpdateOperationsInput
+  users: UserUpdateManyWithoutRoleNestedInput
+}
+
+input RoleUpdateWithoutUsersInput {
+  name: StringFieldUpdateOperationsInput
+  permissions: PermissionsOnRolesUpdateManyWithoutRoleNestedInput
+}
+
+input RoleUpsertWithoutPermissionsInput {
+  create: RoleCreateWithoutPermissionsInput!
+  update: RoleUpdateWithoutPermissionsInput!
+}
+
+input RoleUpsertWithoutUsersInput {
+  create: RoleCreateWithoutUsersInput!
+  update: RoleUpdateWithoutUsersInput!
+}
+
+input RoleWhereInput {
+  AND: [RoleWhereInput!]
+  NOT: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  permissions: PermissionsOnRolesListRelationFilter
+  users: UserListRelationFilter
+}
+
+input RoleWhereUniqueInput {
+  id: Int
+  name: String
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 type User {
+  _count: UserCount!
   avatar: JSON
+  createdAt: DateTime!
   email: String!
-  oauthLinks: [OAuthLink!]!
-  role: Role
+  gender: Boolean!
+  id: ID!
+  oauthLinks: [OAuthLink!]
+  password: String!
+  role: Role!
+  roleId: Int!
+  updatedAt: DateTime!
+  username: String!
+  videos: [Video!]
+}
+
+type UserCount {
+  oauthLinks: Int!
+  videos: Int!
+}
+
+input UserCreateInput {
+  avatar: JSON
+  createdAt: DateTime
+  email: String!
+  gender: Boolean!
+  oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
+  password: String!
+  role: RoleCreateNestedOneWithoutUsersInput!
+  updatedAt: DateTime
+  username: String!
+  videos: VideoCreateNestedManyWithoutUserInput
+}
+
+input UserCreateManyRoleInput {
+  avatar: JSON
+  createdAt: DateTime
+  email: String!
+  gender: Boolean!
+  id: Int
+  password: String!
+  updatedAt: DateTime
+  username: String!
+}
+
+input UserCreateManyRoleInputEnvelope {
+  data: [UserCreateManyRoleInput!]!
+  skipDuplicates: Boolean
+}
+
+input UserCreateNestedManyWithoutRoleInput {
+  connect: [UserWhereUniqueInput!]
+  connectOrCreate: [UserCreateOrConnectWithoutRoleInput!]
+  create: [UserCreateWithoutRoleInput!]
+  createMany: UserCreateManyRoleInputEnvelope
+}
+
+input UserCreateNestedOneWithoutOauthLinksInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutOauthLinksInput
+  create: UserCreateWithoutOauthLinksInput
+}
+
+input UserCreateNestedOneWithoutVideosInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutVideosInput
+  create: UserCreateWithoutVideosInput
+}
+
+input UserCreateOrConnectWithoutOauthLinksInput {
+  create: UserCreateWithoutOauthLinksInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutRoleInput {
+  create: UserCreateWithoutRoleInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutVideosInput {
+  create: UserCreateWithoutVideosInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutOauthLinksInput {
+  avatar: JSON
+  createdAt: DateTime
+  email: String!
+  gender: Boolean!
+  password: String!
+  role: RoleCreateNestedOneWithoutUsersInput!
+  updatedAt: DateTime
+  username: String!
+  videos: VideoCreateNestedManyWithoutUserInput
+}
+
+input UserCreateWithoutRoleInput {
+  avatar: JSON
+  createdAt: DateTime
+  email: String!
+  gender: Boolean!
+  oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
+  password: String!
+  updatedAt: DateTime
+  username: String!
+  videos: VideoCreateNestedManyWithoutUserInput
+}
+
+input UserCreateWithoutVideosInput {
+  avatar: JSON
+  createdAt: DateTime
+  email: String!
+  gender: Boolean!
+  oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
+  password: String!
+  role: RoleCreateNestedOneWithoutUsersInput!
+  updatedAt: DateTime
   username: String!
 }
 
@@ -178,10 +892,378 @@ type UserDto {
   username: String!
 }
 
+input UserListRelationFilter {
+  every: UserWhereInput
+  none: UserWhereInput
+  some: UserWhereInput
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+input UserScalarWhereInput {
+  AND: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  avatar: JsonNullableFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  gender: BoolFilter
+  id: IntFilter
+  password: StringFilter
+  roleId: IntFilter
+  updatedAt: DateTimeFilter
+  username: StringFilter
+}
+
+input UserUpdateInput {
+  avatar: JSON
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  gender: BoolFieldUpdateOperationsInput
+  oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
+  password: StringFieldUpdateOperationsInput
+  role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  username: StringFieldUpdateOperationsInput
+  videos: VideoUpdateManyWithoutUserNestedInput
+}
+
+input UserUpdateManyMutationInput {
+  avatar: JSON
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  gender: BoolFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  username: StringFieldUpdateOperationsInput
+}
+
+input UserUpdateManyWithWhereWithoutRoleInput {
+  data: UserUpdateManyMutationInput!
+  where: UserScalarWhereInput!
+}
+
+input UserUpdateManyWithoutRoleNestedInput {
+  connect: [UserWhereUniqueInput!]
+  connectOrCreate: [UserCreateOrConnectWithoutRoleInput!]
+  create: [UserCreateWithoutRoleInput!]
+  createMany: UserCreateManyRoleInputEnvelope
+  delete: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRoleInput!]
+  updateMany: [UserUpdateManyWithWhereWithoutRoleInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRoleInput!]
+}
+
+input UserUpdateOneRequiredWithoutOauthLinksNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutOauthLinksInput
+  create: UserCreateWithoutOauthLinksInput
+  update: UserUpdateWithoutOauthLinksInput
+  upsert: UserUpsertWithoutOauthLinksInput
+}
+
+input UserUpdateOneRequiredWithoutVideosNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutVideosInput
+  create: UserCreateWithoutVideosInput
+  update: UserUpdateWithoutVideosInput
+  upsert: UserUpsertWithoutVideosInput
+}
+
+input UserUpdateWithWhereUniqueWithoutRoleInput {
+  data: UserUpdateWithoutRoleInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserUpdateWithoutOauthLinksInput {
+  avatar: JSON
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  gender: BoolFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  username: StringFieldUpdateOperationsInput
+  videos: VideoUpdateManyWithoutUserNestedInput
+}
+
+input UserUpdateWithoutRoleInput {
+  avatar: JSON
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  gender: BoolFieldUpdateOperationsInput
+  oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
+  password: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  username: StringFieldUpdateOperationsInput
+  videos: VideoUpdateManyWithoutUserNestedInput
+}
+
+input UserUpdateWithoutVideosInput {
+  avatar: JSON
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  gender: BoolFieldUpdateOperationsInput
+  oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
+  password: StringFieldUpdateOperationsInput
+  role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  username: StringFieldUpdateOperationsInput
+}
+
+input UserUpsertWithWhereUniqueWithoutRoleInput {
+  create: UserCreateWithoutRoleInput!
+  update: UserUpdateWithoutRoleInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserUpsertWithoutOauthLinksInput {
+  create: UserCreateWithoutOauthLinksInput!
+  update: UserUpdateWithoutOauthLinksInput!
+}
+
+input UserUpsertWithoutVideosInput {
+  create: UserCreateWithoutVideosInput!
+  update: UserUpdateWithoutVideosInput!
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  avatar: JsonNullableFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  gender: BoolFilter
+  id: IntFilter
+  oauthLinks: OAuthLinkListRelationFilter
+  password: StringFilter
+  role: RoleRelationFilter
+  roleId: IntFilter
+  updatedAt: DateTimeFilter
+  username: StringFilter
+  videos: VideoListRelationFilter
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: Int
+  username: String
+}
+
 type Video {
+  createdAt: DateTime!
+  id: ID!
   liveSession: LiveSession
   name: String!
+  privacy: Int!
   slug: String!
   thumbnail: JSON
+  updatedAt: DateTime!
   user: User!
+  userId: Int!
+}
+
+input VideoCreateInput {
+  createdAt: DateTime
+  liveSession: LiveSessionCreateNestedOneWithoutVideoInput
+  name: String!
+  privacy: Int
+  slug: String!
+  thumbnail: JSON
+  updatedAt: DateTime
+  user: UserCreateNestedOneWithoutVideosInput!
+}
+
+input VideoCreateManyUserInput {
+  createdAt: DateTime
+  id: Int
+  name: String!
+  privacy: Int
+  slug: String!
+  thumbnail: JSON
+  updatedAt: DateTime
+}
+
+input VideoCreateManyUserInputEnvelope {
+  data: [VideoCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input VideoCreateNestedManyWithoutUserInput {
+  connect: [VideoWhereUniqueInput!]
+  connectOrCreate: [VideoCreateOrConnectWithoutUserInput!]
+  create: [VideoCreateWithoutUserInput!]
+  createMany: VideoCreateManyUserInputEnvelope
+}
+
+input VideoCreateNestedOneWithoutLiveSessionInput {
+  connect: VideoWhereUniqueInput
+  connectOrCreate: VideoCreateOrConnectWithoutLiveSessionInput
+  create: VideoCreateWithoutLiveSessionInput
+}
+
+input VideoCreateOrConnectWithoutLiveSessionInput {
+  create: VideoCreateWithoutLiveSessionInput!
+  where: VideoWhereUniqueInput!
+}
+
+input VideoCreateOrConnectWithoutUserInput {
+  create: VideoCreateWithoutUserInput!
+  where: VideoWhereUniqueInput!
+}
+
+input VideoCreateWithoutLiveSessionInput {
+  createdAt: DateTime
+  name: String!
+  privacy: Int
+  slug: String!
+  thumbnail: JSON
+  updatedAt: DateTime
+  user: UserCreateNestedOneWithoutVideosInput!
+}
+
+input VideoCreateWithoutUserInput {
+  createdAt: DateTime
+  liveSession: LiveSessionCreateNestedOneWithoutVideoInput
+  name: String!
+  privacy: Int
+  slug: String!
+  thumbnail: JSON
+  updatedAt: DateTime
+}
+
+input VideoListRelationFilter {
+  every: VideoWhereInput
+  none: VideoWhereInput
+  some: VideoWhereInput
+}
+
+input VideoRelationFilter {
+  is: VideoWhereInput
+  isNot: VideoWhereInput
+}
+
+input VideoScalarWhereInput {
+  AND: [VideoScalarWhereInput!]
+  NOT: [VideoScalarWhereInput!]
+  OR: [VideoScalarWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  name: StringFilter
+  privacy: IntFilter
+  slug: StringFilter
+  thumbnail: JsonNullableFilter
+  updatedAt: DateTimeFilter
+  userId: IntFilter
+}
+
+input VideoUpdateInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  liveSession: LiveSessionUpdateOneWithoutVideoNestedInput
+  name: StringFieldUpdateOperationsInput
+  privacy: IntFieldUpdateOperationsInput
+  slug: StringFieldUpdateOperationsInput
+  thumbnail: JSON
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutVideosNestedInput
+}
+
+input VideoUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  privacy: IntFieldUpdateOperationsInput
+  slug: StringFieldUpdateOperationsInput
+  thumbnail: JSON
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input VideoUpdateManyWithWhereWithoutUserInput {
+  data: VideoUpdateManyMutationInput!
+  where: VideoScalarWhereInput!
+}
+
+input VideoUpdateManyWithoutUserNestedInput {
+  connect: [VideoWhereUniqueInput!]
+  connectOrCreate: [VideoCreateOrConnectWithoutUserInput!]
+  create: [VideoCreateWithoutUserInput!]
+  createMany: VideoCreateManyUserInputEnvelope
+  delete: [VideoWhereUniqueInput!]
+  deleteMany: [VideoScalarWhereInput!]
+  disconnect: [VideoWhereUniqueInput!]
+  set: [VideoWhereUniqueInput!]
+  update: [VideoUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [VideoUpdateManyWithWhereWithoutUserInput!]
+  upsert: [VideoUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input VideoUpdateOneRequiredWithoutLiveSessionNestedInput {
+  connect: VideoWhereUniqueInput
+  connectOrCreate: VideoCreateOrConnectWithoutLiveSessionInput
+  create: VideoCreateWithoutLiveSessionInput
+  update: VideoUpdateWithoutLiveSessionInput
+  upsert: VideoUpsertWithoutLiveSessionInput
+}
+
+input VideoUpdateWithWhereUniqueWithoutUserInput {
+  data: VideoUpdateWithoutUserInput!
+  where: VideoWhereUniqueInput!
+}
+
+input VideoUpdateWithoutLiveSessionInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  privacy: IntFieldUpdateOperationsInput
+  slug: StringFieldUpdateOperationsInput
+  thumbnail: JSON
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutVideosNestedInput
+}
+
+input VideoUpdateWithoutUserInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  liveSession: LiveSessionUpdateOneWithoutVideoNestedInput
+  name: StringFieldUpdateOperationsInput
+  privacy: IntFieldUpdateOperationsInput
+  slug: StringFieldUpdateOperationsInput
+  thumbnail: JSON
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input VideoUpsertWithWhereUniqueWithoutUserInput {
+  create: VideoCreateWithoutUserInput!
+  update: VideoUpdateWithoutUserInput!
+  where: VideoWhereUniqueInput!
+}
+
+input VideoUpsertWithoutLiveSessionInput {
+  create: VideoCreateWithoutLiveSessionInput!
+  update: VideoUpdateWithoutLiveSessionInput!
+}
+
+input VideoWhereInput {
+  AND: [VideoWhereInput!]
+  NOT: [VideoWhereInput!]
+  OR: [VideoWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  liveSession: LiveSessionRelationFilter
+  name: StringFilter
+  privacy: IntFilter
+  slug: StringFilter
+  thumbnail: JsonNullableFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  userId: IntFilter
+}
+
+input VideoWhereUniqueInput {
+  id: Int
+  slug: String
 }

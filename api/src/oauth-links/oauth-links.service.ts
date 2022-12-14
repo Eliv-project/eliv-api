@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOauthLinkInput } from './dto/create-oauth-link.input';
-import { UpdateOauthLinkInput } from './dto/update-oauth-link.input';
+import { OAuthLinkCreateInput } from 'src/prisma/@generated/o-auth-link/o-auth-link-create.input';
+import { OAuthLinkUpdateInput } from 'src/prisma/@generated/o-auth-link/o-auth-link-update.input';
+import { OAuthLinkWhereUniqueInput } from 'src/prisma/@generated/o-auth-link/o-auth-link-where-unique.input';
+import { OAuthLinkWhereInput } from 'src/prisma/@generated/o-auth-link/o-auth-link-where.input';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class OauthLinksService {
-  create(createOauthLinkInput: CreateOauthLinkInput) {
-    return 'This action adds a new oauthLink';
+export class OAuthLinksService {
+  constructor(private prisma: PrismaService) {}
+
+  create(data: OAuthLinkCreateInput) {
+    return this.prisma.oAuthLink.create({ data });
   }
 
-  findAll() {
-    return `This action returns all oauthLinks`;
+  findAll(where: OAuthLinkWhereInput) {
+    return this.prisma.oAuthLink.findMany({ where });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} oauthLink`;
+  findOne(where: OAuthLinkWhereUniqueInput) {
+    return this.prisma.oAuthLink.findUnique({ where });
   }
 
-  update(id: number, updateOauthLinkInput: UpdateOauthLinkInput) {
-    return `This action updates a #${id} oauthLink`;
+  update(where: OAuthLinkWhereUniqueInput, data: OAuthLinkUpdateInput) {
+    return this.prisma.oAuthLink.update({
+      where,
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} oauthLink`;
+  remove(where: OAuthLinkWhereUniqueInput) {
+    return this.prisma.oAuthLink.delete({ where });
   }
 }

@@ -12,6 +12,12 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
+generator nestgraphql {
+    provider = "node node_modules/prisma-nestjs-graphql"
+    // for yarn monorepos
+    // provider = "prisma-nestjs-graphql"
+    output = "./@generated"
+}
 
 model LiveSession {
     id Int @id @default(autoincrement())

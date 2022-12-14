@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePermissionsOnRoleInput } from './dto/create-permissions-on-role.input';
-import { UpdatePermissionsOnRoleInput } from './dto/update-permissions-on-role.input';
+import { PermissionsOnRolesCreateInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-create.input';
+import { PermissionsOnRolesUpdateInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-update.input';
+import { PermissionsOnRolesWhereUniqueInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-where-unique.input';
+import { PermissionsOnRolesWhereInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-where.input';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PermissionsOnRolesService {
-  create(createPermissionsOnRoleInput: CreatePermissionsOnRoleInput) {
-    return 'This action adds a new permissionsOnRole';
+  constructor(private prisma: PrismaService) {}
+
+  create(data: PermissionsOnRolesCreateInput) {
+    return this.prisma.permissionsOnRoles.create({ data });
   }
 
-  findAll() {
-    return `This action returns all permissionsOnRoles`;
+  findAll(where: PermissionsOnRolesWhereInput) {
+    return this.prisma.permissionsOnRoles.findMany({ where });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} permissionsOnRole`;
+  findOne(where: PermissionsOnRolesWhereUniqueInput) {
+    return this.prisma.permissionsOnRoles.findUnique({ where });
   }
 
-  update(id: number, updatePermissionsOnRoleInput: UpdatePermissionsOnRoleInput) {
-    return `This action updates a #${id} permissionsOnRole`;
+  update(
+    where: PermissionsOnRolesWhereUniqueInput,
+    data: PermissionsOnRolesUpdateInput,
+  ) {
+    return this.prisma.permissionsOnRoles.update({
+      where,
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} permissionsOnRole`;
+  remove(where: PermissionsOnRolesWhereUniqueInput) {
+    return this.prisma.permissionsOnRoles.delete({ where });
   }
 }

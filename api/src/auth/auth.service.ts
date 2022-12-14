@@ -9,12 +9,16 @@ export class AuthService {
   constructor(private usersService: UsersService) {}
 
   async validateUser(input: LoginInputDto) {
-    const user: User = await this.usersService.findOne({
-      OR: [
-        { email: input.usernameOrEmail },
-        { username: input.usernameOrEmail },
-      ],
-    });
+    const users: (User | null)[] = await Promise.all([
+      this.usersService.findOne({
+        email: input.usernameOrEmail,
+      }),
+      this.usersService.findOne({
+        username: input.usernameOrEmail,
+      }),
+    ]);
+
+    const user: User = users.find((user) => !!user);
 
     if (!user) {
       return null;

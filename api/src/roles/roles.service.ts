@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRoleInput } from './dto/create-role.input';
-import { UpdateRoleInput } from './dto/update-role.input';
+import { RoleCreateInput } from 'src/prisma/@generated/role/role-create.input';
+import { RoleUpdateInput } from 'src/prisma/@generated/role/role-update.input';
+import { RoleWhereUniqueInput } from 'src/prisma/@generated/role/role-where-unique.input';
+import { RoleWhereInput } from 'src/prisma/@generated/role/role-where.input';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class RolesService {
-  create(createRoleInput: CreateRoleInput) {
-    return 'This action adds a new role';
+  constructor(private prisma: PrismaService) {}
+
+  create(data: RoleCreateInput) {
+    return this.prisma.role.create({ data });
   }
 
-  findAll() {
-    return `This action returns all roles`;
+  findAll(where: RoleWhereInput) {
+    return this.prisma.role.findMany({ where });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+  findOne(where: RoleWhereUniqueInput) {
+    return this.prisma.role.findUnique({ where });
   }
 
-  update(id: number, updateRoleInput: UpdateRoleInput) {
-    return `This action updates a #${id} role`;
+  update(where: RoleWhereUniqueInput, data: RoleUpdateInput) {
+    return this.prisma.role.update({
+      where,
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  remove(where: RoleWhereUniqueInput) {
+    return this.prisma.role.delete({ where });
   }
 }

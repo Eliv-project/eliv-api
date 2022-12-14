@@ -1,9 +1,8 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { Permission, PermissionsOnRoles } from '@prisma/client';
+import { Permission } from '@prisma/client';
 import { JwtPayload } from 'src/auth/types/jwt-payload.type';
-import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { PERMISSIONS_KEY } from '../decorators/need-permissions/need-permissions.decorator';
 
@@ -35,7 +34,7 @@ export class PermissionsGuard implements CanActivate {
         role: {
           include: {
             permissions: {
-              select: {
+              include: {
                 permission: {
                   select: {
                     name: true,

@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVideoInput } from './dto/create-video.input';
-import { UpdateVideoInput } from './dto/update-video.input';
+import { VideoCreateInput } from 'src/prisma/@generated/video/video-create.input';
+import { VideoUpdateInput } from 'src/prisma/@generated/video/video-update.input';
+import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';
+import { VideoWhereInput } from 'src/prisma/@generated/video/video-where.input';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class VideosService {
-  create(createVideoInput: CreateVideoInput) {
-    return 'This action adds a new video';
+  constructor(private prisma: PrismaService) {}
+
+  create(data: VideoCreateInput) {
+    return this.prisma.video.create({ data });
   }
 
-  findAll() {
-    return `This action returns all videos`;
+  findAll(where: VideoWhereInput) {
+    return this.prisma.video.findMany({ where });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} video`;
+  findOne(where: VideoWhereUniqueInput) {
+    return this.prisma.video.findUnique({ where });
   }
 
-  update(id: number, updateVideoInput: UpdateVideoInput) {
-    return `This action updates a #${id} video`;
+  update(where: VideoWhereUniqueInput, data: VideoUpdateInput) {
+    return this.prisma.video.update({
+      where,
+      data,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} video`;
+  remove(where: VideoWhereUniqueInput) {
+    return this.prisma.video.delete({ where });
   }
 }

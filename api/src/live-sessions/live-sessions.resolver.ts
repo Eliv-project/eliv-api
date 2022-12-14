@@ -1,9 +1,10 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { LiveSessionsService } from './live-sessions.service';
-import { LiveSession } from './entities/live-session.entity';
-import { CreateLiveSessionInput } from './dto/create-live-session.input';
-import { UpdateLiveSessionInput } from './dto/update-live-session.input';
-import { Prisma } from '@prisma/client';
+import { LiveSessionCreateInput } from 'src/prisma/@generated/live-session/live-session-create.input';
+import { LiveSession } from 'src/prisma/@generated/live-session/live-session.model';
+import { LiveSessionUpdateInput } from 'src/prisma/@generated/live-session/live-session-update.input';
+import { LiveSessionWhereUniqueInput } from 'src/prisma/@generated/live-session/live-session-where-unique.input';
+import { LiveSessionWhereInput } from 'src/prisma/@generated/live-session/live-session-where.input';
 
 @Resolver(() => LiveSession)
 export class LiveSessionsResolver {
@@ -11,34 +12,36 @@ export class LiveSessionsResolver {
 
   @Mutation(() => LiveSession)
   createLiveSession(
-    @Args() createLiveSessionInput: Prisma.LiveSessionCreateInput,
+    @Args('data')
+    data: LiveSessionCreateInput,
   ) {
-    return this.liveSessionsService.create(createLiveSessionInput);
+    return this.liveSessionsService.create(data);
   }
 
   @Query(() => [LiveSession], { name: 'liveSessions' })
-  findAll() {
-    return this.liveSessionsService.findAll();
+  findAll(
+    @Args('where')
+    where: LiveSessionWhereInput,
+  ) {
+    return this.liveSessionsService.findAll(where);
   }
 
   @Query(() => LiveSession, { name: 'liveSession' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.liveSessionsService.findOne(id);
+  findOne(@Args('where') where: LiveSessionWhereUniqueInput) {
+    return this.liveSessionsService.findOne(where);
   }
 
   @Mutation(() => LiveSession)
   updateLiveSession(
-    @Args('updateLiveSessionInput')
-    updateLiveSessionInput: UpdateLiveSessionInput,
+    @Args('where') where: LiveSessionWhereUniqueInput,
+    @Args('data')
+    data: LiveSessionUpdateInput,
   ) {
-    return this.liveSessionsService.update(
-      updateLiveSessionInput.id,
-      updateLiveSessionInput,
-    );
+    return this.liveSessionsService.update(where, data);
   }
 
   @Mutation(() => LiveSession)
-  removeLiveSession(@Args('id', { type: () => Int }) id: number) {
-    return this.liveSessionsService.remove(id);
+  removeLiveSession(@Args('where') where: LiveSessionWhereUniqueInput) {
+    return this.liveSessionsService.remove(where);
   }
 }

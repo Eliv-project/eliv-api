@@ -8,7 +8,6 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import globalConfig from './config/global.config';
-import { GraphQLJSON } from 'graphql-scalars';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsOnRolesModule } from './permissions-on-roles/permissions-on-roles.module';
@@ -19,6 +18,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from './permissions/guards/permissions.guard';
 import { VideosModule } from './videos/videos.module';
 import { LiveSessionsModule } from './live-sessions/live-sessions.module';
+import GraphQLJSON from 'graphql-type-json';
 
 @Module({
   imports: [

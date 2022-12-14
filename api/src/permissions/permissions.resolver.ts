@@ -1,35 +1,47 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { PermissionCreateInput } from 'src/prisma/@generated/permission/permission-create.input';
+import { PermissionUpdateInput } from 'src/prisma/@generated/permission/permission-update.input';
+import { PermissionWhereUniqueInput } from 'src/prisma/@generated/permission/permission-where-unique.input';
+import { PermissionWhereInput } from 'src/prisma/@generated/permission/permission-where.input';
+import { Permission } from 'src/prisma/@generated/permission/permission.model';
 import { PermissionsService } from './permissions.service';
-import { Permission } from './entities/permission.entity';
-import { CreatePermissionInput } from './dto/create-permission.input';
-import { UpdatePermissionInput } from './dto/update-permission.input';
 
 @Resolver(() => Permission)
 export class PermissionsResolver {
   constructor(private readonly permissionsService: PermissionsService) {}
 
   @Mutation(() => Permission)
-  createPermission(@Args('createPermissionInput') createPermissionInput: CreatePermissionInput) {
-    return this.permissionsService.create(createPermissionInput);
+  createPermission(
+    @Args('data')
+    data: PermissionCreateInput,
+  ) {
+    return this.permissionsService.create(data);
   }
 
   @Query(() => [Permission], { name: 'permissions' })
-  findAll() {
-    return this.permissionsService.findAll();
+  findAll(
+    @Args('where')
+    where: PermissionWhereInput,
+  ) {
+    return this.permissionsService.findAll(where);
   }
 
   @Query(() => Permission, { name: 'permission' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.permissionsService.findOne(id);
+  findOne(@Args('where') where: PermissionWhereUniqueInput) {
+    return this.permissionsService.findOne(where);
   }
 
   @Mutation(() => Permission)
-  updatePermission(@Args('updatePermissionInput') updatePermissionInput: UpdatePermissionInput) {
-    return this.permissionsService.update(updatePermissionInput.id, updatePermissionInput);
+  updatePermission(
+    @Args('where') where: PermissionWhereUniqueInput,
+    @Args('data')
+    data: PermissionUpdateInput,
+  ) {
+    return this.permissionsService.update(where, data);
   }
 
   @Mutation(() => Permission)
-  removePermission(@Args('id', { type: () => Int }) id: number) {
-    return this.permissionsService.remove(id);
+  removePermission(@Args('where') where: PermissionWhereUniqueInput) {
+    return this.permissionsService.remove(where);
   }
 }

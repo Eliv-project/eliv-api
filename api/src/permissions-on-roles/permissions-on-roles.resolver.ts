@@ -1,35 +1,51 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { PermissionsOnRolesCreateInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-create.input';
+import { PermissionsOnRolesUpdateInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-update.input';
+import { PermissionsOnRolesWhereUniqueInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-where-unique.input';
+import { PermissionsOnRolesWhereInput } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles-where.input';
+import { PermissionsOnRoles } from 'src/prisma/@generated/permissions-on-roles/permissions-on-roles.model';
 import { PermissionsOnRolesService } from './permissions-on-roles.service';
-import { PermissionsOnRole } from './entities/permissions-on-role.entity';
-import { CreatePermissionsOnRoleInput } from './dto/create-permissions-on-role.input';
-import { UpdatePermissionsOnRoleInput } from './dto/update-permissions-on-role.input';
 
-@Resolver(() => PermissionsOnRole)
+@Resolver(() => PermissionsOnRoles)
 export class PermissionsOnRolesResolver {
-  constructor(private readonly permissionsOnRolesService: PermissionsOnRolesService) {}
+  constructor(
+    private readonly permissionsOnRolessService: PermissionsOnRolesService,
+  ) {}
 
-  @Mutation(() => PermissionsOnRole)
-  createPermissionsOnRole(@Args('createPermissionsOnRoleInput') createPermissionsOnRoleInput: CreatePermissionsOnRoleInput) {
-    return this.permissionsOnRolesService.create(createPermissionsOnRoleInput);
+  @Mutation(() => PermissionsOnRoles)
+  createPermissionsOnRoles(
+    @Args('data')
+    data: PermissionsOnRolesCreateInput,
+  ) {
+    return this.permissionsOnRolessService.create(data);
   }
 
-  @Query(() => [PermissionsOnRole], { name: 'permissionsOnRoles' })
-  findAll() {
-    return this.permissionsOnRolesService.findAll();
+  @Query(() => [PermissionsOnRoles], { name: 'permissionsOnRoless' })
+  findAll(
+    @Args('where')
+    where: PermissionsOnRolesWhereInput,
+  ) {
+    return this.permissionsOnRolessService.findAll(where);
   }
 
-  @Query(() => PermissionsOnRole, { name: 'permissionsOnRole' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.permissionsOnRolesService.findOne(id);
+  @Query(() => PermissionsOnRoles, { name: 'permissionsOnRoles' })
+  findOne(@Args('where') where: PermissionsOnRolesWhereUniqueInput) {
+    return this.permissionsOnRolessService.findOne(where);
   }
 
-  @Mutation(() => PermissionsOnRole)
-  updatePermissionsOnRole(@Args('updatePermissionsOnRoleInput') updatePermissionsOnRoleInput: UpdatePermissionsOnRoleInput) {
-    return this.permissionsOnRolesService.update(updatePermissionsOnRoleInput.id, updatePermissionsOnRoleInput);
+  @Mutation(() => PermissionsOnRoles)
+  updatePermissionsOnRoles(
+    @Args('where') where: PermissionsOnRolesWhereUniqueInput,
+    @Args('data')
+    data: PermissionsOnRolesUpdateInput,
+  ) {
+    return this.permissionsOnRolessService.update(where, data);
   }
 
-  @Mutation(() => PermissionsOnRole)
-  removePermissionsOnRole(@Args('id', { type: () => Int }) id: number) {
-    return this.permissionsOnRolesService.remove(id);
+  @Mutation(() => PermissionsOnRoles)
+  removePermissionsOnRoles(
+    @Args('where') where: PermissionsOnRolesWhereUniqueInput,
+  ) {
+    return this.permissionsOnRolessService.remove(where);
   }
 }

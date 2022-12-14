@@ -9,7 +9,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/prisma/@generated/user/user.model';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { IsPublic } from './decorators/is-public/is-public.decorator';

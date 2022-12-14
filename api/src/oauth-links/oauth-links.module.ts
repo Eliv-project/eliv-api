@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { OauthLinksService } from './oauth-links.service';
-import { OauthLinksResolver } from './oauth-links.resolver';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { OAuthLinksResolver } from './oauth-links.resolver';
+import { OAuthLinksService } from './oauth-links.service';
 
 @Module({
-  providers: [OauthLinksResolver, OauthLinksService]
+  providers: [OAuthLinksResolver, OAuthLinksService, PrismaService],
 })
 export class OauthLinksModule {}

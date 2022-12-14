@@ -1,39 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { UserCreateInput } from 'src/prisma/@generated/user/user-create.input';
+import { UserUpdateInput } from 'src/prisma/@generated/user/user-update.input';
+import { UserWhereUniqueInput } from 'src/prisma/@generated/user/user-where-unique.input';
+import { UserWhereInput } from 'src/prisma/@generated/user/user-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  create(createUserInput: CreateUserInput) {
-    return 'This action adds a new user';
+  create(data: UserCreateInput) {
+    return this.prisma.user.create({ data });
   }
 
-  findAll(where: Prisma.UserWhereInput) {
-    return this.prisma.user.findMany({
+  findAll(where: UserWhereInput) {
+    return this.prisma.user.findMany({ where });
+  }
+
+  findOne(where: UserWhereUniqueInput, include?: Prisma.UserInclude) {
+    return this.prisma.user.findUnique({ where, include });
+  }
+
+  update(where: UserWhereUniqueInput, data: UserUpdateInput) {
+    return this.prisma.user.update({
       where,
-      include: {
-        role: true,
-        oauthLinks: true,
-      },
+      data,
     });
   }
 
-  findOne(where: Prisma.UserWhereInput, include?: Prisma.UserInclude) {
-    return this.prisma.user.findFirst({
-      where,
-      include,
-    });
-  }
-
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(where: UserWhereUniqueInput) {
+    return this.prisma.user.delete({ where });
   }
 }
