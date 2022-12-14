@@ -23,8 +23,8 @@ export class VideoGroupBy {
     @Field(() => String, {nullable:false})
     slug!: string;
 
-    @Field(() => Int, {nullable:false})
-    privacy!: number;
+    @Field(() => Int, {nullable:true})
+    privacy?: number;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;

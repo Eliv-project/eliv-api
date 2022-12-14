@@ -10,7 +10,9 @@
   },
   "scripts": {
     "prisma:seed": "ts-node src/prisma/seed/index.ts",
-    "prisma:gen->migrate": "prisma-merge && prisma migrate dev",
+    "prisma:migrate:dev": " dotenv -e .env.dev -- prisma migrate dev --name 'init db'",
+    "prisma:migrate:prod": " dotenv -e .env.prod -- prisma migrate deploy",
+    "prisma:gen": " prisma-merge && prisma generate",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -39,6 +41,7 @@
     "apollo-server-express": "^3.11.1",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
+    "dotenv-cli": "^6.0.0",
     "graphql": "^16.6.0",
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.21",

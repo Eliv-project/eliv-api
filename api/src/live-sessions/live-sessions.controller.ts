@@ -29,12 +29,11 @@ export class LiveSessionsController {
         streamKey,
       },
       {
-        status: { set: Status.WAITING },
+        status: { set: Status.ON_LIVE },
       },
     );
     console.log('An user started a live stream session with key', streamKey);
-
-    return { ok: true };
+    return true;
   }
 
   @Post('/end')
@@ -51,7 +50,6 @@ export class LiveSessionsController {
       },
     );
     console.log('An user ended a live stream session with key', streamKey);
-
-    return { ok: true };
+      return true;
   }
 }

@@ -11,8 +11,8 @@ export class LiveSessionCreateManyInput {
     @Field(() => Int, {nullable:true})
     status?: number;
 
-    @Field(() => String, {nullable:false})
-    streamKey!: string;
+    @Field(() => String, {nullable:true})
+    streamKey?: string;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

@@ -19,7 +19,7 @@ COPY --chown=node:node . .
 RUN apk add --update --no-cache openssl1.1-compat
 
 
-RUN yarn prisma generate
+RUN yarn prisma:gen
 # RUN yarn build
 
 USER node

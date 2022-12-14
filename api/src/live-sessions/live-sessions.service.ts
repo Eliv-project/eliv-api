@@ -10,7 +10,12 @@ export class LiveSessionsService {
   constructor(private prisma: PrismaService) {}
 
   create(data: LiveSessionCreateInput) {
-    return this.prisma.liveSession.create({ data });
+    return this.prisma.liveSession.create({
+      data,
+      include: {
+        video: true,
+      },
+    });
   }
 
   findAll(where: LiveSessionWhereInput) {

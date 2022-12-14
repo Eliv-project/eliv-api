@@ -4,7 +4,6 @@ services:
     build: ./rtmp
     ports:
       - "1935:1935"
-      - "80:8080"
     container_name: rtmp_server
     volumes:
       - ./data:/tmp/hls
@@ -25,9 +24,9 @@ services:
     env_file:
       - ./api/.env.prod
     # Run a command against the development stage of the image
-    command: sh -c "yarn prisma migrate deploy && yarn 'prisma:seed' && yarn start:dev"
+    command: sh -c "yarn prisma:migrate:prod && yarn prisma:seed && yarn start:dev"
     ports:
-      - 3000:3000
+      - "${API_PORT}:${API_PORT}"
     container_name: api_server
   postgres:
     image: postgres
@@ -35,10 +34,6 @@ services:
     restart: always
     env_file:
       - ./api/.env.prod
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '5432:5432'
     volumes:

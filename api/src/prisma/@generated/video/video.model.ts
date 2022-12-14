@@ -21,8 +21,8 @@ export class Video {
     @Field(() => String, {nullable:false})
     slug!: string;
 
-    @Field(() => Int, {nullable:false,defaultValue:1})
-    privacy!: number;
+    @Field(() => Int, {nullable:true,defaultValue:1})
+    privacy!: number | null;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date;

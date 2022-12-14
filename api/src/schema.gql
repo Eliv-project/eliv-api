@@ -50,6 +50,17 @@ input IntFilter {
   notIn: [Int!]
 }
 
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -84,7 +95,7 @@ type LiveSession {
 input LiveSessionCreateInput {
   createdAt: DateTime
   status: Int
-  streamKey: String!
+  streamKey: String
   updatedAt: DateTime
   video: VideoCreateNestedOneWithoutLiveSessionInput!
 }
@@ -103,7 +114,7 @@ input LiveSessionCreateOrConnectWithoutVideoInput {
 input LiveSessionCreateWithoutVideoInput {
   createdAt: DateTime
   status: Int
-  streamKey: String!
+  streamKey: String
   updatedAt: DateTime
 }
 
@@ -224,6 +235,17 @@ input NestedIntFilter {
   notIn: [Int!]
 }
 
+input NestedIntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
 input NestedStringFilter {
   contains: String
   endsWith: String
@@ -236,6 +258,14 @@ input NestedStringFilter {
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
+}
+
+input NullableIntFieldUpdateOperationsInput {
+  decrement: Int
+  divide: Int
+  increment: Int
+  multiply: Int
+  set: Int
 }
 
 type OAuthLink {
@@ -1062,7 +1092,7 @@ type Video {
   id: ID!
   liveSession: LiveSession
   name: String!
-  privacy: Int!
+  privacy: Int
   slug: String!
   thumbnail: JSON
   updatedAt: DateTime!
@@ -1157,7 +1187,7 @@ input VideoScalarWhereInput {
   createdAt: DateTimeFilter
   id: IntFilter
   name: StringFilter
-  privacy: IntFilter
+  privacy: IntNullableFilter
   slug: StringFilter
   thumbnail: JsonNullableFilter
   updatedAt: DateTimeFilter
@@ -1168,7 +1198,7 @@ input VideoUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   liveSession: LiveSessionUpdateOneWithoutVideoNestedInput
   name: StringFieldUpdateOperationsInput
-  privacy: IntFieldUpdateOperationsInput
+  privacy: NullableIntFieldUpdateOperationsInput
   slug: StringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1178,7 +1208,7 @@ input VideoUpdateInput {
 input VideoUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  privacy: IntFieldUpdateOperationsInput
+  privacy: NullableIntFieldUpdateOperationsInput
   slug: StringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1219,7 +1249,7 @@ input VideoUpdateWithWhereUniqueWithoutUserInput {
 input VideoUpdateWithoutLiveSessionInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  privacy: IntFieldUpdateOperationsInput
+  privacy: NullableIntFieldUpdateOperationsInput
   slug: StringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1230,7 +1260,7 @@ input VideoUpdateWithoutUserInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   liveSession: LiveSessionUpdateOneWithoutVideoNestedInput
   name: StringFieldUpdateOperationsInput
-  privacy: IntFieldUpdateOperationsInput
+  privacy: NullableIntFieldUpdateOperationsInput
   slug: StringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1255,7 +1285,7 @@ input VideoWhereInput {
   id: IntFilter
   liveSession: LiveSessionRelationFilter
   name: StringFilter
-  privacy: IntFilter
+  privacy: IntNullableFilter
   slug: StringFilter
   thumbnail: JsonNullableFilter
   updatedAt: DateTimeFilter

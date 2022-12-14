@@ -4,7 +4,7 @@ model Video {
     name String
     thumbnail Json?
     slug String @unique
-    privacy Int @default(1) 
+    privacy Int? @default(1) 
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())

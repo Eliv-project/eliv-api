@@ -3,6 +3,7 @@ import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
@@ -29,8 +30,8 @@ export class VideoScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     slug?: StringFilter;
 
-    @Field(() => IntFilter, {nullable:true})
-    privacy?: IntFilter;
+    @Field(() => IntNullableFilter, {nullable:true})
+    privacy?: IntNullableFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
