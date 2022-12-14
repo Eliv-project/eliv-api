@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
 import { VideoCreateInput } from 'src/prisma/@generated/video/video-create.input';
 import { VideoUpdateInput } from 'src/prisma/@generated/video/video-update.input';
 import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';
@@ -19,6 +20,7 @@ export class VideosResolver {
   }
 
   @Query(() => [Video], { name: 'videos' })
+  @IsPublic()
   findAll(
     @Args('where')
     where: VideoWhereInput,

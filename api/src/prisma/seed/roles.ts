@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import Permissions from 'src/constants/permissions';
 
 export function seedRoles(prisma: PrismaClient) {
   const admin = prisma.role.upsert({

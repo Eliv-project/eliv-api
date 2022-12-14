@@ -30,5 +30,33 @@ export function seedUsers(prisma: PrismaClient, roles: { admin: Role }) {
     },
   });
 
-  return Promise.all([admin]);
+  const user = prisma.user.upsert({
+    create: {
+      email: 'test_user@eliv.dev',
+      gender: true,
+      password: bcrypt.hashSync('test_user', 10),
+      username: 'test_user',
+      role: {
+        connect: {
+          name: roles.admin.name,
+        },
+      },
+    },
+    update: {
+      email: 'test_user@eliv.dev',
+      gender: true,
+      password: bcrypt.hashSync('test_user', 10),
+      username: 'test_user',
+      role: {
+        connect: {
+          name: roles.admin.name,
+        },
+      },
+    },
+    where: {
+      username: 'test_user',
+    },
+  });
+
+  return Promise.all([admin, user]);
 }

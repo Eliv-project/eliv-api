@@ -23,6 +23,8 @@ import GraphQLJSON from 'graphql-type-json';
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: ['.env.dev', '.env.prod'],
+      ignoreEnvFile: process.env.NODE_ENV === 'prod',
       cache: true,
       isGlobal: true,
       load: [globalConfig, jwtConfig],

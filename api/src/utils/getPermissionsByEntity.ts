@@ -11,7 +11,7 @@ export const getPermissionsByEntity = (entityName: string): PermissionTypes => {
   const permissionObj: PermissionTypes = {};
   const types: string[] = ['create', 'read', 'update', 'delete', 'manage'];
   types.forEach(
-    (type) => (permissionObj[type] = `${uppercasedName}_${type.toUpperCase()}`),
+    (type) => (permissionObj[type] = `${type.toUpperCase()}_${uppercasedName}`),
   );
 
   return permissionObj;

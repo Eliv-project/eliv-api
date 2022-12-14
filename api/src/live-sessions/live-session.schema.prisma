@@ -2,7 +2,7 @@ model LiveSession {
     id Int @id @default(autoincrement())
 
     status Int @default(0)
-    streamKey String @unique
+    streamKey String @unique @default(uuid())
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
