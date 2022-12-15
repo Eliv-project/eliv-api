@@ -2,16 +2,19 @@ import { Field, ObjectType, PickType } from '@nestjs/graphql';
 import { User } from 'src/prisma/@generated/user/user.model';
 
 @ObjectType()
-class UserDto extends PickType(User, ['email', 'username']) {}
+class UserAuthInfo extends PickType(User, ['email', 'username']) {}
 
 @ObjectType()
-export class LoginResponseDto {
+export class LoginResponse {
   @Field()
   accessToken: string;
 
   @Field()
   refreshToken: string;
 
-  @Field((type) => UserDto)
-  user: UserDto;
+  @Field()
+  expiresAt: number;
+
+  @Field((type) => UserAuthInfo)
+  user: UserAuthInfo;
 }

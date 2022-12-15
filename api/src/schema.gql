@@ -172,15 +172,16 @@ input LiveSessionWhereUniqueInput {
   videoId: Int
 }
 
-input LoginInputDto {
+input LoginInput {
   password: String!
   usernameOrEmail: String!
 }
 
-type LoginResponseDto {
+type LoginResponse {
   accessToken: String!
+  expiresAt: Float!
   refreshToken: String!
-  user: UserDto!
+  user: UserAuthInfo!
 }
 
 type Mutation {
@@ -191,7 +192,8 @@ type Mutation {
   createRole(data: RoleCreateInput!): Role!
   createUser(data: UserCreateInput!): User!
   createVideo(data: VideoCreateInput!): Video!
-  login(loginInput: LoginInputDto!): LoginResponseDto!
+  login(loginInput: LoginInput!): LoginResponse!
+  refreshTokens: RefreshTokensResponse!
   removeLiveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
   removeOAuthLink(where: OAuthLinkWhereUniqueInput!): OAuthLink!
   removePermission(where: PermissionWhereUniqueInput!): Permission!
@@ -665,6 +667,12 @@ enum QueryMode {
   insensitive
 }
 
+type RefreshTokensResponse {
+  accessToken: String!
+  expiresAt: Float!
+  refreshToken: String!
+}
+
 type Role {
   _count: RoleCount!
   id: ID!
@@ -813,6 +821,11 @@ type User {
   videos: [Video!]
 }
 
+type UserAuthInfo {
+  email: String!
+  username: String!
+}
+
 type UserCount {
   oauthLinks: Int!
   videos: Int!
@@ -914,11 +927,6 @@ input UserCreateWithoutVideosInput {
   password: String!
   role: RoleCreateNestedOneWithoutUsersInput!
   updatedAt: DateTime
-  username: String!
-}
-
-type UserDto {
-  email: String!
   username: String!
 }
 

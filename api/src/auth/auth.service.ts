@@ -1,14 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
-import { LoginInputDto } from './dto/login-input.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './types/jwt-payload.type';
+import { ConfigService } from '@nestjs/config';
+import { JwtTokens } from './types/jwt-tokens.type';
+import { getTokenExp } from 'src/utils/getTokenExp';
+import { LoginInput } from './dto/login-input.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+    private configService: ConfigService,
+  ) {}
 
-  async validateUser(input: LoginInputDto) {
+  getTokensWithExp(payload: JwtPayload): JwtTokens {
+    // Get secret keys
+    const { accessKey, refreshKey, accessKeyExpiry } =
+      this.configService.get('jwt');
+
+    // Get accessToken
+    const accessToken = this.jwtService.sign(payload, {
+      secret: accessKey,
+    });
+    const refreshToken = this.jwtService.sign(payload, {
+      secret: refreshKey,
+    });
+
+    return {
+      accessToken,
+      refreshToken,
+      expiresAt: getTokenExp(accessKeyExpiry),
+    };
+  }
+
+  async validateUser(input: LoginInput) {
     const users: (User | null)[] = await Promise.all([
       this.usersService.findOne({
         email: input.usernameOrEmail,
