@@ -1,0 +1,42 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    
+   
+
+    steps:
+      # actions/checkout MUST come before auth
+      - uses: 'actions/checkout@v3'
+      
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: 'projects/1047923984027/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'my-service-account@sapient-magnet-371415.iam.gserviceaccount.com'
+          
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        
+      - name: 'Use gcloud CLI'
+        run: gcloud compute ssh --zone "asia-southeast1-b" "eliv"  --project "sapient-magnet-371415"
+        
+      - name: Pull repo src
+        run: |
+          cd ~/eliv-api
+          git stash
+          git pull
+          
+      - name: Build and deploy with Docker
+        run: sh deploy-docker.prod.sh
+          
