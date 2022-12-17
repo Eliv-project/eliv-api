@@ -11,6 +11,11 @@ input BoolFilter {
   not: NestedBoolFilter
 }
 
+input CredentialsInput {
+  password: String!
+  usernameOrEmail: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -172,11 +177,6 @@ input LiveSessionWhereUniqueInput {
   videoId: Int
 }
 
-input LoginInput {
-  password: String!
-  usernameOrEmail: String!
-}
-
 type LoginResponse {
   accessToken: String!
   expiresAt: Float!
@@ -192,7 +192,8 @@ type Mutation {
   createRole(data: RoleCreateInput!): Role!
   createUser(data: UserCreateInput!): User!
   createVideo(data: VideoCreateInput!): Video!
-  login(loginInput: LoginInput!): LoginResponse!
+  credentialsLogin(loginInput: CredentialsInput!): LoginResponse!
+  oauthLogin(loginInput: OAuthInput!): LoginResponse!
   refreshTokens: RefreshTokensResponse!
   removeLiveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
   removeOAuthLink(where: OAuthLinkWhereUniqueInput!): OAuthLink!
@@ -270,6 +271,13 @@ input NullableIntFieldUpdateOperationsInput {
   set: Int
 }
 
+input OAuthInput {
+  avatarUrl: String!
+  email: String!
+  provider: String!
+  providerId: String!
+}
+
 type OAuthLink {
   provider: String!
   providerId: String!
@@ -316,9 +324,9 @@ input OAuthLinkListRelationFilter {
   some: OAuthLinkWhereInput
 }
 
-input OAuthLinkProviderUserIdCompoundUniqueInput {
+input OAuthLinkProviderProviderIdCompoundUniqueInput {
   provider: String!
-  userId: Int!
+  providerId: String!
 }
 
 input OAuthLinkScalarWhereInput {
@@ -387,7 +395,8 @@ input OAuthLinkWhereInput {
 }
 
 input OAuthLinkWhereUniqueInput {
-  provider_userId: OAuthLinkProviderUserIdCompoundUniqueInput
+  providerId: String
+  provider_providerId: OAuthLinkProviderProviderIdCompoundUniqueInput
 }
 
 type Permission {

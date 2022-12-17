@@ -9,7 +9,8 @@
     "schema": "src/prisma/schema.prisma"
   },
   "scripts": {
-    "prisma:seed": "ts-node src/prisma/seed/index.ts",
+    "prisma:seed:dev": "dotenv -e .env.dev -- ts-node src/prisma/seed/index.ts",
+    "prisma:seed:prod": "dotenv -e .env.prod -- ts-node src/prisma/seed/index.ts",
     "prisma:migrate:dev": " dotenv -e .env.dev -- prisma migrate dev --name 'init db'",
     "prisma:migrate:prod": " dotenv -e .env.prod -- prisma migrate deploy",
     "prisma:gen": " prisma-merge && prisma generate",

@@ -7,6 +7,8 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthResolver } from './auth.resolver';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { OAuthLinksService } from 'src/oauth-links/oauth-links.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Module({
   imports: [UsersModule, PassportModule, JwtModule.register({})],
@@ -15,7 +17,9 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
     JwtStrategy,
     LocalStrategy,
     AuthResolver,
+    PrismaService,
     JwtRefreshStrategy,
+    OAuthLinksService,
   ],
 })
 export class AuthModule {}

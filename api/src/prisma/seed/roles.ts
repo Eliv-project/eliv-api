@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import Permissions from 'src/constants/permissions';
 
 export function seedRoles(prisma: PrismaClient) {
   const admin = prisma.role.upsert({
@@ -58,5 +57,17 @@ export function seedRoles(prisma: PrismaClient) {
     },
   });
 
-  return Promise.all([admin]);
+  const user = prisma.role.upsert({
+    create: {
+      name: 'NORMAL_USER',
+    },
+    update: {
+      name: 'NORMAL_USER',
+    },
+    where: {
+      name: 'NORMAL_USER',
+    },
+  });
+
+  return Promise.all([admin, user]);
 }

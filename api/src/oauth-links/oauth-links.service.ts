@@ -18,7 +18,7 @@ export class OAuthLinksService {
   }
 
   findOne(where: OAuthLinkWhereUniqueInput) {
-    return this.prisma.oAuthLink.findUnique({ where });
+    return this.prisma.oAuthLink.findUnique({ where, include: { user: true } });
   }
 
   update(where: OAuthLinkWhereUniqueInput, data: OAuthLinkUpdateInput) {

@@ -1,10 +1,13 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { OAuthLinkProviderUserIdCompoundUniqueInput } from './o-auth-link-provider-user-id-compound-unique.input';
+import { OAuthLinkProviderProviderIdCompoundUniqueInput } from './o-auth-link-provider-provider-id-compound-unique.input';
 
 @InputType()
 export class OAuthLinkWhereUniqueInput {
 
-    @Field(() => OAuthLinkProviderUserIdCompoundUniqueInput, {nullable:true})
-    provider_userId?: OAuthLinkProviderUserIdCompoundUniqueInput;
+    @Field(() => String, {nullable:true})
+    providerId?: string;
+
+    @Field(() => OAuthLinkProviderProviderIdCompoundUniqueInput, {nullable:true})
+    provider_providerId?: OAuthLinkProviderProviderIdCompoundUniqueInput;
 }

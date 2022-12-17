@@ -7,7 +7,11 @@ import { JwtPayload } from './types/jwt-payload.type';
 import { ConfigService } from '@nestjs/config';
 import { JwtTokens } from './types/jwt-tokens.type';
 import { getTokenExp } from 'src/utils/getTokenExp';
-import { LoginInput } from './dto/login-input.dto';
+import { CredentialsInput } from './dto/credentials-input.dto';
+import { OAuthInput } from './dto/oauth-input.dto';
+import { OAuthLinksService } from 'src/oauth-links/oauth-links.service';
+import { ImageProvider } from 'src/common/enums/image-provider.enum';
+import { Role } from './enums/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +19,7 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private oauthLinksService: OAuthLinksService,
   ) {}
 
   getTokensWithExp(payload: JwtPayload): JwtTokens {
@@ -29,15 +34,55 @@ export class AuthService {
     const refreshToken = this.jwtService.sign(payload, {
       secret: refreshKey,
     });
+    const expiresAt = getTokenExp(accessKeyExpiry);
 
     return {
       accessToken,
       refreshToken,
-      expiresAt: getTokenExp(accessKeyExpiry),
+      expiresAt,
     };
   }
 
-  async validateUser(input: LoginInput) {
+  async validateLinkedUser(input: OAuthInput) {
+    const linkedUser = await this.usersService.findOne(
+      {
+        email: input.email,
+      },
+      {
+        oauthLinks: true,
+      },
+    );
+
+    if (!linkedUser) {
+      const generatedUsername = `${input.provider}:${input.providerId}`;
+      const newUser = await this.usersService.create({
+        email: input.email,
+        gender: true,
+        password: bcrypt.hashSync(generatedUsername, 10),
+        username: generatedUsername,
+        avatar: {
+          provider: ImageProvider[input.provider],
+          data: {
+            url: input.avatarUrl,
+          },
+        },
+        oauthLinks: {
+          create: [{ provider: input.provider, providerId: input.providerId }],
+        },
+        role: {
+          connect: {
+            name: Role.NORMAL_USER,
+          },
+        },
+      });
+
+      return newUser;
+    }
+
+    return linkedUser;
+  }
+
+  async validateUser(input: CredentialsInput) {
     const users: (User | null)[] = await Promise.all([
       this.usersService.findOne({
         email: input.usernameOrEmail,

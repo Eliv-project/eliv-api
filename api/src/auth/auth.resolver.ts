@@ -1,15 +1,11 @@
-import { ForbiddenException } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common/decorators';
-import { UnauthorizedException } from '@nestjs/common/exceptions';
-import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/prisma/@generated/user/user.model';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { IsPublic } from './decorators/is-public/is-public.decorator';
-import { LoginInput } from './dto/login-input.dto';
+import { CredentialsInput } from './dto/credentials-input.dto';
 import { LoginResponse } from './dto/login-response.dto';
+import { OAuthInput } from './dto/oauth-input.dto';
 import { RefreshTokensResponse } from './dto/refresh-tokens-response.dto';
 import { GqlAuthGuard } from './guards/gql-auth.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
@@ -21,9 +17,28 @@ export class AuthResolver {
 
   @Mutation((returns) => LoginResponse)
   @IsPublic()
+  async oauthLogin(
+    @Args('loginInput') loginInput: OAuthInput,
+  ): Promise<LoginResponse> {
+    const currentUser = await this.authService.validateLinkedUser(loginInput);
+
+    const payload: JwtPayload = {
+      email: currentUser.email,
+      username: currentUser.username,
+    };
+
+    return {
+      ...this.authService.getTokensWithExp(payload),
+      user: currentUser,
+    };
+  }
+
+  @Mutation((returns) => LoginResponse)
+  @IsPublic()
   @UseGuards(GqlAuthGuard)
-  login(
-    @Args('loginInput') loginInput: LoginInput /** Define it on graphql */,
+  credentialsLogin(
+    @Args('loginInput')
+    loginInput: CredentialsInput /** Define it on graphql */,
     @CurrentUser() currentUser,
   ): LoginResponse {
     // if (!currentUser) {
