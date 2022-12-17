@@ -39,4 +39,7 @@ jobs:
           
       - name: Build and deploy with Docker
         run: sh deploy-docker.prod.sh
+        
+      - name: Cleanup docker unused images
+        run: sh cleanup-docker-image.sh
           
