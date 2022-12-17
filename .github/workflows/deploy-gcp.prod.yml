@@ -31,13 +31,21 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
         
-      - name: 'Pull repo src'
-        run: gcloud compute ssh --zone "asia-southeast1-b" "eliv"  --project "sapient-magnet-371415" --command "cd ~/eliv-api && git stash && git pull"
+      - name: "Running cmd with gcloud"
+        uses: 'google-github-actions/ssh-compute@v0'
+        with:
+          instance_name: 'eliv'
+          zone: 'asia-southeast1-b'
+          ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+          command: 'echo Hello world'
+        
+#       - name: 'Pull repo src'
+#         run: gcloud compute ssh --zone "asia-southeast1-b" "eliv"  --project "sapient-magnet-371415" --command "cd ~/eliv-api && git stash && git pull"
         
           
-      - name: "Build and deploy with Docker"
-        run:  gcloud compute ssh --zone "asia-southeast1-b" "eliv"  --project "sapient-magnet-371415" --command "sh deploy-docker.prod.sh"
+#       - name: "Build and deploy with Docker"
+#         run:  gcloud compute ssh --zone "asia-southeast1-b" "eliv"  --project "sapient-magnet-371415" --command "sh deploy-docker.prod.sh"
         
-      - name: "Cleanup docker unused images"
-        run: gcloud compute ssh --zone "asia-southeast1-b" "eliv"  --project "sapient-magnet-371415" --command "sh cleanup-docker-image.sh"
+#       - name: "Cleanup docker unused images"
+#         run: gcloud compute ssh --zone "asia-southeast1-b" "eliv"  --project "sapient-magnet-371415" --command "sh cleanup-docker-image.sh"
           
