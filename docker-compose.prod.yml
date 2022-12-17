@@ -15,16 +15,14 @@ services:
       dockerfile: Dockerfile
       context: ./api
       # Only will build development stage from our dockerfile
-      target: dev
+      target: prod
      # Enables the data to be persisted and is what makes the hot reloading possible.
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
     # load the .env file into the container
     env_file:
-      - ./api/.env.prod
-    # Run a command against the development stage of the image
-    command: sh -c "yarn prisma:migrate:prod && yarn prisma:seed && yarn start:dev"
+      - ./api/.env.docker
     ports:
       - "${API_PORT}:${API_PORT}"
     container_name: api_server
@@ -33,7 +31,7 @@ services:
     container_name: db
     restart: always
     env_file:
-      - ./api/.env.prod
+      - ./api/.env.docker
     ports:
       - '5432:5432'
     volumes:

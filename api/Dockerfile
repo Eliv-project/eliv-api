@@ -12,45 +12,32 @@ WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node yarn*.lock ./
-RUN   yarn
+
+RUN  yarn install --frozen-lockfile
 
 COPY --chown=node:node . .
 
 RUN apk add --update --no-cache openssl1.1-compat
-
-
 RUN yarn prisma:gen
-# RUN yarn build
 
-USER node
-
+CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:dev"
 
 # ###################
-# # BUILD FOR PRODUCTION
+# BUILD FOR PRODUCTION
 # ###################
 
-# FROM base as build
+FROM base As prod
 
-# WORKDIR /usr/src/app
+WORKDIR /usr/src/app
 
-# COPY --chown=node:node ./package*.json ./
-# COPY --chown=node:node ./yarn*.lock ./
-# COPY --chown=node:node --from=dev /usr/src/app/node_modules ./node_modules
-# COPY --chown=node:node . .
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node yarn*.lock ./
 
-# RUN yarn && yarn cache clean
+RUN yarn install --production --frozen-lockfile
 
-# ENV NODE_ENV production
+COPY --chown=node:node . .
 
-# USER node
+RUN apk add --update --no-cache openssl1.1-compat
+RUN yarn prisma:gen
 
-# ###################
-# # PRODUCTION
-# ###################
-
-# FROM base As production
-
-# COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
-# COPY --chown=node:node --from=build /usr/src/app/dist ./dist
-
-# CMD [ "node", "dist/main.js" ]
+CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:prod"
