@@ -37,7 +37,4 @@ jobs:
           instance_name: 'dnntung@eliv'
           zone: 'asia-southeast1-b'
           ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-          command: |
-            cd ~/eliv-api && git stash && git pull
-            sh deploy-docker.prod.sh
-            sh cleanup-docker-image.sh
+          command: 'cd ~/eliv-api && git stash && git pull && sh deploy-docker.prod.sh && sh cleanup-docker-image.sh'
