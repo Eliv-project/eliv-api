@@ -28,19 +28,18 @@ CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:d
 
 FROM base As prod
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/eliv-api
 
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node yarn*.lock ./
 
 RUN yarn install --production --frozen-lockfile
-RUN yarn build
 
 COPY --chown=node:node . .
-COPY --chown=node:node ./dist ./dist
 
 RUN apk add --update --no-cache openssl1.1-compat
 RUN yarn prisma:gen
 
+RUN yarn build
 
 CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:prod"
