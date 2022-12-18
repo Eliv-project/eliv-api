@@ -42,4 +42,4 @@ jobs:
             git stash
             git pull
             sudo sh deploy-docker.prod.sh
-            sudo sh cleanup-docker-image.sh'
+            sudo sh cleanup-docker-image.sh
