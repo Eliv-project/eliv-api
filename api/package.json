@@ -56,10 +56,10 @@
     "rxjs": "^7.2.0",
     "prisma-merge": "^0.2.0",
     "prisma-nestjs-graphql": "^17.0.2",
+    "@nestjs/cli": "^9.0.0",
     "ts-node": "^10.0.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@types/bcrypt": "^5.0.0",
