@@ -4,11 +4,11 @@ import { seedRoles } from './roles';
 import { seedUsers } from './users';
 const prisma = new PrismaClient();
 async function main() {
-  const permissions: any[] = await seedPermissions(prisma);
+  const [superPermission, ...permissions] = await seedPermissions(prisma);
 
-  console.log(`Seeded ${permissions.length} permissions`);
+  console.log(`Seeded ${permissions.length + 1} permissions`);
 
-  const [adminRole] = await seedRoles(prisma);
+  const [adminRole] = await seedRoles(prisma, { super: superPermission });
   const [adminUser] = await seedUsers(prisma, { admin: adminRole });
 
   console.log('Seeding completed!', adminUser);

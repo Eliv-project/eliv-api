@@ -27,5 +27,18 @@ export function seedPermissions(prisma: PrismaClient) {
     ];
   });
 
-  return Promise.all(queries);
+  return Promise.all([
+    prisma.permission.upsert({
+      create: {
+        name: Permissions.super,
+      },
+      update: {
+        name: Permissions.super,
+      },
+      where: {
+        name: Permissions.super,
+      },
+    }),
+    ...queries,
+  ]);
 }

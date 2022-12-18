@@ -1,54 +1,26 @@
 import { PrismaClient } from '@prisma/client';
+import { Permission } from '../@generated/permission/permission.model';
 
-export async function seedRoles(prisma: PrismaClient) {
+export async function seedRoles(
+  prisma: PrismaClient,
+  permissions: { super: Permission },
+) {
   const admin = await prisma.role.upsert({
     create: {
       name: 'ADMIN',
       permissions: {
-        connectOrCreate: {
-          create: {
-            permission: {
-              connectOrCreate: {
-                create: {
-                  name: 'SUPER',
-                },
-                where: {
-                  name: 'SUPER',
-                },
-              },
-            },
-          },
-          where: {
-            roleId_permissionId: {
-              roleId: 1,
-              permissionId: 1,
-            },
-          },
+        createMany: {
+          data: [{ permissionId: permissions.super.id }],
+          skipDuplicates: true,
         },
       },
     },
     update: {
       name: 'ADMIN',
       permissions: {
-        connectOrCreate: {
-          create: {
-            permission: {
-              connectOrCreate: {
-                create: {
-                  name: 'SUPER',
-                },
-                where: {
-                  name: 'SUPER',
-                },
-              },
-            },
-          },
-          where: {
-            roleId_permissionId: {
-              roleId: 1,
-              permissionId: 1,
-            },
-          },
+        createMany: {
+          data: [{ permissionId: permissions.super.id }],
+          skipDuplicates: true,
         },
       },
     },
