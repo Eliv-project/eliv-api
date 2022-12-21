@@ -20,8 +20,8 @@ export class User {
     @Field(() => String, {nullable:false})
     username!: string;
 
-    @Field(() => Boolean, {nullable:false})
-    gender!: boolean;
+    @Field(() => Boolean, {nullable:true,defaultValue:true})
+    gender!: boolean | null;
 
     @Field(() => String, {nullable:false})
     password!: string;

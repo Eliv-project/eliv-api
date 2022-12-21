@@ -2,13 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input BoolFieldUpdateOperationsInput {
-  set: Boolean
-}
-
-input BoolFilter {
+input BoolNullableFilter {
   equals: Boolean
-  not: NestedBoolFilter
+  not: NestedBoolNullableFilter
 }
 
 input CredentialsInput {
@@ -211,9 +207,9 @@ type Mutation {
   updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
 }
 
-input NestedBoolFilter {
+input NestedBoolNullableFilter {
   equals: Boolean
-  not: NestedBoolFilter
+  not: NestedBoolNullableFilter
 }
 
 input NestedDateTimeFilter {
@@ -261,6 +257,10 @@ input NestedStringFilter {
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
+}
+
+input NullableBoolFieldUpdateOperationsInput {
+  set: Boolean
 }
 
 input NullableIntFieldUpdateOperationsInput {
@@ -819,7 +819,7 @@ type User {
   avatar: JSON
   createdAt: DateTime!
   email: String!
-  gender: Boolean!
+  gender: Boolean
   id: ID!
   oauthLinks: [OAuthLink!]
   password: String!
@@ -844,7 +844,7 @@ input UserCreateInput {
   avatar: JSON
   createdAt: DateTime
   email: String!
-  gender: Boolean!
+  gender: Boolean
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   password: String!
   role: RoleCreateNestedOneWithoutUsersInput!
@@ -857,7 +857,7 @@ input UserCreateManyRoleInput {
   avatar: JSON
   createdAt: DateTime
   email: String!
-  gender: Boolean!
+  gender: Boolean
   id: Int
   password: String!
   updatedAt: DateTime
@@ -907,7 +907,7 @@ input UserCreateWithoutOauthLinksInput {
   avatar: JSON
   createdAt: DateTime
   email: String!
-  gender: Boolean!
+  gender: Boolean
   password: String!
   role: RoleCreateNestedOneWithoutUsersInput!
   updatedAt: DateTime
@@ -919,7 +919,7 @@ input UserCreateWithoutRoleInput {
   avatar: JSON
   createdAt: DateTime
   email: String!
-  gender: Boolean!
+  gender: Boolean
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   password: String!
   updatedAt: DateTime
@@ -931,7 +931,7 @@ input UserCreateWithoutVideosInput {
   avatar: JSON
   createdAt: DateTime
   email: String!
-  gender: Boolean!
+  gender: Boolean
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   password: String!
   role: RoleCreateNestedOneWithoutUsersInput!
@@ -957,7 +957,7 @@ input UserScalarWhereInput {
   avatar: JsonNullableFilter
   createdAt: DateTimeFilter
   email: StringFilter
-  gender: BoolFilter
+  gender: BoolNullableFilter
   id: IntFilter
   password: StringFilter
   roleId: IntFilter
@@ -969,7 +969,7 @@ input UserUpdateInput {
   avatar: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
-  gender: BoolFieldUpdateOperationsInput
+  gender: NullableBoolFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   password: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
@@ -982,7 +982,7 @@ input UserUpdateManyMutationInput {
   avatar: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
-  gender: BoolFieldUpdateOperationsInput
+  gender: NullableBoolFieldUpdateOperationsInput
   password: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
@@ -1032,7 +1032,7 @@ input UserUpdateWithoutOauthLinksInput {
   avatar: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
-  gender: BoolFieldUpdateOperationsInput
+  gender: NullableBoolFieldUpdateOperationsInput
   password: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1044,7 +1044,7 @@ input UserUpdateWithoutRoleInput {
   avatar: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
-  gender: BoolFieldUpdateOperationsInput
+  gender: NullableBoolFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   password: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1056,7 +1056,7 @@ input UserUpdateWithoutVideosInput {
   avatar: JSON
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
-  gender: BoolFieldUpdateOperationsInput
+  gender: NullableBoolFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   password: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
@@ -1087,7 +1087,7 @@ input UserWhereInput {
   avatar: JsonNullableFilter
   createdAt: DateTimeFilter
   email: StringFilter
-  gender: BoolFilter
+  gender: BoolNullableFilter
   id: IntFilter
   oauthLinks: OAuthLinkListRelationFilter
   password: StringFilter

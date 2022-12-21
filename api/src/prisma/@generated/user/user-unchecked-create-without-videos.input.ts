@@ -16,8 +16,8 @@ export class UserUncheckedCreateWithoutVideosInput {
     @Field(() => String, {nullable:false})
     username!: string;
 
-    @Field(() => Boolean, {nullable:false})
-    gender!: boolean;
+    @Field(() => Boolean, {nullable:true})
+    gender?: boolean;
 
     @Field(() => String, {nullable:false})
     password!: string;

@@ -5,13 +5,18 @@ import { UserUpdateInput } from 'src/prisma/@generated/user/user-update.input';
 import { UserWhereUniqueInput } from 'src/prisma/@generated/user/user-where-unique.input';
 import { UserWhereInput } from 'src/prisma/@generated/user/user-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import * as bcrypt from "bcrypt"
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: UserCreateInput) {
-    return this.prisma.user.create({ data });
+  create({password, ...inputData}: UserCreateInput) {
+    return this.prisma.user.create({ 
+      data: {
+        password: bcrypt.hashSync(password, 10),
+        ...inputData
+      }});
   }
 
   findAll(where: UserWhereInput) {
