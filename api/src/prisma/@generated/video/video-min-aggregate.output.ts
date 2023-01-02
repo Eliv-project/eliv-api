@@ -23,6 +23,9 @@ export class VideoMinAggregate {
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
+    @Field(() => String, {nullable:true})
+    path?: string;
+
     @Field(() => Int, {nullable:true})
     userId?: number;
 }

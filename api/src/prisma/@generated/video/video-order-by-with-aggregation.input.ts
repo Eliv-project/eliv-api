@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 import { VideoCountOrderByAggregateInput } from './video-count-order-by-aggregate.input';
 import { VideoAvgOrderByAggregateInput } from './video-avg-order-by-aggregate.input';
 import { VideoMaxOrderByAggregateInput } from './video-max-order-by-aggregate.input';
@@ -30,6 +31,9 @@ export class VideoOrderByWithAggregationInput {
 
     @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
+
+    @HideField()
+    path?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     userId?: keyof typeof SortOrder;

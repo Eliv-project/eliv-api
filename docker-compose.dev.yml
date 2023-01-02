@@ -1,12 +1,13 @@
 version: "3.3"
 services:
   rtmp:
+    platform: linux/amd64
     build: ./rtmp
     ports:
       - "1935:1935"
     container_name: rtmp_server
     volumes:
-      - ./data:/tmp/hls
+      - hls:/tmp/hls
 
   api:
     depends_on:
@@ -20,6 +21,7 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
+      - hls:/tmp/hls
     # load the .env file into the container
     env_file:
       - ./api/.env.docker
@@ -38,3 +40,4 @@ services:
       - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata:
+  hls:

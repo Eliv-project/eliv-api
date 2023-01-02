@@ -5,6 +5,7 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class VideoScalarWhereInput {
@@ -38,6 +39,9 @@ export class VideoScalarWhereInput {
 
     @Field(() => DateTimeFilter, {nullable:true})
     updatedAt?: DateTimeFilter;
+
+    @HideField()
+    path?: StringFilter;
 
     @Field(() => IntFilter, {nullable:true})
     userId?: IntFilter;

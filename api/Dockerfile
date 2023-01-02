@@ -1,4 +1,4 @@
-FROM node:18-alpine As base
+FROM node:18-slim As base
 # yarn already included in node
 # RUN npm i -g yarn 
 
@@ -10,6 +10,9 @@ FROM base as dev
 
 WORKDIR /usr/src/app
 
+RUN apt-get update
+RUN apt-get install -y openssl
+
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node yarn*.lock ./
 
@@ -17,7 +20,6 @@ RUN  yarn install --frozen-lockfile
 
 COPY --chown=node:node . .
 
-RUN apk add --update --no-cache openssl1.1-compat
 RUN yarn prisma:gen
 
 CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:dev"

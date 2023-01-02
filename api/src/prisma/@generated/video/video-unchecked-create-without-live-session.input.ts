@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class VideoUncheckedCreateWithoutLiveSessionInput {
@@ -26,6 +27,9 @@ export class VideoUncheckedCreateWithoutLiveSessionInput {
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
+
+    @HideField()
+    path!: string;
 
     @Field(() => Int, {nullable:false})
     userId!: number;

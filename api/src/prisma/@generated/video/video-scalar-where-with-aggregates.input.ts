@@ -5,6 +5,7 @@ import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-fil
 import { JsonNullableWithAggregatesFilter } from '../prisma/json-nullable-with-aggregates-filter.input';
 import { IntNullableWithAggregatesFilter } from '../prisma/int-nullable-with-aggregates-filter.input';
 import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class VideoScalarWhereWithAggregatesInput {
@@ -38,6 +39,9 @@ export class VideoScalarWhereWithAggregatesInput {
 
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
     updatedAt?: DateTimeWithAggregatesFilter;
+
+    @HideField()
+    path?: StringWithAggregatesFilter;
 
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     userId?: IntWithAggregatesFilter;

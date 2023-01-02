@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class VideoCreateManyUserInput {
@@ -26,4 +27,7 @@ export class VideoCreateManyUserInput {
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
+
+    @HideField()
+    path!: string;
 }

@@ -187,7 +187,7 @@ type Mutation {
   createPermissionsOnRoles(data: PermissionsOnRolesCreateInput!): PermissionsOnRoles!
   createRole(data: RoleCreateInput!): Role!
   createUser(data: UserCreateInput!): User!
-  createVideo(data: VideoCreateInput!): Video!
+  createVideo(data: VideoCreateInputWithFile!): Video!
   credentialsLogin(loginInput: CredentialsInput!): LoginResponse!
   oauthLogin(loginInput: OAuthInput!): LoginResponse!
   refreshTokens: RefreshTokensResponse!
@@ -814,6 +814,9 @@ input StringFilter {
   startsWith: String
 }
 
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
 type User {
   _count: UserCount!
   avatar: JSON
@@ -1109,6 +1112,7 @@ type Video {
   id: ID!
   liveSession: LiveSession
   name: String!
+  path: String!
   privacy: Int
   slug: String!
   thumbnail: JSON
@@ -1117,8 +1121,9 @@ type Video {
   userId: Int!
 }
 
-input VideoCreateInput {
+input VideoCreateInputWithFile {
   createdAt: DateTime
+  file: Upload!
   liveSession: LiveSessionCreateNestedOneWithoutVideoInput
   name: String!
   privacy: Int

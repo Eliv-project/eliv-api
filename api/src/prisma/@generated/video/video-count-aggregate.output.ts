@@ -27,6 +27,9 @@ export class VideoCountAggregate {
     updatedAt!: number;
 
     @Field(() => Int, {nullable:false})
+    path!: number;
+
+    @Field(() => Int, {nullable:false})
     userId!: number;
 
     @Field(() => Int, {nullable:false})

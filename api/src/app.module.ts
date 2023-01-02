@@ -18,7 +18,9 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from './permissions/guards/permissions.guard';
 import { VideosModule } from './videos/videos.module';
 import { LiveSessionsModule } from './live-sessions/live-sessions.module';
+import { UploadService } from './upload/upload.service';
 import GraphQLJSON from 'graphql-type-json';
+import pathConfig from './config/path.config';
 
 @Module({
   imports: [
@@ -27,10 +29,12 @@ import GraphQLJSON from 'graphql-type-json';
       ignoreEnvFile: process.env.NODE_ENV === 'prod',
       cache: true,
       isGlobal: true,
-      load: [globalConfig, jwtConfig],
+      load: [globalConfig, jwtConfig, pathConfig],
     }),
     // Code-first approach
     GraphQLModule.forRoot({
+      // Disable upload default feature
+      upload: false,
       // Import custom scalars
       resolvers: { JSON: GraphQLJSON },
       driver: ApolloDriver,
@@ -59,6 +63,7 @@ import GraphQLJSON from 'graphql-type-json';
       provide: APP_GUARD,
       useClass: PermissionsGuard,
     },
+    UploadService,
   ],
 })
 export class AppModule {}

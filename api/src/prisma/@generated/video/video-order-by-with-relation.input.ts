@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 import { LiveSessionOrderByWithRelationInput } from '../live-session/live-session-order-by-with-relation.input';
 import { UserOrderByWithRelationInput } from '../user/user-order-by-with-relation.input';
 
@@ -27,6 +28,9 @@ export class VideoOrderByWithRelationInput {
 
     @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
+
+    @HideField()
+    path?: keyof typeof SortOrder;
 
     @Field(() => LiveSessionOrderByWithRelationInput, {nullable:true})
     liveSession?: LiveSessionOrderByWithRelationInput;

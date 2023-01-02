@@ -32,6 +32,9 @@ export class VideoGroupBy {
     @Field(() => Date, {nullable:false})
     updatedAt!: Date | string;
 
+    @Field(() => String, {nullable:false})
+    path!: string;
+
     @Field(() => Int, {nullable:false})
     userId!: number;
 
