@@ -32,6 +32,9 @@ FROM base As prod
 
 WORKDIR /usr/src/eliv-api
 
+RUN apt-get update
+RUN apt-get install -y openssl
+
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node yarn*.lock ./
 
@@ -39,7 +42,6 @@ RUN yarn install --production --frozen-lockfile
 
 COPY --chown=node:node . .
 
-RUN apk add --update --no-cache openssl1.1-compat
 RUN yarn prisma:gen
 
 RUN yarn build
