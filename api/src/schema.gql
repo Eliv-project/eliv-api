@@ -1109,10 +1109,10 @@ input UserWhereUniqueInput {
 
 type Video {
   createdAt: DateTime!
+  dirId: String
   id: ID!
   liveSession: LiveSession
   name: String!
-  path: String!
   privacy: Int
   slug: String!
   thumbnail: JSON

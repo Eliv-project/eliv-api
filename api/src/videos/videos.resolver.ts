@@ -4,22 +4,31 @@ import { VideoUpdateInput } from 'src/prisma/@generated/video/video-update.input
 import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';
 import { VideoWhereInput } from 'src/prisma/@generated/video/video-where.input';
 import { Video } from 'src/prisma/@generated/video/video.model';
+import { UploadService } from 'src/upload/upload.service';
 import { VideoCreateInputWithFile } from './interfaces/create-video-with-file.input';
 import { VideosService } from './videos.service';
 
 @Resolver(() => Video)
 export class VideosResolver {
-  constructor(private readonly videosService: VideosService) {}
+  constructor(
+    private readonly videosService: VideosService,
+    private readonly uploadService: UploadService,
+  ) {}
 
   @Mutation(() => Video)
   async createVideo(
     @Args('data')
     { file, ...data }: VideoCreateInputWithFile,
   ) {
-    const { createReadStream } = await file;
-    const videoPath = await this.videosService.toHls({ createReadStream });
+    const { createReadStream, filename } = await file;
 
-    return this.videosService.create({ ...data, path: videoPath });
+    const uploadedFile = await this.uploadService.writeFileToDir({
+      createReadStream,
+      filename,
+    });
+
+    const dirId = await this.videosService.toHls(uploadedFile.path);
+    return this.videosService.create({ ...data, dirId });
   }
 
   @Query(() => [Video], { name: 'videos' })

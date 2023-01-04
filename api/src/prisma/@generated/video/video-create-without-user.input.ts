@@ -27,7 +27,7 @@ export class VideoCreateWithoutUserInput {
     updatedAt?: Date | string;
 
     @HideField()
-    path!: string;
+    dirId?: string;
 
     @Field(() => LiveSessionCreateNestedOneWithoutVideoInput, {nullable:true})
     liveSession?: LiveSessionCreateNestedOneWithoutVideoInput;

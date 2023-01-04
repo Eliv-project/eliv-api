@@ -29,5 +29,5 @@ export class VideoCreateManyUserInput {
     updatedAt?: Date | string;
 
     @HideField()
-    path!: string;
+    dirId?: string;
 }

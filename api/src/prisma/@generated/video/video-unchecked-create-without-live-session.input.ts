@@ -29,7 +29,7 @@ export class VideoUncheckedCreateWithoutLiveSessionInput {
     updatedAt?: Date | string;
 
     @HideField()
-    path!: string;
+    dirId?: string;
 
     @Field(() => Int, {nullable:false})
     userId!: number;

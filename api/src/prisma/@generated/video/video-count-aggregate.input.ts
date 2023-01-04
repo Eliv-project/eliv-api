@@ -27,7 +27,7 @@ export class VideoCountAggregateInput {
     updatedAt?: true;
 
     @HideField()
-    path?: true;
+    dirId?: true;
 
     @Field(() => Boolean, {nullable:true})
     userId?: true;

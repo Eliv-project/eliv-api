@@ -21,6 +21,7 @@ import { LiveSessionsModule } from './live-sessions/live-sessions.module';
 import { UploadService } from './upload/upload.service';
 import GraphQLJSON from 'graphql-type-json';
 import pathConfig from './config/path.config';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -46,6 +47,13 @@ import pathConfig from './config/path.config';
         'graphql-ws': true,
       },
     }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
+
     AuthModule,
     UsersModule,
     PermissionsModule,

@@ -30,8 +30,8 @@ export class Video {
     @Field(() => Date, {nullable:false})
     updatedAt!: Date;
 
-    @Field(() => String, {nullable:false})
-    path!: string;
+    @Field(() => String, {nullable:true})
+    dirId!: string | null;
 
     @Field(() => LiveSession, {nullable:true})
     liveSession?: LiveSession | null;

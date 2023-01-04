@@ -1,5 +1,3 @@
-import { Stream } from 'stream';
-
 export interface Video2HlsOptions {
-  createReadStream: () => Stream;
+  filepath: string;
 }

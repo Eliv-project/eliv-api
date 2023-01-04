@@ -100,7 +100,7 @@ model Video {
     updatedAt DateTime @default(now())
 
     /// @HideField({input: true, output: false})
-    path String
+    dirId String?
 
     liveSession LiveSession?
     user User @relation(fields: [userId], references: [id])

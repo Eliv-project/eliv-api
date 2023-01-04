@@ -24,7 +24,7 @@ export class VideoMaxAggregate {
     updatedAt?: Date | string;
 
     @Field(() => String, {nullable:true})
-    path?: string;
+    dirId?: string;
 
     @Field(() => Int, {nullable:true})
     userId?: number;

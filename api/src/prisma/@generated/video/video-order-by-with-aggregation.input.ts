@@ -33,7 +33,7 @@ export class VideoOrderByWithAggregationInput {
     updatedAt?: keyof typeof SortOrder;
 
     @HideField()
-    path?: keyof typeof SortOrder;
+    dirId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     userId?: keyof typeof SortOrder;

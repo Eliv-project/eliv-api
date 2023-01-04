@@ -30,7 +30,7 @@ export class VideoUncheckedCreateInput {
     updatedAt?: Date | string;
 
     @HideField()
-    path!: string;
+    dirId?: string;
 
     @Field(() => LiveSessionUncheckedCreateNestedOneWithoutVideoInput, {nullable:true})
     liveSession?: LiveSessionUncheckedCreateNestedOneWithoutVideoInput;

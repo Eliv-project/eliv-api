@@ -30,7 +30,7 @@ export class VideoOrderByWithRelationInput {
     updatedAt?: keyof typeof SortOrder;
 
     @HideField()
-    path?: keyof typeof SortOrder;
+    dirId?: keyof typeof SortOrder;
 
     @Field(() => LiveSessionOrderByWithRelationInput, {nullable:true})
     liveSession?: LiveSessionOrderByWithRelationInput;
