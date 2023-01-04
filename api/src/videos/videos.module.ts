@@ -5,6 +5,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { UploadService } from 'src/upload/upload.service';
 
 @Module({
-  providers: [VideosResolver, VideosService, PrismaService, UploadService],
+  providers: [VideosResolver, VideosService, PrismaService],
 })
 export class VideosModule {}

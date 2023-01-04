@@ -4,34 +4,20 @@ import { VideoUpdateInput } from 'src/prisma/@generated/video/video-update.input
 import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';
 import { VideoWhereInput } from 'src/prisma/@generated/video/video-where.input';
 import { Video } from 'src/prisma/@generated/video/video.model';
-import { UploadService } from 'src/upload/upload.service';
-import { VideoCreateInputWithFile } from './interfaces/video-create-input-with-file.dto';
+import { VideoCreateInputWithFile } from './interfaces/create-video-with-file.input';
 import { VideosService } from './videos.service';
 
 @Resolver(() => Video)
 export class VideosResolver {
-  constructor(
-    private readonly videosService: VideosService,
-    private readonly uploadService: UploadService,
-  ) {}
+  constructor(private readonly videosService: VideosService) {}
 
   @Mutation(() => Video)
   async createVideo(
     @Args('data')
     { file, ...data }: VideoCreateInputWithFile,
   ) {
-    const { createReadStream, filename } = await file;
-
-    // const uploadedPath = await this.uploadService.writeFileToDir({
-    //   createReadStream,
-    //   filename,
-    // });
-    // console.log('New video uploaded to', uploadedPath);
-
-    const videoPath = await this.uploadService.convertFileToChunks({
-      createReadStream,
-      filename,
-    });
+    const { createReadStream } = await file;
+    const videoPath = await this.videosService.toHls({ createReadStream });
 
     return this.videosService.create({ ...data, path: videoPath });
   }

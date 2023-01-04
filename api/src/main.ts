@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaService } from './prisma/prisma.service';
+// @ts-ignore
 import { graphqlUploadExpress } from 'graphql-upload';
 
 async function bootstrap() {
@@ -15,6 +16,12 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const PORT = configService.get('port');
-  await app.listen(PORT, () => console.log('Server running at port', PORT));
+  const isDev = configService.get("isDev")
+  await app.listen(PORT, () => {
+    if (isDev) {
+      console.log("App running in dev mode")
+    }
+    console.log('Server running at port', PORT)
+  });
 }
 bootstrap();

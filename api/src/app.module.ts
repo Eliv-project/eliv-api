@@ -41,6 +41,10 @@ import pathConfig from './config/path.config';
       // Generate schema file
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
+      // Enable subscriptions
+      subscriptions: {
+        'graphql-ws': true,
+      },
     }),
     AuthModule,
     UsersModule,

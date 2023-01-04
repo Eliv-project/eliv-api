@@ -1,6 +1,5 @@
 import { Stream } from 'stream';
 
-export interface WriteFileOptions {
+export interface Video2HlsOptions {
   createReadStream: () => Stream;
-  filename: string;
 }

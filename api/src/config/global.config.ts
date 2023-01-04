@@ -1,4 +1,5 @@
 export default () => ({
+  isDev: process.env.NODE_ENV === 'dev',
   port: parseInt(process.env.API_PORT, 10),
   database: {
     host: process.env.POSTGRES_HOST || 'localhost',
