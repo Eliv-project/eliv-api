@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import Permissions from '../../../src/constants/permissions';
+import Permissions from '../../common/constants/permissions';
 
 export function seedPermissions(prisma: PrismaClient) {
   let queries = [];

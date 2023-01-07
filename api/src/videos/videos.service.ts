@@ -23,6 +23,7 @@ export class VideosService {
     const dirId = randomUUID();
 
     await this.videoQueue.add('convert-to-hls', {
+      dirId,
       filePath,
       hlsSaveDirname: dirId,
       hlsSavePath: path.join(this.configService.get('hlsPath'), dirId),

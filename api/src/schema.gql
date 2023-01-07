@@ -654,6 +654,10 @@ input PermissionsOnRolesWhereUniqueInput {
   roleId_permissionId: PermissionsOnRolesRoleIdPermissionIdCompoundUniqueInput
 }
 
+type ProcessProgress {
+  progress: Float!
+}
+
 type Query {
   liveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
   liveSessions(where: LiveSessionWhereInput!): [LiveSession!]!
@@ -812,6 +816,10 @@ input StringFilter {
   not: NestedStringFilter
   notIn: [String!]
   startsWith: String
+}
+
+type Subscription {
+  currentProcessProgress(dirId: String!): ProcessProgress!
 }
 
 """The `Upload` scalar type represents a file upload."""

@@ -4,26 +4,35 @@ import {
   OnQueueActive,
   OnQueueCompleted,
   OnQueueFailed,
-  OnQueueWaiting,
 } from '@nestjs/bull';
 import ffmpegPath from 'ffmpeg-static';
 import Ffmpeg from 'fluent-ffmpeg';
 import path from 'path';
 import fs from 'fs';
 import { FfmpegQualityConfig } from '../interfaces/ffmpeg-quality-config';
-import { Video2HlsOptions } from '../interfaces/video2hls-options.input';
-import { VideoQualityConfigs } from 'src/constants/videoQualityConfigs';
+import { VideoQualityConfigs } from 'src/common/constants/videoQualityConfigs';
 import { Job } from 'bull';
 import { getOrCreateDir } from 'src/utils/getOrCreateDir';
+import { Inject } from '@nestjs/common';
+import { VideosService } from '../videos.service';
+import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
 
 interface ConvertDto {
   hlsSavePath: string;
   filePath: string;
   hlsSaveDirname: string;
+  dirId: string;
 }
 
 @Processor('video')
-export class VideoConsumer {
+export class VideoProcessor {
+  constructor(
+    @Inject(PUB_SUB) private pubSub: RedisPubSub,
+    private readonly videosService: VideosService,
+  ) {}
+
   getHlsBitrateConfigByQuality(qualityConfig: FfmpegQualityConfig) {
     return [
       `-s:v:${qualityConfig.id} ${qualityConfig.rendition.resolution}`,
@@ -54,10 +63,14 @@ export class VideoConsumer {
 
   @Process('convert-to-hls')
   async convertToHls(job: Job<ConvertDto>) {
-    const { hlsSavePath, filePath, hlsSaveDirname } = job.data;
+    const { hlsSavePath, filePath, hlsSaveDirname, dirId } = job.data;
 
     const playlistName = hlsSaveDirname;
     const savePath = getOrCreateDir(hlsSavePath);
+    const publisher = this.pubSub;
+    const publishEvent = [SubscriptionEvents.UPLOAD_VIDEO_PROGRESS, dirId].join(
+      '_',
+    );
 
     return new Promise<string>((resolve, reject) => {
       let totalTime;
@@ -75,6 +88,7 @@ export class VideoConsumer {
             '-map 0:1',
             '-map 0:0',
             '-map 0:1',
+            '-threads 1',
             // The next lines specify how each video stream should be encoded
             // ...this.getQualityStringConfig(VideoQualityConfigs['360p']),
             ...this.getHlsBitrateConfigByQuality(VideoQualityConfigs['480p']),
@@ -109,9 +123,14 @@ export class VideoConsumer {
         })
         .on('progress', function (progress) {
           const time = parseInt(progress.timemark.replace(/:/g, ''));
-          const percent = (time / totalTime) * 100;
+          const percent = ((time / totalTime) * 100).toFixed(2);
 
           console.log('Processing: ' + percent + '% done');
+          publisher.publish(publishEvent, {
+            currentProcessProgress: {
+              progress: percent,
+            },
+          });
         })
         .on('end', function (err, stdout, stderr) {
           console.log('Finished processing!' /*, err, stdout, stderr*/);

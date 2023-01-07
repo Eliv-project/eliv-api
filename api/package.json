@@ -51,6 +51,7 @@
     "ffmpeg-static": "^5.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "graphql": "^16.6.0",
+    "graphql-redis-subscriptions": "^2.6.0",
     "graphql-type-json": "^0.3.2",
     "graphql-upload": "13",
     "lodash": "^4.17.21",

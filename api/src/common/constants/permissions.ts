@@ -1,4 +1,4 @@
-import { getPermissionsByEntity } from '../utils/getPermissionsByEntity';
+import { getPermissionsByEntity } from '../../utils/getPermissionsByEntity';
 
 const Permissions = {
   super: 'SUPER',

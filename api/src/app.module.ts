@@ -22,6 +22,7 @@ import { UploadService } from './upload/upload.service';
 import GraphQLJSON from 'graphql-type-json';
 import pathConfig from './config/path.config';
 import { BullModule } from '@nestjs/bull';
+import { PubSubModule } from './pub-sub/pub-sub.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { BullModule } from '@nestjs/bull';
     OauthLinksModule,
     VideosModule,
     LiveSessionsModule,
+    PubSubModule,
   ],
   controllers: [AppController],
   providers: [
