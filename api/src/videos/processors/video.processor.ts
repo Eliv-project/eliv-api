@@ -88,7 +88,7 @@ export class VideoProcessor {
             '-map 0:1',
             '-map 0:0',
             '-map 0:1',
-            '-threads 1',
+            '-threads 0',
             // The next lines specify how each video stream should be encoded
             // ...this.getQualityStringConfig(VideoQualityConfigs['360p']),
             ...this.getHlsBitrateConfigByQuality(VideoQualityConfigs['480p']),
