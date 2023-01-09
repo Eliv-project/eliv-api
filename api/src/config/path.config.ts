@@ -1,4 +1,4 @@
 export default () => ({
-  hlsPath: process.env.PATH_HLS || '/upload/hls',
-  uploadPath: process.env.PATH_TMP || '/upload/tmp',
+  hlsPath: process.env.PATH_HLS || '/eliv/upload/hls',
+  uploadPath: process.env.PATH_TMP || '/eliv/upload/tmp',
 });

@@ -46,6 +46,7 @@ export class VideosResolver {
     try {
       createdVideo = await this.videosService.create({ ...data, dirId });
     } catch (err) {
+      console.error(err);
       fs.unlinkSync(uploadedFile.path);
       throw new InternalServerErrorException();
     }

@@ -1,6 +1,6 @@
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -48,11 +48,15 @@ import { PubSubModule } from './pub-sub/pub-sub.module';
         'graphql-ws': true,
       },
     }),
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('redis').host,
+          port: configService.get('redis').port,
+        },
+      }),
+      inject: [ConfigService],
     }),
 
     AuthModule,

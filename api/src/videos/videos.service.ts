@@ -9,8 +9,7 @@ import path from 'path';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import slugify from 'slugify';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const nanoid = require('nanoid');
+import nanoid from 'nanoid';
 
 @Injectable()
 export class VideosService {
