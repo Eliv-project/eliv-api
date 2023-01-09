@@ -15,9 +15,15 @@ export class VideoOrderByWithRelationInput {
     name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    thumbnail?: keyof typeof SortOrder;
+    desc?: keyof typeof SortOrder;
+
+    @HideField()
+    searchableName?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    thumbnail?: keyof typeof SortOrder;
+
+    @HideField()
     slug?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

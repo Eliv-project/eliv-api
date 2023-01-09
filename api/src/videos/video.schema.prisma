@@ -2,8 +2,16 @@ model Video {
     id Int @id @default(autoincrement())
 
     name String
+    desc String?
+
+    /// @HideField({input: true, output: true})
+    searchableName String?
+
     thumbnail Json?
+
+    /// @HideField({output: false, input: true})
     slug String @unique
+
     privacy Int? @default(1) 
 
     createdAt DateTime @default(now())

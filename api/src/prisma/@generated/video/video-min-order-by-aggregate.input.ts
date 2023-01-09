@@ -13,6 +13,12 @@ export class VideoMinOrderByAggregateInput {
     name?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    desc?: keyof typeof SortOrder;
+
+    @HideField()
+    searchableName?: keyof typeof SortOrder;
+
+    @HideField()
     slug?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

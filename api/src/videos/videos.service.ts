@@ -5,10 +5,12 @@ import { VideoUpdateInput } from 'src/prisma/@generated/video/video-update.input
 import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';
 import { VideoWhereInput } from 'src/prisma/@generated/video/video-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { randomUUID } from 'crypto';
 import path from 'path';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
+import slugify from 'slugify';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nanoid = require('nanoid');
 
 @Injectable()
 export class VideosService {
@@ -19,9 +21,7 @@ export class VideosService {
     private readonly videoQueue: Queue,
   ) {}
 
-  async toHls(filePath: string) {
-    const dirId = randomUUID();
-
+  async toHls(filePath: string, dirId: string) {
     await this.videoQueue.add('convert-to-hls', {
       dirId,
       filePath,
@@ -33,7 +33,15 @@ export class VideosService {
   }
 
   create(data: VideoCreateInput) {
-    return this.prisma.video.create({ data });
+    const searchableName = slugify(data.name, {
+      strict: true,
+      lower: true,
+    });
+    const slug = [searchableName, nanoid(10)].join('-');
+
+    return this.prisma.video.create({
+      data: { ...data, searchableName, slug },
+    });
   }
 
   findAll(where: VideoWhereInput) {

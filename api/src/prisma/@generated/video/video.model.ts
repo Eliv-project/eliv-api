@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Int } from '@nestjs/graphql';
 import { LiveSession } from '../live-session/live-session.model';
@@ -14,6 +15,12 @@ export class Video {
 
     @Field(() => String, {nullable:false})
     name!: string;
+
+    @Field(() => String, {nullable:true})
+    desc!: string | null;
+
+    @HideField()
+    searchableName!: string | null;
 
     @Field(() => GraphQLJSON, {nullable:true})
     thumbnail!: any | null;

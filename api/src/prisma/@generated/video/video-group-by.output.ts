@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { VideoCountAggregate } from './video-count-aggregate.output';
 import { VideoAvgAggregate } from './video-avg-aggregate.output';
@@ -16,6 +17,12 @@ export class VideoGroupBy {
 
     @Field(() => String, {nullable:false})
     name!: string;
+
+    @Field(() => String, {nullable:true})
+    desc?: string;
+
+    @HideField()
+    searchableName?: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
     thumbnail?: any;

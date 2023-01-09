@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @ObjectType()
 export class VideoMaxAggregate {
@@ -10,6 +11,12 @@ export class VideoMaxAggregate {
 
     @Field(() => String, {nullable:true})
     name?: string;
+
+    @Field(() => String, {nullable:true})
+    desc?: string;
+
+    @HideField()
+    searchableName?: string;
 
     @Field(() => String, {nullable:true})
     slug?: string;

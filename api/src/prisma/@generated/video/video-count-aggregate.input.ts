@@ -12,9 +12,15 @@ export class VideoCountAggregateInput {
     name?: true;
 
     @Field(() => Boolean, {nullable:true})
-    thumbnail?: true;
+    desc?: true;
+
+    @HideField()
+    searchableName?: true;
 
     @Field(() => Boolean, {nullable:true})
+    thumbnail?: true;
+
+    @HideField()
     slug?: true;
 
     @Field(() => Boolean, {nullable:true})

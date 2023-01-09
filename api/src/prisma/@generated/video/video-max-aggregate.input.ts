@@ -12,6 +12,12 @@ export class VideoMaxAggregateInput {
     name?: true;
 
     @Field(() => Boolean, {nullable:true})
+    desc?: true;
+
+    @HideField()
+    searchableName?: true;
+
+    @HideField()
     slug?: true;
 
     @Field(() => Boolean, {nullable:true})

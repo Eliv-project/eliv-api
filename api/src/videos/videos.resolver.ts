@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, InternalServerErrorException } from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -7,6 +7,7 @@ import {
   Int,
   Subscription,
 } from '@nestjs/graphql';
+import { randomUUID } from 'crypto';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
 import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
@@ -19,6 +20,7 @@ import { UploadService } from 'src/upload/upload.service';
 import { VideoCreateInputWithFile } from './interfaces/create-video-with-file.input';
 import { ProcessProgress } from './models/process-progress.model';
 import { VideosService } from './videos.service';
+import fs from 'fs';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -34,14 +36,22 @@ export class VideosResolver {
     { file, ...data }: VideoCreateInputWithFile,
   ) {
     const { createReadStream, filename } = await file;
-
+    let createdVideo: Video = null;
+    const dirId = randomUUID();
     const uploadedFile = await this.uploadService.writeFileToDir({
       createReadStream,
       filename,
     });
 
-    const dirId = await this.videosService.toHls(uploadedFile.path);
-    return this.videosService.create({ ...data, dirId });
+    try {
+      createdVideo = await this.videosService.create({ ...data, dirId });
+    } catch (err) {
+      fs.unlinkSync(uploadedFile.path);
+      throw new InternalServerErrorException();
+    }
+
+    await this.videosService.toHls(uploadedFile.path, dirId);
+    return createdVideo;
   }
 
   @Query(() => [Video], { name: 'videos' })
