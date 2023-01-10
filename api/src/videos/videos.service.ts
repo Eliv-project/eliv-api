@@ -9,6 +9,7 @@ import path from 'path';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import slugify from 'slugify';
+// @ts-ignore
 import nanoid from 'nanoid';
 
 @Injectable()
