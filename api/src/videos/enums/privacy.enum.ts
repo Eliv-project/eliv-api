@@ -1,4 +1,4 @@
-export enum Privacy {
-  public = 1,
+export enum VideoPrivacy {
   private = 0,
+  public = 1,
 }

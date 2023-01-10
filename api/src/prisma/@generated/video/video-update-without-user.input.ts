@@ -7,6 +7,7 @@ import { GraphQLJSON } from 'graphql-type-json';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { LiveSessionUpdateOneWithoutVideoNestedInput } from '../live-session/live-session-update-one-without-video-nested.input';
+import { VodSessionUpdateOneWithoutVideoNestedInput } from '../vod-session/vod-session-update-one-without-video-nested.input';
 
 @InputType()
 export class VideoUpdateWithoutUserInput {
@@ -40,4 +41,7 @@ export class VideoUpdateWithoutUserInput {
 
     @Field(() => LiveSessionUpdateOneWithoutVideoNestedInput, {nullable:true})
     liveSession?: LiveSessionUpdateOneWithoutVideoNestedInput;
+
+    @Field(() => VodSessionUpdateOneWithoutVideoNestedInput, {nullable:true})
+    vodSession?: VodSessionUpdateOneWithoutVideoNestedInput;
 }

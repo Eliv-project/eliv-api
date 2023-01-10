@@ -102,15 +102,29 @@ model Video {
     /// @HideField({output: false, input: true})
     slug String @unique
 
-    privacy Int? @default(1) 
+    privacy Int? @default(0) 
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
     /// @HideField({input: true, output: false})
-    dirId String?
+    dirId String? @unique
 
-    liveSession LiveSession?
     user User @relation(fields: [userId], references: [id])
     userId Int
+
+    liveSession LiveSession?
+    vodSession VodSession?
+}
+
+model VodSession {
+    id Int @id @default(autoincrement())
+
+    status Int @default(0)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    video Video @relation(fields: [videoId], references: [id])
+    videoId Int @unique
 }

@@ -4,6 +4,7 @@ import { Int } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { LiveSessionUncheckedCreateNestedOneWithoutVideoInput } from '../live-session/live-session-unchecked-create-nested-one-without-video.input';
+import { VodSessionUncheckedCreateNestedOneWithoutVideoInput } from '../vod-session/vod-session-unchecked-create-nested-one-without-video.input';
 
 @InputType()
 export class VideoUncheckedCreateWithoutUserInput {
@@ -40,4 +41,7 @@ export class VideoUncheckedCreateWithoutUserInput {
 
     @Field(() => LiveSessionUncheckedCreateNestedOneWithoutVideoInput, {nullable:true})
     liveSession?: LiveSessionUncheckedCreateNestedOneWithoutVideoInput;
+
+    @Field(() => VodSessionUncheckedCreateNestedOneWithoutVideoInput, {nullable:true})
+    vodSession?: VodSessionUncheckedCreateNestedOneWithoutVideoInput;
 }

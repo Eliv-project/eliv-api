@@ -8,7 +8,7 @@ services:
       - "8080:8080"
     container_name: rtmp_server
     volumes:
-      - hls:/eliv/upload/hls
+      - ./upload/hls:/eliv/upload/hls
   api:
     depends_on:
       - postgres
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./api:/usr/src/app
       - /usr/src/app/node_modules
-      - hls:/eliv/upload/hls
+      - ./upload:/eliv/upload
     # load the .env file into the container
     env_file:
       - ./api/.env.docker
@@ -50,4 +50,3 @@ volumes:
   redis:
     driver: local
   pgdata:
-  hls:

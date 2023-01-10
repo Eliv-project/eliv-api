@@ -18,6 +18,7 @@ import { VideosService } from '../videos.service';
 import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
+import { VodStatus } from 'src/vod-sessions/enums/status.enum';
 
 interface ConvertDto {
   hlsSavePath: string;
@@ -43,21 +44,53 @@ export class VideoProcessor {
 
   @OnQueueCompleted()
   onComplete(job: Job<ConvertDto>, result) {
-    console.log(`Complete job ${job.id}, now cleaning up tmp files`, result);
+    console.log(`Complete job ${job.id}`, result);
 
+    // Clean up tmp file
     const { filePath } = job.data;
     fs.unlinkSync(filePath);
+
+    // Update vod status
+    this.videosService.update(
+      {
+        dirId: job.data.dirId,
+      },
+      {
+        vodSession: {
+          update: {
+            status: { set: VodStatus.ready },
+          },
+        },
+      },
+    );
   }
+
   @OnQueueFailed()
   onFail(job: Job, err: Error) {
     console.log(`Failed job ${job.id} of type ${job.name} with error`, err);
   }
 
   @OnQueueActive()
-  onActive(job: Job) {
+  onActive(job: Job<ConvertDto>) {
     console.log(
       `Processing job ${job.id} of type ${job.name} with data`,
       job.data,
+    );
+
+    // Update vod status
+    this.videosService.update(
+      {
+        dirId: job.data.dirId,
+      },
+      {
+        vodSession: {
+          update: {
+            status: {
+              set: VodStatus.processing,
+            },
+          },
+        },
+      },
     );
   }
 

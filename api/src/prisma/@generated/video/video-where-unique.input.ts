@@ -11,4 +11,7 @@ export class VideoWhereUniqueInput {
 
     @HideField()
     slug?: string;
+
+    @HideField()
+    dirId?: string;
 }

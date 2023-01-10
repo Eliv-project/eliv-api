@@ -1,0 +1,11 @@
+model VodSession {
+    id Int @id @default(autoincrement())
+
+    status Int @default(0)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    video Video @relation(fields: [videoId], references: [id])
+    videoId Int @unique
+}

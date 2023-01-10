@@ -2,8 +2,9 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
 import { HideField } from '@nestjs/graphql';
-import { LiveSessionOrderByWithRelationInput } from '../live-session/live-session-order-by-with-relation.input';
 import { UserOrderByWithRelationInput } from '../user/user-order-by-with-relation.input';
+import { LiveSessionOrderByWithRelationInput } from '../live-session/live-session-order-by-with-relation.input';
+import { VodSessionOrderByWithRelationInput } from '../vod-session/vod-session-order-by-with-relation.input';
 
 @InputType()
 export class VideoOrderByWithRelationInput {
@@ -38,12 +39,15 @@ export class VideoOrderByWithRelationInput {
     @HideField()
     dirId?: keyof typeof SortOrder;
 
-    @Field(() => LiveSessionOrderByWithRelationInput, {nullable:true})
-    liveSession?: LiveSessionOrderByWithRelationInput;
-
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
     user?: UserOrderByWithRelationInput;
 
     @Field(() => SortOrder, {nullable:true})
     userId?: keyof typeof SortOrder;
+
+    @Field(() => LiveSessionOrderByWithRelationInput, {nullable:true})
+    liveSession?: LiveSessionOrderByWithRelationInput;
+
+    @Field(() => VodSessionOrderByWithRelationInput, {nullable:true})
+    vodSession?: VodSessionOrderByWithRelationInput;
 }

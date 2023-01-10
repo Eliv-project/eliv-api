@@ -21,6 +21,8 @@ import { VideoCreateInputWithFile } from './interfaces/create-video-with-file.in
 import { ProcessProgress } from './models/process-progress.model';
 import { VideosService } from './videos.service';
 import fs from 'fs';
+import { VodStatus } from 'src/vod-sessions/enums/status.enum';
+import { VideoPrivacy } from './enums/privacy.enum';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -38,19 +40,32 @@ export class VideosResolver {
     const { createReadStream, filename } = await file;
     let createdVideo: Video = null;
     const dirId = randomUUID();
+    // Move uploaded file to tmp for transcoding
     const uploadedFile = await this.uploadService.writeFileToDir({
       createReadStream,
       filename,
     });
 
     try {
-      createdVideo = await this.videosService.create({ ...data, dirId });
+      // Create private video with default vod session
+      createdVideo = await this.videosService.create({
+        ...data,
+        dirId,
+        privacy: VideoPrivacy.private,
+        vodSession: {
+          create: {
+            status: VodStatus.empty,
+          },
+        },
+      });
     } catch (err) {
       console.error(err);
+      // Remove tmp file
       fs.unlinkSync(uploadedFile.path);
       throw new InternalServerErrorException();
     }
 
+    // Request transcoding
     await this.videosService.toHls(uploadedFile.path, dirId);
     return createdVideo;
   }

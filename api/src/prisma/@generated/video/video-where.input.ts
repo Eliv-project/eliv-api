@@ -7,8 +7,9 @@ import { HideField } from '@nestjs/graphql';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
-import { LiveSessionRelationFilter } from '../live-session/live-session-relation-filter.input';
 import { UserRelationFilter } from '../user/user-relation-filter.input';
+import { LiveSessionRelationFilter } from '../live-session/live-session-relation-filter.input';
+import { VodSessionRelationFilter } from '../vod-session/vod-session-relation-filter.input';
 
 @InputType()
 export class VideoWhereInput {
@@ -52,12 +53,15 @@ export class VideoWhereInput {
     @HideField()
     dirId?: StringNullableFilter;
 
-    @Field(() => LiveSessionRelationFilter, {nullable:true})
-    liveSession?: LiveSessionRelationFilter;
-
     @Field(() => UserRelationFilter, {nullable:true})
     user?: UserRelationFilter;
 
     @Field(() => IntFilter, {nullable:true})
     userId?: IntFilter;
+
+    @Field(() => LiveSessionRelationFilter, {nullable:true})
+    liveSession?: LiveSessionRelationFilter;
+
+    @Field(() => VodSessionRelationFilter, {nullable:true})
+    vodSession?: VodSessionRelationFilter;
 }

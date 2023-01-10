@@ -23,6 +23,7 @@ import GraphQLJSON from 'graphql-type-json';
 import pathConfig from './config/path.config';
 import { BullModule } from '@nestjs/bull';
 import { PubSubModule } from './pub-sub/pub-sub.module';
+import { VodSessionsModule } from './vod-sessions/vod-sessions.module';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { PubSubModule } from './pub-sub/pub-sub.module';
     VideosModule,
     LiveSessionsModule,
     PubSubModule,
+    VodSessionsModule,
   ],
   controllers: [AppController],
   providers: [
