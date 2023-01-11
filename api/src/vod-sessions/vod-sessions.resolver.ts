@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { VodSessionsService } from './vod-sessions.service';
-import { VodSession } from './entities/vod-session.entity';
 import { CreateVodSessionInput } from './dto/create-vod-session.input';
 import { UpdateVodSessionInput } from './dto/update-vod-session.input';
+import { VodSession } from 'src/prisma/@generated/vod-session/vod-session.model';
 
 @Resolver(() => VodSession)
 export class VodSessionsResolver {

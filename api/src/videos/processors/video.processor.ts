@@ -43,7 +43,7 @@ export class VideoProcessor {
   }
 
   @OnQueueCompleted()
-  onComplete(job: Job<ConvertDto>, result) {
+  async onComplete(job: Job<ConvertDto>, result) {
     console.log(`Complete job ${job.id}`, result);
 
     // Clean up tmp file
@@ -51,7 +51,7 @@ export class VideoProcessor {
     fs.unlinkSync(filePath);
 
     // Update vod status
-    this.videosService.update(
+    await this.videosService.update(
       {
         dirId: job.data.dirId,
       },
@@ -71,14 +71,14 @@ export class VideoProcessor {
   }
 
   @OnQueueActive()
-  onActive(job: Job<ConvertDto>) {
+  async onActive(job: Job<ConvertDto>) {
     console.log(
       `Processing job ${job.id} of type ${job.name} with data`,
       job.data,
     );
 
     // Update vod status
-    this.videosService.update(
+    await this.videosService.update(
       {
         dirId: job.data.dirId,
       },

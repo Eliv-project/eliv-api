@@ -7,6 +7,11 @@ input BoolNullableFilter {
   not: NestedBoolNullableFilter
 }
 
+input CreateVodSessionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CredentialsInput {
   password: String!
   usernameOrEmail: String!
@@ -188,6 +193,7 @@ type Mutation {
   createRole(data: RoleCreateInput!): Role!
   createUser(data: UserCreateInput!): User!
   createVideo(data: VideoCreateInputWithFile!): Video!
+  createVodSession(createVodSessionInput: CreateVodSessionInput!): VodSession!
   credentialsLogin(loginInput: CredentialsInput!): LoginResponse!
   oauthLogin(loginInput: OAuthInput!): LoginResponse!
   refreshTokens: RefreshTokensResponse!
@@ -198,6 +204,7 @@ type Mutation {
   removeRole(where: RoleWhereUniqueInput!): Role!
   removeUser(where: UserWhereUniqueInput!): User!
   removeVideo(where: VideoWhereUniqueInput!): Video!
+  removeVodSession(id: Int!): VodSession!
   updateLiveSession(data: LiveSessionUpdateInput!, where: LiveSessionWhereUniqueInput!): LiveSession!
   updateOAuthLink(data: OAuthLinkUpdateInput!, where: OAuthLinkWhereUniqueInput!): OAuthLink!
   updatePermission(data: PermissionUpdateInput!, where: PermissionWhereUniqueInput!): Permission!
@@ -205,6 +212,7 @@ type Mutation {
   updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
   updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
+  updateVodSession(updateVodSessionInput: UpdateVodSessionInput!): VodSession!
 }
 
 input NestedBoolNullableFilter {
@@ -691,6 +699,8 @@ type Query {
   users(where: UserWhereInput!): [User!]!
   video(where: VideoWhereUniqueInput!): Video!
   videos(where: VideoWhereInput!): [Video!]!
+  vodSession(id: Int!): VodSession!
+  vodSessions: [VodSession!]!
 }
 
 enum QueryMode {
@@ -853,6 +863,12 @@ input StringNullableFilter {
 
 type Subscription {
   currentProcessProgress(dirId: String!): ProcessProgress!
+}
+
+input UpdateVodSessionInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -1161,6 +1177,7 @@ type Video {
   updatedAt: DateTime!
   user: User!
   userId: Int!
+  vodSession: VodSession
 }
 
 input VideoCreateInputWithFile {
@@ -1173,6 +1190,7 @@ input VideoCreateInputWithFile {
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
+  vodSession: VodSessionCreateNestedOneWithoutVideoInput
 }
 
 input VideoCreateManyUserInput {
@@ -1221,6 +1239,7 @@ input VideoCreateWithoutLiveSessionInput {
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
+  vodSession: VodSessionCreateNestedOneWithoutVideoInput
 }
 
 input VideoCreateWithoutUserInput {
@@ -1231,6 +1250,7 @@ input VideoCreateWithoutUserInput {
   privacy: Int
   thumbnail: JSON
   updatedAt: DateTime
+  vodSession: VodSessionCreateNestedOneWithoutVideoInput
 }
 
 input VideoListRelationFilter {
@@ -1267,6 +1287,7 @@ input VideoUpdateInput {
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
+  vodSession: VodSessionUpdateOneWithoutVideoNestedInput
 }
 
 input VideoUpdateManyMutationInput {
@@ -1318,6 +1339,7 @@ input VideoUpdateWithoutLiveSessionInput {
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
+  vodSession: VodSessionUpdateOneWithoutVideoNestedInput
 }
 
 input VideoUpdateWithoutUserInput {
@@ -1328,6 +1350,7 @@ input VideoUpdateWithoutUserInput {
   privacy: NullableIntFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
+  vodSession: VodSessionUpdateOneWithoutVideoNestedInput
 }
 
 input VideoUpsertWithWhereUniqueWithoutUserInput {
@@ -1355,8 +1378,78 @@ input VideoWhereInput {
   updatedAt: DateTimeFilter
   user: UserRelationFilter
   userId: IntFilter
+  vodSession: VodSessionRelationFilter
 }
 
 input VideoWhereUniqueInput {
   id: Int
+}
+
+type VodSession {
+  createdAt: DateTime!
+  id: ID!
+  status: Int!
+  updatedAt: DateTime!
+  video: Video!
+  videoId: Int!
+}
+
+input VodSessionCreateNestedOneWithoutVideoInput {
+  connect: VodSessionWhereUniqueInput
+  connectOrCreate: VodSessionCreateOrConnectWithoutVideoInput
+  create: VodSessionCreateWithoutVideoInput
+}
+
+input VodSessionCreateOrConnectWithoutVideoInput {
+  create: VodSessionCreateWithoutVideoInput!
+  where: VodSessionWhereUniqueInput!
+}
+
+input VodSessionCreateWithoutVideoInput {
+  createdAt: DateTime
+  status: Int
+  updatedAt: DateTime
+}
+
+input VodSessionRelationFilter {
+  is: VodSessionWhereInput
+  isNot: VodSessionWhereInput
+}
+
+input VodSessionUpdateOneWithoutVideoNestedInput {
+  connect: VodSessionWhereUniqueInput
+  connectOrCreate: VodSessionCreateOrConnectWithoutVideoInput
+  create: VodSessionCreateWithoutVideoInput
+  delete: Boolean
+  disconnect: Boolean
+  update: VodSessionUpdateWithoutVideoInput
+  upsert: VodSessionUpsertWithoutVideoInput
+}
+
+input VodSessionUpdateWithoutVideoInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  status: IntFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input VodSessionUpsertWithoutVideoInput {
+  create: VodSessionCreateWithoutVideoInput!
+  update: VodSessionUpdateWithoutVideoInput!
+}
+
+input VodSessionWhereInput {
+  AND: [VodSessionWhereInput!]
+  NOT: [VodSessionWhereInput!]
+  OR: [VodSessionWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  status: IntFilter
+  updatedAt: DateTimeFilter
+  video: VideoRelationFilter
+  videoId: IntFilter
+}
+
+input VodSessionWhereUniqueInput {
+  id: Int
+  videoId: Int
 }
