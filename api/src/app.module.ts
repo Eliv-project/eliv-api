@@ -24,6 +24,7 @@ import pathConfig from './config/path.config';
 import { BullModule } from '@nestjs/bull';
 import { PubSubModule } from './pub-sub/pub-sub.module';
 import { VodSessionsModule } from './vod-sessions/vod-sessions.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { VodSessionsModule } from './vod-sessions/vod-sessions.module';
     LiveSessionsModule,
     PubSubModule,
     VodSessionsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [

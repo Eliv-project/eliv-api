@@ -1,8 +1,10 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { RoleCreateNestedOneWithoutUsersInput } from '../role/role-create-nested-one-without-users.input';
 import { VideoCreateNestedManyWithoutUserInput } from '../video/video-create-nested-many-without-user.input';
+import { CommentCreateNestedManyWithoutUserInput } from '../comment/comment-create-nested-many-without-user.input';
 
 @InputType()
 export class UserCreateWithoutOauthLinksInput {
@@ -16,7 +18,7 @@ export class UserCreateWithoutOauthLinksInput {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -33,4 +35,7 @@ export class UserCreateWithoutOauthLinksInput {
 
     @Field(() => VideoCreateNestedManyWithoutUserInput, {nullable:true})
     videos?: VideoCreateNestedManyWithoutUserInput;
+
+    @Field(() => CommentCreateNestedManyWithoutUserInput, {nullable:true})
+    comments?: CommentCreateNestedManyWithoutUserInput;
 }

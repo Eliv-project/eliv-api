@@ -23,6 +23,7 @@ import { VideosService } from './videos.service';
 import fs from 'fs';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
 import { VideoPrivacy } from './enums/privacy.enum';
+import slugify from 'slugify';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -76,12 +77,21 @@ export class VideosResolver {
     @Args('where')
     where: VideoWhereInput,
   ) {
-    return this.videosService.findAll(where);
+    return this.videosService.findAll(where, {
+      vodSession: true,
+      liveSession: true,
+      user: true,
+    });
   }
 
-  @Query(() => Video, { name: 'video' })
+  @Query(() => Video, { name: 'video', nullable: true })
+  @IsPublic()
   findOne(@Args('where') where: VideoWhereUniqueInput) {
-    return this.videosService.findOne(where);
+    return this.videosService.findOne(where, {
+      vodSession: true,
+      liveSession: true,
+      user: true,
+    });
   }
 
   @Mutation(() => Video)
@@ -90,7 +100,14 @@ export class VideosResolver {
     @Args('data')
     data: VideoUpdateInput,
   ) {
-    return this.videosService.update(where, data);
+    const searchableName = slugify(data.name.set, {
+      strict: true,
+      lower: true,
+    });
+    return this.videosService.update(where, {
+      ...data,
+      searchableName: { set: searchableName },
+    });
   }
 
   @Mutation(() => Video)

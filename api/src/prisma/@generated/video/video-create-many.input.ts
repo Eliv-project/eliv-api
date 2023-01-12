@@ -22,8 +22,8 @@ export class VideoCreateManyInput {
     @Field(() => GraphQLJSON, {nullable:true})
     thumbnail?: any;
 
-    @HideField()
-    slug!: string;
+    @Field(() => String, {nullable:true})
+    slug?: string;
 
     @Field(() => Int, {nullable:true})
     privacy?: number;

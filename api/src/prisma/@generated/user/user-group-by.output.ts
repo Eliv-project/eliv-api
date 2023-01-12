@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { UserCountAggregate } from './user-count-aggregate.output';
 import { UserAvgAggregate } from './user-avg-aggregate.output';
@@ -23,7 +24,7 @@ export class UserGroupBy {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})

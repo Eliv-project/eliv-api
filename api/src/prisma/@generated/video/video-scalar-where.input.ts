@@ -35,8 +35,8 @@ export class VideoScalarWhereInput {
     @Field(() => JsonNullableFilter, {nullable:true})
     thumbnail?: JsonNullableFilter;
 
-    @HideField()
-    slug?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    slug?: StringNullableFilter;
 
     @Field(() => IntNullableFilter, {nullable:true})
     privacy?: IntNullableFilter;

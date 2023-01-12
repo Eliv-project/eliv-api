@@ -3,7 +3,10 @@ model User {
     email     String   @unique
     username  String   @unique
     gender    Boolean? @default(true)
+
+    /// @HideField({output: true, input: true})
     password  String
+    
     avatar    Json?
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
@@ -13,4 +16,5 @@ model User {
 
     oauthLinks OAuthLink[]
     videos Video[]
+    comments Comment[]
 }

@@ -1,9 +1,11 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { SortOrder } from '../prisma/sort-order.enum';
+import { HideField } from '@nestjs/graphql';
 import { RoleOrderByWithRelationInput } from '../role/role-order-by-with-relation.input';
 import { OAuthLinkOrderByRelationAggregateInput } from '../o-auth-link/o-auth-link-order-by-relation-aggregate.input';
 import { VideoOrderByRelationAggregateInput } from '../video/video-order-by-relation-aggregate.input';
+import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-by-relation-aggregate.input';
 
 @InputType()
 export class UserOrderByWithRelationInput {
@@ -20,7 +22,7 @@ export class UserOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     gender?: keyof typeof SortOrder;
 
-    @Field(() => SortOrder, {nullable:true})
+    @HideField()
     password?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -43,4 +45,7 @@ export class UserOrderByWithRelationInput {
 
     @Field(() => VideoOrderByRelationAggregateInput, {nullable:true})
     videos?: VideoOrderByRelationAggregateInput;
+
+    @Field(() => CommentOrderByRelationAggregateInput, {nullable:true})
+    comments?: CommentOrderByRelationAggregateInput;
 }

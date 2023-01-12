@@ -8,6 +8,7 @@ import { GraphQLJSON } from 'graphql-type-json';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { VodSessionUncheckedUpdateOneWithoutVideoNestedInput } from '../vod-session/vod-session-unchecked-update-one-without-video-nested.input';
+import { CommentUncheckedUpdateManyWithoutVideoNestedInput } from '../comment/comment-unchecked-update-many-without-video-nested.input';
 
 @InputType()
 export class VideoUncheckedUpdateWithoutLiveSessionInput {
@@ -27,8 +28,8 @@ export class VideoUncheckedUpdateWithoutLiveSessionInput {
     @Field(() => GraphQLJSON, {nullable:true})
     thumbnail?: any;
 
-    @HideField()
-    slug?: StringFieldUpdateOperationsInput;
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
+    slug?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
     privacy?: NullableIntFieldUpdateOperationsInput;
@@ -47,4 +48,7 @@ export class VideoUncheckedUpdateWithoutLiveSessionInput {
 
     @Field(() => VodSessionUncheckedUpdateOneWithoutVideoNestedInput, {nullable:true})
     vodSession?: VodSessionUncheckedUpdateOneWithoutVideoNestedInput;
+
+    @Field(() => CommentUncheckedUpdateManyWithoutVideoNestedInput, {nullable:true})
+    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput;
 }

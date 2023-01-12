@@ -11,6 +11,7 @@ import { Queue } from 'bull';
 import slugify from 'slugify';
 // @ts-ignore
 import nanoid from 'nanoid';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class VideosService {
@@ -37,19 +38,19 @@ export class VideosService {
       strict: true,
       lower: true,
     });
-    const slug = [searchableName, nanoid(10)].join('-');
+    const slug = nanoid(10);
 
     return this.prisma.video.create({
       data: { ...data, searchableName, slug },
     });
   }
 
-  findAll(where: VideoWhereInput) {
-    return this.prisma.video.findMany({ where });
+  findAll(where: VideoWhereInput, include?: Prisma.VideoInclude) {
+    return this.prisma.video.findMany({ where, include });
   }
 
-  findOne(where: VideoWhereUniqueInput) {
-    return this.prisma.video.findUnique({ where });
+  findOne(where: VideoWhereUniqueInput, include?: Prisma.VideoInclude) {
+    return this.prisma.video.findUnique({ where, include });
   }
 
   update(where: VideoWhereUniqueInput, data: VideoUpdateInput) {

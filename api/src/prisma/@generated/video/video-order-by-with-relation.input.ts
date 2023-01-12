@@ -5,6 +5,7 @@ import { HideField } from '@nestjs/graphql';
 import { UserOrderByWithRelationInput } from '../user/user-order-by-with-relation.input';
 import { LiveSessionOrderByWithRelationInput } from '../live-session/live-session-order-by-with-relation.input';
 import { VodSessionOrderByWithRelationInput } from '../vod-session/vod-session-order-by-with-relation.input';
+import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-by-relation-aggregate.input';
 
 @InputType()
 export class VideoOrderByWithRelationInput {
@@ -24,7 +25,7 @@ export class VideoOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     thumbnail?: keyof typeof SortOrder;
 
-    @HideField()
+    @Field(() => SortOrder, {nullable:true})
     slug?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -50,4 +51,7 @@ export class VideoOrderByWithRelationInput {
 
     @Field(() => VodSessionOrderByWithRelationInput, {nullable:true})
     vodSession?: VodSessionOrderByWithRelationInput;
+
+    @Field(() => CommentOrderByRelationAggregateInput, {nullable:true})
+    comments?: CommentOrderByRelationAggregateInput;
 }

@@ -19,6 +19,21 @@ generator nestgraphql {
     output = "./@generated"
 }
 
+model Comment {
+    id Int @unique @default(autoincrement())
+    content String
+    
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId Int @unique
+    video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
+    videoId Int @unique
+
+    parentComment Comment? @relation("childComments", fields: [parentCommentId], references: [id], onDelete: Cascade)
+    parentCommentId Int?
+
+    childComments Comment[] @relation("childComments")
+}
+
 model LiveSession {
     id Int @id @default(autoincrement())
 
@@ -28,7 +43,7 @@ model LiveSession {
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
-    video Video @relation(fields: [videoId], references: [id])
+    video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
     videoId Int @unique
 }
 
@@ -75,7 +90,10 @@ model User {
     email     String   @unique
     username  String   @unique
     gender    Boolean? @default(true)
+
+    /// @HideField({output: true, input: true})
     password  String
+    
     avatar    Json?
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
@@ -85,6 +103,7 @@ model User {
 
     oauthLinks OAuthLink[]
     videos Video[]
+    comments Comment[]
 }
 
 
@@ -99,8 +118,7 @@ model Video {
 
     thumbnail Json?
 
-    /// @HideField({output: false, input: true})
-    slug String @unique
+    slug String? @unique
 
     privacy Int? @default(0) 
 
@@ -115,6 +133,8 @@ model Video {
 
     liveSession LiveSession?
     vodSession VodSession?
+    
+    comments Comment[]
 }
 
 model VodSession {
@@ -125,6 +145,6 @@ model VodSession {
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
-    video Video @relation(fields: [videoId], references: [id])
+    video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
     videoId Int @unique
 }

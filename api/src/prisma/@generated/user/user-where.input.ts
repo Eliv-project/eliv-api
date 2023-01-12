@@ -3,11 +3,13 @@ import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
 import { BoolNullableFilter } from '../prisma/bool-nullable-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { RoleRelationFilter } from '../role/role-relation-filter.input';
 import { OAuthLinkListRelationFilter } from '../o-auth-link/o-auth-link-list-relation-filter.input';
 import { VideoListRelationFilter } from '../video/video-list-relation-filter.input';
+import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -33,7 +35,7 @@ export class UserWhereInput {
     @Field(() => BoolNullableFilter, {nullable:true})
     gender?: BoolNullableFilter;
 
-    @Field(() => StringFilter, {nullable:true})
+    @HideField()
     password?: StringFilter;
 
     @Field(() => JsonNullableFilter, {nullable:true})
@@ -56,4 +58,7 @@ export class UserWhereInput {
 
     @Field(() => VideoListRelationFilter, {nullable:true})
     videos?: VideoListRelationFilter;
+
+    @Field(() => CommentListRelationFilter, {nullable:true})
+    comments?: CommentListRelationFilter;
 }

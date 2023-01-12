@@ -18,7 +18,7 @@ export class VideoMaxOrderByAggregateInput {
     @HideField()
     searchableName?: keyof typeof SortOrder;
 
-    @HideField()
+    @Field(() => SortOrder, {nullable:true})
     slug?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

@@ -3,10 +3,12 @@ import { InputType } from '@nestjs/graphql';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { NullableBoolFieldUpdateOperationsInput } from '../prisma/nullable-bool-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { OAuthLinkUncheckedUpdateManyWithoutUserNestedInput } from '../o-auth-link/o-auth-link-unchecked-update-many-without-user-nested.input';
 import { VideoUncheckedUpdateManyWithoutUserNestedInput } from '../video/video-unchecked-update-many-without-user-nested.input';
+import { CommentUncheckedUpdateManyWithoutUserNestedInput } from '../comment/comment-unchecked-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUncheckedUpdateInput {
@@ -23,7 +25,7 @@ export class UserUncheckedUpdateInput {
     @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     gender?: NullableBoolFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    @HideField()
     password?: StringFieldUpdateOperationsInput;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -43,4 +45,7 @@ export class UserUncheckedUpdateInput {
 
     @Field(() => VideoUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     videos?: VideoUncheckedUpdateManyWithoutUserNestedInput;
+
+    @Field(() => CommentUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput;
 }

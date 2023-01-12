@@ -46,28 +46,54 @@ export class VideoProcessor {
   async onComplete(job: Job<ConvertDto>, result) {
     console.log(`Complete job ${job.id}`, result);
 
-    // Clean up tmp file
-    const { filePath } = job.data;
-    fs.unlinkSync(filePath);
+    try {
+      // Clean up tmp file
+      const { filePath } = job.data;
+      fs.unlinkSync(filePath);
 
-    // Update vod status
-    await this.videosService.update(
-      {
-        dirId: job.data.dirId,
-      },
-      {
-        vodSession: {
-          update: {
-            status: { set: VodStatus.ready },
+      // Update vod status
+      await this.videosService.update(
+        {
+          dirId: job.data.dirId,
+        },
+        {
+          vodSession: {
+            update: {
+              status: { set: VodStatus.ready },
+            },
           },
         },
-      },
-    );
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   @OnQueueFailed()
-  onFail(job: Job, err: Error) {
+  async onFail(job: Job<ConvertDto>, err: Error) {
     console.log(`Failed job ${job.id} of type ${job.name} with error`, err);
+
+    try {
+      // Clean up tmp file
+      const { filePath } = job.data;
+      fs.unlinkSync(filePath);
+
+      // Update vod status
+      await this.videosService.update(
+        {
+          dirId: job.data.dirId,
+        },
+        {
+          vodSession: {
+            update: {
+              status: { set: VodStatus.empty },
+            },
+          },
+        },
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   @OnQueueActive()
@@ -78,20 +104,24 @@ export class VideoProcessor {
     );
 
     // Update vod status
-    await this.videosService.update(
-      {
-        dirId: job.data.dirId,
-      },
-      {
-        vodSession: {
-          update: {
-            status: {
-              set: VodStatus.processing,
+    try {
+      await this.videosService.update(
+        {
+          dirId: job.data.dirId,
+        },
+        {
+          vodSession: {
+            update: {
+              status: {
+                set: VodStatus.processing,
+              },
             },
           },
         },
-      },
-    );
+      );
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   @Process('convert-to-hls')

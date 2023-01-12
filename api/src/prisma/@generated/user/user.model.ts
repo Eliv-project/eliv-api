@@ -1,11 +1,13 @@
 import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Role } from '../role/role.model';
 import { Int } from '@nestjs/graphql';
 import { OAuthLink } from '../o-auth-link/o-auth-link.model';
 import { Video } from '../video/video.model';
+import { Comment } from '../comment/comment.model';
 import { UserCount } from './user-count.output';
 
 @ObjectType()
@@ -23,7 +25,7 @@ export class User {
     @Field(() => Boolean, {nullable:true,defaultValue:true})
     gender!: boolean | null;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -46,6 +48,9 @@ export class User {
 
     @Field(() => [Video], {nullable:true})
     videos?: Array<Video>;
+
+    @Field(() => [Comment], {nullable:true})
+    comments?: Array<Comment>;
 
     @Field(() => UserCount, {nullable:false})
     _count?: UserCount;

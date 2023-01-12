@@ -35,8 +35,8 @@ export class VideoScalarWhereWithAggregatesInput {
     @Field(() => JsonNullableWithAggregatesFilter, {nullable:true})
     thumbnail?: JsonNullableWithAggregatesFilter;
 
-    @HideField()
-    slug?: StringWithAggregatesFilter;
+    @Field(() => StringNullableWithAggregatesFilter, {nullable:true})
+    slug?: StringNullableWithAggregatesFilter;
 
     @Field(() => IntNullableWithAggregatesFilter, {nullable:true})
     privacy?: IntNullableWithAggregatesFilter;

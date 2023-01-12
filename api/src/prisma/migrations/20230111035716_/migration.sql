@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Video" ALTER COLUMN "slug" DROP NOT NULL;

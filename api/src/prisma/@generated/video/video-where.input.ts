@@ -10,6 +10,7 @@ import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { UserRelationFilter } from '../user/user-relation-filter.input';
 import { LiveSessionRelationFilter } from '../live-session/live-session-relation-filter.input';
 import { VodSessionRelationFilter } from '../vod-session/vod-session-relation-filter.input';
+import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
 
 @InputType()
 export class VideoWhereInput {
@@ -38,8 +39,8 @@ export class VideoWhereInput {
     @Field(() => JsonNullableFilter, {nullable:true})
     thumbnail?: JsonNullableFilter;
 
-    @HideField()
-    slug?: StringFilter;
+    @Field(() => StringNullableFilter, {nullable:true})
+    slug?: StringNullableFilter;
 
     @Field(() => IntNullableFilter, {nullable:true})
     privacy?: IntNullableFilter;
@@ -64,4 +65,7 @@ export class VideoWhereInput {
 
     @Field(() => VodSessionRelationFilter, {nullable:true})
     vodSession?: VodSessionRelationFilter;
+
+    @Field(() => CommentListRelationFilter, {nullable:true})
+    comments?: CommentListRelationFilter;
 }

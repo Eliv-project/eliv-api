@@ -5,6 +5,7 @@ import { GraphQLJSON } from 'graphql-type-json';
 import { Int } from '@nestjs/graphql';
 import { UserCreateNestedOneWithoutVideosInput } from '../user/user-create-nested-one-without-videos.input';
 import { VodSessionCreateNestedOneWithoutVideoInput } from '../vod-session/vod-session-create-nested-one-without-video.input';
+import { CommentCreateNestedManyWithoutVideoInput } from '../comment/comment-create-nested-many-without-video.input';
 
 @InputType()
 export class VideoCreateWithoutLiveSessionInput {
@@ -21,8 +22,8 @@ export class VideoCreateWithoutLiveSessionInput {
     @Field(() => GraphQLJSON, {nullable:true})
     thumbnail?: any;
 
-    @HideField()
-    slug!: string;
+    @Field(() => String, {nullable:true})
+    slug?: string;
 
     @Field(() => Int, {nullable:true})
     privacy?: number;
@@ -41,4 +42,7 @@ export class VideoCreateWithoutLiveSessionInput {
 
     @Field(() => VodSessionCreateNestedOneWithoutVideoInput, {nullable:true})
     vodSession?: VodSessionCreateNestedOneWithoutVideoInput;
+
+    @Field(() => CommentCreateNestedManyWithoutVideoInput, {nullable:true})
+    comments?: CommentCreateNestedManyWithoutVideoInput;
 }

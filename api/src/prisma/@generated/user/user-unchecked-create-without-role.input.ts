@@ -1,9 +1,11 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { OAuthLinkUncheckedCreateNestedManyWithoutUserInput } from '../o-auth-link/o-auth-link-unchecked-create-nested-many-without-user.input';
 import { VideoUncheckedCreateNestedManyWithoutUserInput } from '../video/video-unchecked-create-nested-many-without-user.input';
+import { CommentUncheckedCreateNestedManyWithoutUserInput } from '../comment/comment-unchecked-create-nested-many-without-user.input';
 
 @InputType()
 export class UserUncheckedCreateWithoutRoleInput {
@@ -20,7 +22,7 @@ export class UserUncheckedCreateWithoutRoleInput {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
-    @Field(() => String, {nullable:false})
+    @HideField()
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -37,4 +39,7 @@ export class UserUncheckedCreateWithoutRoleInput {
 
     @Field(() => VideoUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     videos?: VideoUncheckedCreateNestedManyWithoutUserInput;
+
+    @Field(() => CommentUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput;
 }

@@ -7,6 +7,8 @@ import { Int } from '@nestjs/graphql';
 import { User } from '../user/user.model';
 import { LiveSession } from '../live-session/live-session.model';
 import { VodSession } from '../vod-session/vod-session.model';
+import { Comment } from '../comment/comment.model';
+import { VideoCount } from './video-count.output';
 
 @ObjectType()
 export class Video {
@@ -26,8 +28,8 @@ export class Video {
     @Field(() => GraphQLJSON, {nullable:true})
     thumbnail!: any | null;
 
-    @Field(() => String, {nullable:false})
-    slug!: string;
+    @Field(() => String, {nullable:true})
+    slug!: string | null;
 
     @Field(() => Int, {nullable:true,defaultValue:0})
     privacy!: number | null;
@@ -52,4 +54,10 @@ export class Video {
 
     @Field(() => VodSession, {nullable:true})
     vodSession?: VodSession | null;
+
+    @Field(() => [Comment], {nullable:true})
+    comments?: Array<Comment>;
+
+    @Field(() => VideoCount, {nullable:false})
+    _count?: VideoCount;
 }

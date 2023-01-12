@@ -9,8 +9,7 @@ model Video {
 
     thumbnail Json?
 
-    /// @HideField({output: false, input: true})
-    slug String @unique
+    slug String? @unique
 
     privacy Int? @default(0) 
 
@@ -25,4 +24,6 @@ model Video {
 
     liveSession LiveSession?
     vodSession VodSession?
+    
+    comments Comment[]
 }

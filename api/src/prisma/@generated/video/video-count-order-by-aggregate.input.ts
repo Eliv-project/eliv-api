@@ -21,7 +21,7 @@ export class VideoCountOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     thumbnail?: keyof typeof SortOrder;
 
-    @HideField()
+    @Field(() => SortOrder, {nullable:true})
     slug?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

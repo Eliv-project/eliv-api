@@ -2,7 +2,7 @@ import { Controller, ForbiddenException } from '@nestjs/common';
 import { Body, Get, Post } from '@nestjs/common/decorators';
 import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
 import { RtmpInput } from './dto/rtmp-input.dto';
-import { Status } from './enums/status.enum';
+import { LiveStatus } from './enums/status.enum';
 import { LiveSessionsService } from './live-sessions.service';
 
 @Controller('live-sessions')
@@ -20,7 +20,7 @@ export class LiveSessionsController {
       return new ForbiddenException();
     }
 
-    if (liveSession.status !== Status.OFFLINE) {
+    if (liveSession.status !== LiveStatus.OFFLINE) {
       return new ForbiddenException('INVALID_LIVE_SESSION');
     }
 
@@ -29,7 +29,7 @@ export class LiveSessionsController {
         streamKey,
       },
       {
-        status: { set: Status.ON_LIVE },
+        status: { set: LiveStatus.ON_LIVE },
       },
     );
     console.log('An user started a live stream session with key', streamKey);
@@ -46,10 +46,10 @@ export class LiveSessionsController {
         streamKey,
       },
       {
-        status: { set: Status.ENDED },
+        status: { set: LiveStatus.ENDED },
       },
     );
     console.log('An user ended a live stream session with key', streamKey);
-      return true;
+    return true;
   }
 }

@@ -9,7 +9,7 @@ export class VideoWhereUniqueInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
-    @HideField()
+    @Field(() => String, {nullable:true})
     slug?: string;
 
     @HideField()

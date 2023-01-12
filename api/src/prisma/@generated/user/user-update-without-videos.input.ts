@@ -2,10 +2,12 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { NullableBoolFieldUpdateOperationsInput } from '../prisma/nullable-bool-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { RoleUpdateOneRequiredWithoutUsersNestedInput } from '../role/role-update-one-required-without-users-nested.input';
 import { OAuthLinkUpdateManyWithoutUserNestedInput } from '../o-auth-link/o-auth-link-update-many-without-user-nested.input';
+import { CommentUpdateManyWithoutUserNestedInput } from '../comment/comment-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUpdateWithoutVideosInput {
@@ -19,7 +21,7 @@ export class UserUpdateWithoutVideosInput {
     @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     gender?: NullableBoolFieldUpdateOperationsInput;
 
-    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    @HideField()
     password?: StringFieldUpdateOperationsInput;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -36,4 +38,7 @@ export class UserUpdateWithoutVideosInput {
 
     @Field(() => OAuthLinkUpdateManyWithoutUserNestedInput, {nullable:true})
     oauthLinks?: OAuthLinkUpdateManyWithoutUserNestedInput;
+
+    @Field(() => CommentUpdateManyWithoutUserNestedInput, {nullable:true})
+    comments?: CommentUpdateManyWithoutUserNestedInput;
 }

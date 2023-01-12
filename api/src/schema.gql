@@ -697,7 +697,7 @@ type Query {
   roles(where: RoleWhereInput!): [Role!]!
   user(where: UserWhereUniqueInput!): User!
   users(where: UserWhereInput!): [User!]!
-  video(where: VideoWhereUniqueInput!): Video!
+  video(where: VideoWhereUniqueInput!): Video
   videos(where: VideoWhereInput!): [Video!]!
   vodSession(id: Int!): VodSession!
   vodSessions: [VodSession!]!
@@ -882,7 +882,6 @@ type User {
   gender: Boolean
   id: ID!
   oauthLinks: [OAuthLink!]
-  password: String!
   role: Role!
   roleId: Int!
   updatedAt: DateTime!
@@ -906,7 +905,6 @@ input UserCreateInput {
   email: String!
   gender: Boolean
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
-  password: String!
   role: RoleCreateNestedOneWithoutUsersInput!
   updatedAt: DateTime
   username: String!
@@ -919,7 +917,6 @@ input UserCreateManyRoleInput {
   email: String!
   gender: Boolean
   id: Int
-  password: String!
   updatedAt: DateTime
   username: String!
 }
@@ -968,7 +965,6 @@ input UserCreateWithoutOauthLinksInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
-  password: String!
   role: RoleCreateNestedOneWithoutUsersInput!
   updatedAt: DateTime
   username: String!
@@ -981,7 +977,6 @@ input UserCreateWithoutRoleInput {
   email: String!
   gender: Boolean
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
-  password: String!
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
@@ -993,7 +988,6 @@ input UserCreateWithoutVideosInput {
   email: String!
   gender: Boolean
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
-  password: String!
   role: RoleCreateNestedOneWithoutUsersInput!
   updatedAt: DateTime
   username: String!
@@ -1019,7 +1013,6 @@ input UserScalarWhereInput {
   email: StringFilter
   gender: BoolNullableFilter
   id: IntFilter
-  password: StringFilter
   roleId: IntFilter
   updatedAt: DateTimeFilter
   username: StringFilter
@@ -1031,7 +1024,6 @@ input UserUpdateInput {
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
-  password: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
@@ -1043,7 +1035,6 @@ input UserUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
-  password: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
 }
@@ -1093,7 +1084,6 @@ input UserUpdateWithoutOauthLinksInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
-  password: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
@@ -1106,7 +1096,6 @@ input UserUpdateWithoutRoleInput {
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
-  password: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
@@ -1118,7 +1107,6 @@ input UserUpdateWithoutVideosInput {
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
-  password: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
@@ -1150,7 +1138,6 @@ input UserWhereInput {
   gender: BoolNullableFilter
   id: IntFilter
   oauthLinks: OAuthLinkListRelationFilter
-  password: StringFilter
   role: RoleRelationFilter
   roleId: IntFilter
   updatedAt: DateTimeFilter
@@ -1172,7 +1159,7 @@ type Video {
   liveSession: LiveSession
   name: String!
   privacy: Int
-  slug: String!
+  slug: String
   thumbnail: JSON
   updatedAt: DateTime!
   user: User!
@@ -1187,6 +1174,7 @@ input VideoCreateInputWithFile {
   liveSession: LiveSessionCreateNestedOneWithoutVideoInput
   name: String!
   privacy: Int
+  slug: String
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
@@ -1199,6 +1187,7 @@ input VideoCreateManyUserInput {
   id: Int
   name: String!
   privacy: Int
+  slug: String
   thumbnail: JSON
   updatedAt: DateTime
 }
@@ -1236,6 +1225,7 @@ input VideoCreateWithoutLiveSessionInput {
   desc: String
   name: String!
   privacy: Int
+  slug: String
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
@@ -1248,6 +1238,7 @@ input VideoCreateWithoutUserInput {
   liveSession: LiveSessionCreateNestedOneWithoutVideoInput
   name: String!
   privacy: Int
+  slug: String
   thumbnail: JSON
   updatedAt: DateTime
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
@@ -1273,6 +1264,7 @@ input VideoScalarWhereInput {
   id: IntFilter
   name: StringFilter
   privacy: IntNullableFilter
+  slug: StringNullableFilter
   thumbnail: JsonNullableFilter
   updatedAt: DateTimeFilter
   userId: IntFilter
@@ -1284,6 +1276,7 @@ input VideoUpdateInput {
   liveSession: LiveSessionUpdateOneWithoutVideoNestedInput
   name: StringFieldUpdateOperationsInput
   privacy: NullableIntFieldUpdateOperationsInput
+  slug: NullableStringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
@@ -1295,6 +1288,7 @@ input VideoUpdateManyMutationInput {
   desc: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   privacy: NullableIntFieldUpdateOperationsInput
+  slug: NullableStringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -1336,6 +1330,7 @@ input VideoUpdateWithoutLiveSessionInput {
   desc: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   privacy: NullableIntFieldUpdateOperationsInput
+  slug: NullableStringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
@@ -1348,6 +1343,7 @@ input VideoUpdateWithoutUserInput {
   liveSession: LiveSessionUpdateOneWithoutVideoNestedInput
   name: StringFieldUpdateOperationsInput
   privacy: NullableIntFieldUpdateOperationsInput
+  slug: NullableStringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   vodSession: VodSessionUpdateOneWithoutVideoNestedInput
@@ -1374,6 +1370,7 @@ input VideoWhereInput {
   liveSession: LiveSessionRelationFilter
   name: StringFilter
   privacy: IntNullableFilter
+  slug: StringNullableFilter
   thumbnail: JsonNullableFilter
   updatedAt: DateTimeFilter
   user: UserRelationFilter
@@ -1383,6 +1380,7 @@ input VideoWhereInput {
 
 input VideoWhereUniqueInput {
   id: Int
+  slug: String
 }
 
 type VodSession {
