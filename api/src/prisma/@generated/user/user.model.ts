@@ -5,9 +5,11 @@ import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Role } from '../role/role.model';
 import { Int } from '@nestjs/graphql';
+import { UserSubscription } from '../user-subscription/user-subscription.model';
 import { OAuthLink } from '../o-auth-link/o-auth-link.model';
 import { Video } from '../video/video.model';
 import { Comment } from '../comment/comment.model';
+import { Vote } from '../vote/vote.model';
 import { UserCount } from './user-count.output';
 
 @ObjectType()
@@ -43,6 +45,12 @@ export class User {
     @Field(() => Int, {nullable:false})
     roleId!: number;
 
+    @Field(() => [UserSubscription], {nullable:true})
+    subscribingUsers?: Array<UserSubscription>;
+
+    @Field(() => [UserSubscription], {nullable:true})
+    subscribers?: Array<UserSubscription>;
+
     @Field(() => [OAuthLink], {nullable:true})
     oauthLinks?: Array<OAuthLink>;
 
@@ -51,6 +59,9 @@ export class User {
 
     @Field(() => [Comment], {nullable:true})
     comments?: Array<Comment>;
+
+    @Field(() => [Vote], {nullable:true})
+    votes?: Array<Vote>;
 
     @Field(() => UserCount, {nullable:false})
     _count?: UserCount;

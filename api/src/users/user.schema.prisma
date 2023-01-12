@@ -1,12 +1,12 @@
 model User {
-    id        Int      @id @default(autoincrement())
-    email     String   @unique
-    username  String   @unique
-    gender    Boolean? @default(true)
+    id       Int      @id @default(autoincrement())
+    email    String   @unique
+    username String   @unique
+    gender   Boolean? @default(true)
 
     /// @HideField({output: true, input: true})
-    password  String
-    
+    password String
+
     avatar    Json?
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
@@ -14,7 +14,11 @@ model User {
     role   Role @relation(fields: [roleId], references: [id])
     roleId Int
 
+    subscribingUsers UserSubscription[] @relation("subscribing")
+    subscribers      UserSubscription[] @relation("subscribedBy")
+
     oauthLinks OAuthLink[]
-    videos Video[]
-    comments Comment[]
+    videos     Video[]
+    comments   Comment[]
+    votes      Vote[]
 }

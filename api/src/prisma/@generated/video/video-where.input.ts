@@ -11,6 +11,7 @@ import { UserRelationFilter } from '../user/user-relation-filter.input';
 import { LiveSessionRelationFilter } from '../live-session/live-session-relation-filter.input';
 import { VodSessionRelationFilter } from '../vod-session/vod-session-relation-filter.input';
 import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
+import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
 
 @InputType()
 export class VideoWhereInput {
@@ -68,4 +69,7 @@ export class VideoWhereInput {
 
     @Field(() => CommentListRelationFilter, {nullable:true})
     comments?: CommentListRelationFilter;
+
+    @Field(() => VoteListRelationFilter, {nullable:true})
+    votes?: VoteListRelationFilter;
 }

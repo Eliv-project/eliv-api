@@ -10,6 +10,7 @@ import { UserUpdateOneRequiredWithoutVideosNestedInput } from '../user/user-upda
 import { LiveSessionUpdateOneWithoutVideoNestedInput } from '../live-session/live-session-update-one-without-video-nested.input';
 import { VodSessionUpdateOneWithoutVideoNestedInput } from '../vod-session/vod-session-update-one-without-video-nested.input';
 import { CommentUpdateManyWithoutVideoNestedInput } from '../comment/comment-update-many-without-video-nested.input';
+import { VoteUpdateManyWithoutVideoNestedInput } from '../vote/vote-update-many-without-video-nested.input';
 
 @InputType()
 export class VideoUpdateInput {
@@ -52,4 +53,7 @@ export class VideoUpdateInput {
 
     @Field(() => CommentUpdateManyWithoutVideoNestedInput, {nullable:true})
     comments?: CommentUpdateManyWithoutVideoNestedInput;
+
+    @Field(() => VoteUpdateManyWithoutVideoNestedInput, {nullable:true})
+    votes?: VoteUpdateManyWithoutVideoNestedInput;
 }

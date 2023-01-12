@@ -8,6 +8,7 @@ import { User } from '../user/user.model';
 import { LiveSession } from '../live-session/live-session.model';
 import { VodSession } from '../vod-session/vod-session.model';
 import { Comment } from '../comment/comment.model';
+import { Vote } from '../vote/vote.model';
 import { VideoCount } from './video-count.output';
 
 @ObjectType()
@@ -57,6 +58,9 @@ export class Video {
 
     @Field(() => [Comment], {nullable:true})
     comments?: Array<Comment>;
+
+    @Field(() => [Vote], {nullable:true})
+    votes?: Array<Vote>;
 
     @Field(() => VideoCount, {nullable:false})
     _count?: VideoCount;

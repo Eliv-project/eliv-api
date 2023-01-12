@@ -5,9 +5,12 @@ import { NullableBoolFieldUpdateOperationsInput } from '../prisma/nullable-bool-
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
+import { UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput } from '../user-subscription/user-subscription-update-many-without-subscribing-user-nested.input';
+import { UserSubscriptionUpdateManyWithoutUserNestedInput } from '../user-subscription/user-subscription-update-many-without-user-nested.input';
 import { OAuthLinkUpdateManyWithoutUserNestedInput } from '../o-auth-link/o-auth-link-update-many-without-user-nested.input';
 import { VideoUpdateManyWithoutUserNestedInput } from '../video/video-update-many-without-user-nested.input';
 import { CommentUpdateManyWithoutUserNestedInput } from '../comment/comment-update-many-without-user-nested.input';
+import { VoteUpdateManyWithoutUserNestedInput } from '../vote/vote-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUpdateWithoutRoleInput {
@@ -33,6 +36,12 @@ export class UserUpdateWithoutRoleInput {
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
 
+    @Field(() => UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput, {nullable:true})
+    subscribingUsers?: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput;
+
+    @Field(() => UserSubscriptionUpdateManyWithoutUserNestedInput, {nullable:true})
+    subscribers?: UserSubscriptionUpdateManyWithoutUserNestedInput;
+
     @Field(() => OAuthLinkUpdateManyWithoutUserNestedInput, {nullable:true})
     oauthLinks?: OAuthLinkUpdateManyWithoutUserNestedInput;
 
@@ -41,4 +50,7 @@ export class UserUpdateWithoutRoleInput {
 
     @Field(() => CommentUpdateManyWithoutUserNestedInput, {nullable:true})
     comments?: CommentUpdateManyWithoutUserNestedInput;
+
+    @Field(() => VoteUpdateManyWithoutUserNestedInput, {nullable:true})
+    votes?: VoteUpdateManyWithoutUserNestedInput;
 }

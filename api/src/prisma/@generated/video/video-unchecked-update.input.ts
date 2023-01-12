@@ -10,6 +10,7 @@ import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-up
 import { LiveSessionUncheckedUpdateOneWithoutVideoNestedInput } from '../live-session/live-session-unchecked-update-one-without-video-nested.input';
 import { VodSessionUncheckedUpdateOneWithoutVideoNestedInput } from '../vod-session/vod-session-unchecked-update-one-without-video-nested.input';
 import { CommentUncheckedUpdateManyWithoutVideoNestedInput } from '../comment/comment-unchecked-update-many-without-video-nested.input';
+import { VoteUncheckedUpdateManyWithoutVideoNestedInput } from '../vote/vote-unchecked-update-many-without-video-nested.input';
 
 @InputType()
 export class VideoUncheckedUpdateInput {
@@ -55,4 +56,7 @@ export class VideoUncheckedUpdateInput {
 
     @Field(() => CommentUncheckedUpdateManyWithoutVideoNestedInput, {nullable:true})
     comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput;
+
+    @Field(() => VoteUncheckedUpdateManyWithoutVideoNestedInput, {nullable:true})
+    votes?: VoteUncheckedUpdateManyWithoutVideoNestedInput;
 }

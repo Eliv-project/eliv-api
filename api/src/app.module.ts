@@ -25,6 +25,9 @@ import { BullModule } from '@nestjs/bull';
 import { PubSubModule } from './pub-sub/pub-sub.module';
 import { VodSessionsModule } from './vod-sessions/vod-sessions.module';
 import { CommentsModule } from './comments/comments.module';
+import { VotesModule } from './votes/votes.module';
+import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
+import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
 
 @Module({
   imports: [
@@ -73,6 +76,8 @@ import { CommentsModule } from './comments/comments.module';
     PubSubModule,
     VodSessionsModule,
     CommentsModule,
+    VotesModule,
+    UserSubscriptionsModule,
   ],
   controllers: [AppController],
   providers: [

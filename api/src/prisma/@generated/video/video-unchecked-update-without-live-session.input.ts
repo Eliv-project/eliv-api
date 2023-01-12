@@ -9,6 +9,7 @@ import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-fi
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { VodSessionUncheckedUpdateOneWithoutVideoNestedInput } from '../vod-session/vod-session-unchecked-update-one-without-video-nested.input';
 import { CommentUncheckedUpdateManyWithoutVideoNestedInput } from '../comment/comment-unchecked-update-many-without-video-nested.input';
+import { VoteUncheckedUpdateManyWithoutVideoNestedInput } from '../vote/vote-unchecked-update-many-without-video-nested.input';
 
 @InputType()
 export class VideoUncheckedUpdateWithoutLiveSessionInput {
@@ -51,4 +52,7 @@ export class VideoUncheckedUpdateWithoutLiveSessionInput {
 
     @Field(() => CommentUncheckedUpdateManyWithoutVideoNestedInput, {nullable:true})
     comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput;
+
+    @Field(() => VoteUncheckedUpdateManyWithoutVideoNestedInput, {nullable:true})
+    votes?: VoteUncheckedUpdateManyWithoutVideoNestedInput;
 }

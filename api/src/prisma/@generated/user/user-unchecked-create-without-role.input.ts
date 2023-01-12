@@ -3,9 +3,12 @@ import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
+import { UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-unchecked-create-nested-many-without-subscribing-user.input';
+import { UserSubscriptionUncheckedCreateNestedManyWithoutUserInput } from '../user-subscription/user-subscription-unchecked-create-nested-many-without-user.input';
 import { OAuthLinkUncheckedCreateNestedManyWithoutUserInput } from '../o-auth-link/o-auth-link-unchecked-create-nested-many-without-user.input';
 import { VideoUncheckedCreateNestedManyWithoutUserInput } from '../video/video-unchecked-create-nested-many-without-user.input';
 import { CommentUncheckedCreateNestedManyWithoutUserInput } from '../comment/comment-unchecked-create-nested-many-without-user.input';
+import { VoteUncheckedCreateNestedManyWithoutUserInput } from '../vote/vote-unchecked-create-nested-many-without-user.input';
 
 @InputType()
 export class UserUncheckedCreateWithoutRoleInput {
@@ -34,6 +37,12 @@ export class UserUncheckedCreateWithoutRoleInput {
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
+    @Field(() => UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput, {nullable:true})
+    subscribingUsers?: UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput;
+
+    @Field(() => UserSubscriptionUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    subscribers?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
+
     @Field(() => OAuthLinkUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     oauthLinks?: OAuthLinkUncheckedCreateNestedManyWithoutUserInput;
 
@@ -42,4 +51,7 @@ export class UserUncheckedCreateWithoutRoleInput {
 
     @Field(() => CommentUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput;
+
+    @Field(() => VoteUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    votes?: VoteUncheckedCreateNestedManyWithoutUserInput;
 }

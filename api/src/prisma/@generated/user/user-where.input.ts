@@ -7,9 +7,11 @@ import { HideField } from '@nestjs/graphql';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { RoleRelationFilter } from '../role/role-relation-filter.input';
+import { UserSubscriptionListRelationFilter } from '../user-subscription/user-subscription-list-relation-filter.input';
 import { OAuthLinkListRelationFilter } from '../o-auth-link/o-auth-link-list-relation-filter.input';
 import { VideoListRelationFilter } from '../video/video-list-relation-filter.input';
 import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
+import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -53,6 +55,12 @@ export class UserWhereInput {
     @Field(() => IntFilter, {nullable:true})
     roleId?: IntFilter;
 
+    @Field(() => UserSubscriptionListRelationFilter, {nullable:true})
+    subscribingUsers?: UserSubscriptionListRelationFilter;
+
+    @Field(() => UserSubscriptionListRelationFilter, {nullable:true})
+    subscribers?: UserSubscriptionListRelationFilter;
+
     @Field(() => OAuthLinkListRelationFilter, {nullable:true})
     oauthLinks?: OAuthLinkListRelationFilter;
 
@@ -61,4 +69,7 @@ export class UserWhereInput {
 
     @Field(() => CommentListRelationFilter, {nullable:true})
     comments?: CommentListRelationFilter;
+
+    @Field(() => VoteListRelationFilter, {nullable:true})
+    votes?: VoteListRelationFilter;
 }

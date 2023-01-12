@@ -6,6 +6,7 @@ import { Int } from '@nestjs/graphql';
 import { UserCreateNestedOneWithoutVideosInput } from '../user/user-create-nested-one-without-videos.input';
 import { VodSessionCreateNestedOneWithoutVideoInput } from '../vod-session/vod-session-create-nested-one-without-video.input';
 import { CommentCreateNestedManyWithoutVideoInput } from '../comment/comment-create-nested-many-without-video.input';
+import { VoteCreateNestedManyWithoutVideoInput } from '../vote/vote-create-nested-many-without-video.input';
 
 @InputType()
 export class VideoCreateWithoutLiveSessionInput {
@@ -45,4 +46,7 @@ export class VideoCreateWithoutLiveSessionInput {
 
     @Field(() => CommentCreateNestedManyWithoutVideoInput, {nullable:true})
     comments?: CommentCreateNestedManyWithoutVideoInput;
+
+    @Field(() => VoteCreateNestedManyWithoutVideoInput, {nullable:true})
+    votes?: VoteCreateNestedManyWithoutVideoInput;
 }

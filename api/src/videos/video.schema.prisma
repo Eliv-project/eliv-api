@@ -24,6 +24,6 @@ model Video {
 
     liveSession LiveSession?
     vodSession VodSession?
-    
     comments Comment[]
+    votes Vote[]
 }

@@ -1,35 +1,40 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { CommentCreateInput } from 'src/prisma/@generated/comment/comment-create.input';
+import { CommentUpdateInput } from 'src/prisma/@generated/comment/comment-update.input';
+import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
+import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
+import { Comment } from 'src/prisma/@generated/comment/comment.model';
 import { CommentsService } from './comments.service';
-import { Comment } from './entities/comment.entity';
-import { CreateCommentInput } from './dto/create-comment.input';
-import { UpdateCommentInput } from './dto/update-comment.input';
 
 @Resolver(() => Comment)
 export class CommentsResolver {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Mutation(() => Comment)
-  createComment(@Args('createCommentInput') createCommentInput: CreateCommentInput) {
-    return this.commentsService.create(createCommentInput);
+  createComment(@Args('data') data: CommentCreateInput) {
+    return this.commentsService.create(data);
   }
 
   @Query(() => [Comment], { name: 'comments' })
-  findAll() {
-    return this.commentsService.findAll();
+  findAll(@Args('where') where: CommentWhereInput) {
+    return this.commentsService.findAll(where);
   }
 
   @Query(() => Comment, { name: 'comment' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.commentsService.findOne(id);
+  findOne(@Args('where') where: CommentWhereUniqueInput) {
+    return this.commentsService.findOne(where);
   }
 
   @Mutation(() => Comment)
-  updateComment(@Args('updateCommentInput') updateCommentInput: UpdateCommentInput) {
-    return this.commentsService.update(updateCommentInput.id, updateCommentInput);
+  updateComment(
+    @Args('where') where: CommentWhereUniqueInput,
+    @Args('data') data: CommentUpdateInput,
+  ) {
+    return this.commentsService.update(where, data);
   }
 
   @Mutation(() => Comment)
-  removeComment(@Args('id', { type: () => Int }) id: number) {
-    return this.commentsService.remove(id);
+  removeComment(@Args('where') where: CommentWhereUniqueInput) {
+    return this.commentsService.remove(where);
   }
 }

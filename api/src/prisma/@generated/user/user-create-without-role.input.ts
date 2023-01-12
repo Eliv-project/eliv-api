@@ -2,9 +2,12 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
+import { UserSubscriptionCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-create-nested-many-without-subscribing-user.input';
+import { UserSubscriptionCreateNestedManyWithoutUserInput } from '../user-subscription/user-subscription-create-nested-many-without-user.input';
 import { OAuthLinkCreateNestedManyWithoutUserInput } from '../o-auth-link/o-auth-link-create-nested-many-without-user.input';
 import { VideoCreateNestedManyWithoutUserInput } from '../video/video-create-nested-many-without-user.input';
 import { CommentCreateNestedManyWithoutUserInput } from '../comment/comment-create-nested-many-without-user.input';
+import { VoteCreateNestedManyWithoutUserInput } from '../vote/vote-create-nested-many-without-user.input';
 
 @InputType()
 export class UserCreateWithoutRoleInput {
@@ -30,6 +33,12 @@ export class UserCreateWithoutRoleInput {
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
+    @Field(() => UserSubscriptionCreateNestedManyWithoutSubscribingUserInput, {nullable:true})
+    subscribingUsers?: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput;
+
+    @Field(() => UserSubscriptionCreateNestedManyWithoutUserInput, {nullable:true})
+    subscribers?: UserSubscriptionCreateNestedManyWithoutUserInput;
+
     @Field(() => OAuthLinkCreateNestedManyWithoutUserInput, {nullable:true})
     oauthLinks?: OAuthLinkCreateNestedManyWithoutUserInput;
 
@@ -38,4 +47,7 @@ export class UserCreateWithoutRoleInput {
 
     @Field(() => CommentCreateNestedManyWithoutUserInput, {nullable:true})
     comments?: CommentCreateNestedManyWithoutUserInput;
+
+    @Field(() => VoteCreateNestedManyWithoutUserInput, {nullable:true})
+    votes?: VoteCreateNestedManyWithoutUserInput;
 }
