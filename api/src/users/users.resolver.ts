@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
 import { UserCreateInput } from 'src/prisma/@generated/user/user-create.input';
 import { UserUpdateInput } from 'src/prisma/@generated/user/user-update.input';
 import { UserWhereUniqueInput } from 'src/prisma/@generated/user/user-where-unique.input';
@@ -19,6 +20,7 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
+  @IsPublic()
   findAll(
     @Args('where')
     where: UserWhereInput,
@@ -27,6 +29,7 @@ export class UsersResolver {
   }
 
   @Query(() => User, { name: 'user' })
+  @IsPublic()
   findOne(@Args('where') where: UserWhereUniqueInput) {
     return this.usersService.findOne(where);
   }

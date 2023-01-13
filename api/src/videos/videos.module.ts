@@ -16,5 +16,6 @@ import { PubSubModule } from 'src/pub-sub/pub-sub.module';
     VideoProcessor,
     UploadService,
   ],
+  exports: [VideosService],
 })
 export class VideosModule {}

@@ -628,6 +628,7 @@ type Mutation {
   removeUser(where: UserWhereUniqueInput!): User!
   removeVideo(where: VideoWhereUniqueInput!): Video!
   removeVodSession(id: Int!): VodSession!
+  subscribe(user: UserWhereUniqueInput!): UserSubscriptionResponse!
   updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment!
   updateLiveSession(data: LiveSessionUpdateInput!, where: LiveSessionWhereUniqueInput!): LiveSession!
   updateOAuthLink(data: OAuthLinkUpdateInput!, where: OAuthLinkWhereUniqueInput!): OAuthLink!
@@ -636,7 +637,7 @@ type Mutation {
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
   updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
   updateVodSession(updateVodSessionInput: UpdateVodSessionInput!): VodSession!
-  vote(data: VoteCreateInput!, where: VoteWhereInput!): Vote!
+  voteVideo(direction: Int!, video: VideoWhereUniqueInput!): VoteResponse!
 }
 
 input NestedBoolNullableFilter {
@@ -1099,6 +1100,8 @@ type ProcessProgress {
 type Query {
   comment(where: CommentWhereUniqueInput!): Comment!
   comments(where: CommentWhereInput!): [Comment!]!
+  countSubscriber(where: UserSubscriptionWhereInput!): Int!
+  countVote(where: VoteWhereInput!): Int!
   liveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
   liveSessions(where: LiveSessionWhereInput!): [LiveSession!]!
   oauthLink(where: OAuthLinkWhereUniqueInput!): OAuthLink!
@@ -1624,6 +1627,10 @@ input UserSubscriptionListRelationFilter {
   every: UserSubscriptionWhereInput
   none: UserSubscriptionWhereInput
   some: UserSubscriptionWhereInput
+}
+
+type UserSubscriptionResponse {
+  status: Boolean!
 }
 
 input UserSubscriptionScalarWhereInput {
@@ -2436,15 +2443,6 @@ type Vote {
   voteDirection: Int!
 }
 
-input VoteCreateInput {
-  comment: CommentCreateNestedOneWithoutVotesInput
-  createdAt: DateTime
-  updatedAt: DateTime
-  user: UserCreateNestedOneWithoutVotesInput!
-  video: VideoCreateNestedOneWithoutVotesInput
-  voteDirection: Int!
-}
-
 input VoteCreateManyCommentInput {
   createdAt: DateTime
   id: Int
@@ -2551,6 +2549,11 @@ input VoteListRelationFilter {
   every: VoteWhereInput
   none: VoteWhereInput
   some: VoteWhereInput
+}
+
+type VoteResponse {
+  status: Boolean!
+  vote: Vote
 }
 
 input VoteScalarWhereInput {

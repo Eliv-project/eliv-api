@@ -27,7 +27,6 @@ import { VodSessionsModule } from './vod-sessions/vod-sessions.module';
 import { CommentsModule } from './comments/comments.module';
 import { VotesModule } from './votes/votes.module';
 import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
-import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
 
 @Module({
   imports: [

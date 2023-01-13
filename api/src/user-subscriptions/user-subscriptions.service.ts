@@ -1,26 +1,48 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserSubscriptionInput } from './dto/create-user-subscription.input';
-import { UpdateUserSubscriptionInput } from './dto/update-user-subscription.input';
+import { UserSubscriptionCreateInput } from 'src/prisma/@generated/user-subscription/user-subscription-create.input';
+import { UserSubscriptionWhereUniqueInput } from 'src/prisma/@generated/user-subscription/user-subscription-where-unique.input';
+import { UserSubscriptionWhereInput } from 'src/prisma/@generated/user-subscription/user-subscription-where.input';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+import { UserSubscriptionUpdateInput } from 'src/prisma/@generated/user-subscription/user-subscription-update.input';
 
 @Injectable()
 export class UserSubscriptionsService {
-  create(createUserSubscriptionInput: CreateUserSubscriptionInput) {
-    return 'This action adds a new userSubscription';
+  constructor(private readonly prisma: PrismaService) {}
+  create(data: UserSubscriptionCreateInput) {
+    return this.prisma.userSubscription.create({ data });
   }
 
-  findAll() {
-    return `This action returns all userSubscriptions`;
+  count(where: UserSubscriptionWhereInput) {
+    return this.prisma.userSubscription.count({ where });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userSubscription`;
+  findAll(
+    where: UserSubscriptionWhereInput,
+    include?: Prisma.UserSubscriptionInclude,
+  ) {
+    return this.prisma.userSubscription.findMany({ where, include });
   }
 
-  update(id: number, updateUserSubscriptionInput: UpdateUserSubscriptionInput) {
-    return `This action updates a #${id} userSubscription`;
+  findOne(
+    where: UserSubscriptionWhereUniqueInput,
+    include?: Prisma.UserSubscriptionInclude,
+  ) {
+    return this.prisma.userSubscription.findUnique({ where, include });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userSubscription`;
+  findFirst(where: UserSubscriptionWhereInput) {
+    return this.prisma.userSubscription.findFirst({ where });
+  }
+
+  update(
+    where: UserSubscriptionWhereUniqueInput,
+    data: UserSubscriptionUpdateInput,
+  ) {
+    return this.prisma.userSubscription.update({ where, data });
+  }
+
+  remove(where: UserSubscriptionWhereUniqueInput) {
+    return this.prisma.userSubscription.delete({ where });
   }
 }

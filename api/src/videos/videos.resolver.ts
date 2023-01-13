@@ -91,6 +91,7 @@ export class VideosResolver {
       vodSession: true,
       liveSession: true,
       user: true,
+      _count: true,
     });
   }
 

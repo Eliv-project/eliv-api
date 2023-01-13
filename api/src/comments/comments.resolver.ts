@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
 import { CommentCreateInput } from 'src/prisma/@generated/comment/comment-create.input';
 import { CommentUpdateInput } from 'src/prisma/@generated/comment/comment-update.input';
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
@@ -16,6 +17,7 @@ export class CommentsResolver {
   }
 
   @Query(() => [Comment], { name: 'comments' })
+  @IsPublic()
   findAll(@Args('where') where: CommentWhereInput) {
     return this.commentsService.findAll(where);
   }

@@ -1,35 +1,72 @@
+import { BadRequestException } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
+import { UserSubscriptionWhereInput } from 'src/prisma/@generated/user-subscription/user-subscription-where.input';
+import { UserSubscription } from 'src/prisma/@generated/user-subscription/user-subscription.model';
+import { UserWhereUniqueInput } from 'src/prisma/@generated/user/user-where-unique.input';
+import { User } from 'src/prisma/@generated/user/user.model';
+import { UsersService } from 'src/users/users.service';
+import { UserSubscriptionResponse } from './dto/user-subscription-response.dto';
 import { UserSubscriptionsService } from './user-subscriptions.service';
-import { UserSubscription } from './entities/user-subscription.entity';
-import { CreateUserSubscriptionInput } from './dto/create-user-subscription.input';
-import { UpdateUserSubscriptionInput } from './dto/update-user-subscription.input';
 
 @Resolver(() => UserSubscription)
 export class UserSubscriptionsResolver {
-  constructor(private readonly userSubscriptionsService: UserSubscriptionsService) {}
+  constructor(
+    private readonly userSubscriptionsService: UserSubscriptionsService,
+    private readonly usersService: UsersService,
+  ) {}
 
-  @Mutation(() => UserSubscription)
-  createUserSubscription(@Args('createUserSubscriptionInput') createUserSubscriptionInput: CreateUserSubscriptionInput) {
-    return this.userSubscriptionsService.create(createUserSubscriptionInput);
+  @Query(() => Int)
+  @IsPublic()
+  countSubscriber(@Args('where') where: UserSubscriptionWhereInput) {
+    return this.userSubscriptionsService.count(where);
   }
 
-  @Query(() => [UserSubscription], { name: 'userSubscriptions' })
-  findAll() {
-    return this.userSubscriptionsService.findAll();
-  }
+  @Mutation(() => UserSubscriptionResponse)
+  async subscribe(
+    @Args('user') userWhere: UserWhereUniqueInput,
+    @CurrentUser() me: User,
+  ): Promise<UserSubscriptionResponse> {
+    // Prevent user from subscribing themselve
+    const subscribingUser = await this.usersService.findOne(userWhere);
+    if (subscribingUser.id === me.id) {
+      throw new BadRequestException('CANNOT_SELF_SUBSCRIBE');
+    }
 
-  @Query(() => UserSubscription, { name: 'userSubscription' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.userSubscriptionsService.findOne(id);
-  }
+    const prevSubscription = await this.userSubscriptionsService.findFirst({
+      subscribingUser: {
+        is: { username: { equals: subscribingUser.username } },
+      },
+      user: { is: { username: { equals: me.username } } },
+    });
 
-  @Mutation(() => UserSubscription)
-  updateUserSubscription(@Args('updateUserSubscriptionInput') updateUserSubscriptionInput: UpdateUserSubscriptionInput) {
-    return this.userSubscriptionsService.update(updateUserSubscriptionInput.id, updateUserSubscriptionInput);
-  }
+    // If subscription not exisited, create one
+    if (!prevSubscription) {
+      await this.userSubscriptionsService.create({
+        user: {
+          connect: {
+            username: me.username,
+          },
+        },
+        subscribingUser: {
+          connect: {
+            username: subscribingUser.username,
+          },
+        },
+      });
+      return {
+        status: true,
+      };
+    }
 
-  @Mutation(() => UserSubscription)
-  removeUserSubscription(@Args('id', { type: () => Int }) id: number) {
-    return this.userSubscriptionsService.remove(id);
+    // If subscription existed, remove (unsubscribe) it
+    await this.userSubscriptionsService.remove({
+      userId_subscribingUserId: {
+        userId: prevSubscription.userId,
+        subscribingUserId: prevSubscription.subscribingUserId,
+      },
+    });
+    return { status: false };
   }
 }
