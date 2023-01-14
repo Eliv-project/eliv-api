@@ -23,6 +23,29 @@ export class VotesResolver {
     return this.votesService.count(where);
   }
 
+  @Query(() => VoteResponse)
+  async isVoted(
+    @CurrentUser() me,
+    @Args('video') videoWhere: VideoWhereUniqueInput,
+  ): Promise<VoteResponse> {
+    // Get video
+    const video = await this.videosService.findOne(videoWhere);
+    if (!video) {
+      throw new NotFoundException('VIDEO_NOT_FOUND');
+    }
+
+    // Get prev vote (if any)
+    const prevVote = await this.votesService.findFirst({
+      videoId: { equals: video.id },
+      userId: { equals: me.id },
+    });
+
+    return {
+      status: !!prevVote,
+      vote: prevVote,
+    };
+  }
+
   @Mutation(() => VoteResponse)
   async voteVideo(
     @Args('video') videoWhere: VideoWhereUniqueInput,

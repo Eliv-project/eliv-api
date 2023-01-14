@@ -1102,6 +1102,7 @@ type Query {
   comments(where: CommentWhereInput!): [Comment!]!
   countSubscriber(where: UserSubscriptionWhereInput!): Int!
   countVote(where: VoteWhereInput!): Int!
+  isVoted(video: VideoWhereUniqueInput!): VoteResponse!
   liveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
   liveSessions(where: LiveSessionWhereInput!): [LiveSession!]!
   oauthLink(where: OAuthLinkWhereUniqueInput!): OAuthLink!
