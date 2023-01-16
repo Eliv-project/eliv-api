@@ -28,18 +28,6 @@ type CommentCount {
   votes: Int!
 }
 
-input CommentCreateInput {
-  childComments: CommentCreateNestedManyWithoutParentCommentInput
-  content: String!
-  createdAt: DateTime
-  id: Int
-  parentComment: CommentCreateNestedOneWithoutChildCommentsInput
-  updatedAt: DateTime
-  user: UserCreateNestedOneWithoutCommentsInput!
-  video: VideoCreateNestedOneWithoutCommentsInput!
-  votes: VoteCreateNestedManyWithoutCommentInput
-}
-
 input CommentCreateManyParentCommentInput {
   content: String!
   createdAt: DateTime
@@ -426,8 +414,12 @@ input CommentWhereInput {
 
 input CommentWhereUniqueInput {
   id: Int
-  userId: Int
-  videoId: Int
+}
+
+input CreateCommentInput {
+  content: String!
+  replyTo: CommentWhereUniqueInput
+  video: VideoCreateNestedOneWithoutCommentsInput!
 }
 
 input CreateVodSessionInput {
@@ -609,7 +601,7 @@ type LoginResponse {
 }
 
 type Mutation {
-  createComment(data: CommentCreateInput!): Comment!
+  createComment(data: CreateCommentInput!): Comment!
   createLiveSession(data: LiveSessionCreateInput!): LiveSession!
   createOAuthLink(data: OAuthLinkCreateInput!): OAuthLink!
   createPermission(data: PermissionCreateInput!): Permission!
@@ -637,6 +629,7 @@ type Mutation {
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
   updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
   updateVodSession(updateVodSessionInput: UpdateVodSessionInput!): VodSession!
+  voteComment(comment: CommentWhereUniqueInput!, direction: Int!): VoteResponse!
   voteVideo(direction: Int!, video: VideoWhereUniqueInput!): VoteResponse!
 }
 
@@ -1101,7 +1094,7 @@ type Query {
   comment(where: CommentWhereUniqueInput!): Comment!
   comments(where: CommentWhereInput!): [Comment!]!
   countSubscriber(where: UserSubscriptionWhereInput!): Int!
-  countVote(where: VoteWhereInput!): Int!
+  countVote(where: VoteCountWhereInput!): VoteCountResponse!
   isVoted(video: VideoWhereUniqueInput!): VoteResponse!
   liveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
   liveSessions(where: LiveSessionWhereInput!): [LiveSession!]!
@@ -2442,6 +2435,26 @@ type Vote {
   video: Video
   videoId: Int
   voteDirection: Int!
+}
+
+type VoteCountResponse {
+  dislike: Int!
+  like: Int!
+}
+
+input VoteCountWhereInput {
+  AND: [VoteWhereInput!]
+  NOT: [VoteWhereInput!]
+  OR: [VoteWhereInput!]
+  comment: CommentRelationFilter
+  commentId: IntNullableFilter
+  createdAt: DateTimeFilter
+  id: IntFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  userId: IntFilter
+  video: VideoRelationFilter
+  videoId: IntNullableFilter
 }
 
 input VoteCreateManyCommentInput {

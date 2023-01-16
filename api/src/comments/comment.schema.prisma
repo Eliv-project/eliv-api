@@ -6,9 +6,9 @@ model Comment {
     updatedAt DateTime @default(now())
 
     user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId  Int   @unique
+    userId  Int 
     video   Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
-    videoId Int   @unique
+    videoId Int  
 
     parentComment   Comment? @relation("childComments", fields: [parentCommentId], references: [id], onDelete: Cascade)
     parentCommentId Int?

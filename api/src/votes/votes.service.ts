@@ -5,6 +5,7 @@ import { VoteUpdateInput } from 'src/prisma/@generated/vote/vote-update.input';
 import { VoteWhereUniqueInput } from 'src/prisma/@generated/vote/vote-where-unique.input';
 import { VoteWhereInput } from 'src/prisma/@generated/vote/vote-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { VoteCountWhereInput } from './dto/vote-count-where.input';
 
 @Injectable()
 export class VotesService {
@@ -18,8 +19,16 @@ export class VotesService {
     return this.prisma.vote.findMany({ where, include });
   }
 
-  count(where: VoteWhereInput) {
-    return this.prisma.vote.count({ where });
+  async count(where: VoteCountWhereInput) {
+    const [dislike, like] = await this.prisma.$transaction([
+      this.prisma.vote.count({ where: { ...where, voteDirection: { lt: 0 } } }),
+      this.prisma.vote.count({ where: { ...where, voteDirection: { gt: 0 } } }),
+    ]);
+
+    return {
+      like,
+      dislike,
+    };
   }
 
   findOne(where: VoteWhereUniqueInput, include?: Prisma.VoteInclude) {
