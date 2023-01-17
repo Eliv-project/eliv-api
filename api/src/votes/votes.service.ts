@@ -20,14 +20,14 @@ export class VotesService {
   }
 
   async count(where: VoteCountWhereInput) {
-    const [dislike, like] = await this.prisma.$transaction([
+    const [dislikes, likes] = await this.prisma.$transaction([
       this.prisma.vote.count({ where: { ...where, voteDirection: { lt: 0 } } }),
       this.prisma.vote.count({ where: { ...where, voteDirection: { gt: 0 } } }),
     ]);
 
     return {
-      like,
-      dislike,
+      likes,
+      dislikes,
     };
   }
 

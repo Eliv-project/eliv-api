@@ -6,7 +6,6 @@ import { CommentsService } from 'src/comments/comments.service';
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
 import { User } from 'src/prisma/@generated/user/user.model';
 import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';
-import { VoteWhereInput } from 'src/prisma/@generated/vote/vote-where.input';
 import { Vote } from 'src/prisma/@generated/vote/vote.model';
 import { VideosService } from 'src/videos/videos.service';
 import { VoteCountResponse } from './dto/vote-count-response.dto';

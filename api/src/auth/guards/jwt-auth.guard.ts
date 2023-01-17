@@ -1,8 +1,15 @@
-import { Injectable, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
-import { IS_PUBLIC_KEY } from 'src/auth/decorators/is-public/is-public.decorator';
+import {
+  IS_PUBLIC_KEY,
+  PublicType,
+} from 'src/auth/decorators/is-public/is-public.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt-access') {
@@ -10,19 +17,48 @@ export class JwtAuthGuard extends AuthGuard('jwt-access') {
     super();
   }
 
-  canActivate(context: ExecutionContext) {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+  publicType: PublicType = null;
+
+  getPublicType(context) {
+    return this.reflector.getAllAndOverride<PublicType>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (isPublic) {
-      return true;
+  }
+
+  canActivate(context: ExecutionContext) {
+    const publicType = this.getPublicType(context);
+
+    switch (publicType) {
+      case 'all':
+        return true;
+      case 'withAuth':
+        this.publicType = publicType;
+        break;
+      default:
     }
+
     return super.canActivate(context);
   }
 
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req;
+  }
+
+  handleRequest(err, user, info) {
+    // Handle strategy request
+    // You can throw an exception based on either "info" or "err" arguments
+
+    // Allow anonymous users to access route
+    if (this.publicType === 'withAuth') {
+      console.log('Passing user to decorator', user);
+      return user;
+    }
+
+    if (err || !user) {
+      throw err || new UnauthorizedException();
+    }
+    return user;
   }
 }

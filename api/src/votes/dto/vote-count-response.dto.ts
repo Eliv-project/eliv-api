@@ -4,8 +4,8 @@ import { ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class VoteCountResponse {
   @Field(() => Int)
-  like: number;
+  likes: number;
 
   @Field(() => Int)
-  dislike: number;
+  dislikes: number;
 }

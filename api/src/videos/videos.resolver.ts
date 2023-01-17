@@ -78,6 +78,7 @@ export class VideosResolver {
     where: VideoWhereInput,
   ) {
     return this.videosService.findAll(where, {
+      _count: true,
       vodSession: true,
       liveSession: true,
       user: true,

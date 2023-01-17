@@ -416,6 +416,25 @@ input CommentWhereUniqueInput {
   id: Int
 }
 
+type CommentWithVotes {
+  _count: CommentCount!
+  childComments: [Comment!]
+  content: String!
+  createdAt: DateTime!
+  dislikes: Int!
+  id: Int!
+  likes: Int!
+  myVote: Vote
+  parentComment: Comment
+  parentCommentId: Int
+  updatedAt: DateTime!
+  user: User!
+  userId: Int!
+  video: Video!
+  videoId: Int!
+  votes: [Vote!]
+}
+
 input CreateCommentInput {
   content: String!
   replyTo: CommentWhereUniqueInput
@@ -1093,6 +1112,7 @@ type ProcessProgress {
 type Query {
   comment(where: CommentWhereUniqueInput!): Comment!
   comments(where: CommentWhereInput!): [Comment!]!
+  commentsWithVotes(where: CommentWhereInput!): [CommentWithVotes!]!
   countSubscriber(where: UserSubscriptionWhereInput!): Int!
   countVote(where: VoteCountWhereInput!): VoteCountResponse!
   isVoted(video: VideoWhereUniqueInput!): VoteResponse!
@@ -2438,8 +2458,8 @@ type Vote {
 }
 
 type VoteCountResponse {
-  dislike: Int!
-  like: Int!
+  dislikes: Int!
+  likes: Int!
 }
 
 input VoteCountWhereInput {

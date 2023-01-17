@@ -8,7 +8,9 @@ import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-w
 import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
 import { Comment } from 'src/prisma/@generated/comment/comment.model';
 import { User } from 'src/prisma/@generated/user/user.model';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CommentsService } from './comments.service';
+import { CommentWithVotes } from './dto/comment-with-votes.dto';
 import { CreateCommentInput } from './dto/create-comment.input';
 
 @Resolver(() => Comment)
@@ -57,18 +59,56 @@ export class CommentsResolver {
     return this.commentsService.findAll(where, { user: true, _count: true });
   }
 
-  @Query(() => [Comment], { name: 'comments' })
-  @IsPublic()
-  findAllWithVotes(@Args('where') where: CommentWhereInput) {
-    return this.commentsService.raw(Prisma.sql`
-    SELECT posts.postid, posts.postbody,
-    COUNT(DISTINCT comments.commentid) AS comment_count, 
-    (SELECT COUNT(nullif(postlikes.vote,true)) FROM postlikes WHERE postlikes.postid=posts.postid)  AS dislikes, 
-    (SELECT COUNT(nullif(postlikes.vote,false))FROM postlikes WHERE postlikes.postid=posts.postid)  AS likes 
-    FROM posts 
-    LEFT JOIN comments ON comments.postid=posts.postid 
-    GROUP BY posts.postid;
-    `);
+  @Query(() => [CommentWithVotes], { name: 'commentsWithVotes' })
+  @IsPublic(true)
+  async findAllWithVotes(
+    @Args('where') where: CommentWhereInput,
+    @CurrentUser() me: User,
+  ) {
+    let myVoteQuery = '';
+    if (me) {
+      myVoteQuery = `
+      (
+        SELECT row_to_json("Vote")
+        FROM "Vote"
+        WHERE "Vote"."commentId"="Comment".id AND "Vote"."userId"=${me.id}
+      ) as "myVote",
+      `;
+    }
+
+    const whereQuery = [
+      where.videoId && `"Comment"."videoId"=${where.videoId.equals}`,
+      where.parentCommentId &&
+        `"Comment"."parentCommentId"=${where.parentCommentId.equals}`,
+    ].filter((criteria) => !!criteria);
+
+    const query = `SELECT "Comment".*, row_to_json("User") as user,  
+    ${myVoteQuery}
+    (
+      SELECT COUNT(CASE WHEN "Vote"."voteDirection" > 0 THEN 1 END)
+      FROM "Vote"
+      WHERE "Vote"."commentId"="Comment".id
+    ) as likes,
+    (
+      SELECT COUNT(CASE WHEN "Vote"."voteDirection" < 0 THEN 1 END)
+      FROM "Vote"
+      WHERE "Vote"."commentId"="Comment".id
+    ) as dislikes
+    FROM "Comment"
+    JOIN "User" ON "User"."id"="Comment"."userId"
+    ${whereQuery.length > 0 ? `WHERE ${whereQuery.join(' AND ')}` : ''}`;
+
+    const comments = await this.commentsService.raw<CommentWithVotes[]>(
+      Prisma.sql([query]),
+    );
+
+    return comments.map((c) => {
+      return {
+        ...c,
+        likes: Number(c.likes),
+        dislikes: Number(c.dislikes),
+      };
+    });
   }
 
   @Query(() => Comment, { name: 'comment' })

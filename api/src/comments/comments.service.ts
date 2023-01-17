@@ -5,6 +5,7 @@ import { CommentUpdateInput } from 'src/prisma/@generated/comment/comment-update
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
 import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CommentWithVotes } from './dto/comment-with-votes.dto';
 
 @Injectable()
 export class CommentsService {
@@ -18,8 +19,9 @@ export class CommentsService {
     return this.prisma.comment.findMany({ where, include });
   }
 
-  raw(query: Prisma.Sql) {
-    return this.prisma.$queryRaw(query);
+  async raw<T>(query: Prisma.Sql) {
+    const result = await this.prisma.$queryRaw<T>(query);
+    return result;
   }
 
   findOne(where: CommentWhereUniqueInput, include?: Prisma.CommentInclude) {
