@@ -19,6 +19,9 @@ export class UserCreateManyInput {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
+    @Field(() => String, {nullable:true})
+    name?: string;
+
     @HideField()
     password!: string;
 
@@ -33,4 +36,7 @@ export class UserCreateManyInput {
 
     @Field(() => Int, {nullable:false})
     roleId!: number;
+
+    @HideField()
+    verified?: boolean;
 }

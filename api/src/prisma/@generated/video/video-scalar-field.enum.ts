@@ -10,6 +10,7 @@ export enum VideoScalarFieldEnum {
     privacy = "privacy",
     createdAt = "createdAt",
     updatedAt = "updatedAt",
+    duration = "duration",
     dirId = "dirId",
     userId = "userId"
 }

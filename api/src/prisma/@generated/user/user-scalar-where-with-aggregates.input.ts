@@ -31,6 +31,9 @@ export class UserScalarWhereWithAggregatesInput {
     @Field(() => BoolNullableWithAggregatesFilter, {nullable:true})
     gender?: BoolNullableWithAggregatesFilter;
 
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    name?: StringWithAggregatesFilter;
+
     @HideField()
     password?: StringWithAggregatesFilter;
 
@@ -45,4 +48,7 @@ export class UserScalarWhereWithAggregatesInput {
 
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     roleId?: IntWithAggregatesFilter;
+
+    @HideField()
+    verified?: BoolNullableWithAggregatesFilter;
 }

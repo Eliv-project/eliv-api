@@ -1,0 +1,13 @@
+model View {
+    id Int @id @default(autoincrement())
+
+    ip String 
+
+    user User? @relation(references: [id], fields: [userId])
+    userId Int?
+
+    video Video @relation(references: [id], fields: [videoId])
+    videoId Int
+
+    createdAt DateTime @default(now())
+}

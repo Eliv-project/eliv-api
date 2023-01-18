@@ -5,7 +5,6 @@ import { CommentUpdateInput } from 'src/prisma/@generated/comment/comment-update
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
 import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CommentWithVotes } from './dto/comment-with-votes.dto';
 
 @Injectable()
 export class CommentsService {

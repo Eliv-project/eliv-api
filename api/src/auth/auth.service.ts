@@ -9,7 +9,6 @@ import { JwtTokens } from './types/jwt-tokens.type';
 import { getTokenExp } from 'src/utils/getTokenExp';
 import { CredentialsInput } from './dto/credentials-input.dto';
 import { OAuthInput } from './dto/oauth-input.dto';
-import { OAuthLinksService } from 'src/oauth-links/oauth-links.service';
 import { ImageProvider } from 'src/common/enums/image-provider.enum';
 import { Role } from './enums/role.enum';
 
@@ -19,7 +18,6 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
-    private oauthLinksService: OAuthLinksService,
   ) {}
 
   getTokensWithExp(payload: JwtPayload): JwtTokens {
@@ -56,6 +54,7 @@ export class AuthService {
     if (!linkedUser) {
       const generatedUsername = `${input.provider}:${input.providerId}`;
       const newUser = await this.usersService.create({
+        name: input.name,
         email: input.email,
         gender: true,
         password: bcrypt.hashSync(generatedUsername, 10),

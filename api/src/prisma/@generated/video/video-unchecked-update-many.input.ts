@@ -7,6 +7,7 @@ import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
+import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
 
 @InputType()
 export class VideoUncheckedUpdateManyInput {
@@ -37,6 +38,9 @@ export class VideoUncheckedUpdateManyInput {
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
+
+    @HideField()
+    duration?: FloatFieldUpdateOperationsInput;
 
     @HideField()
     dirId?: NullableStringFieldUpdateOperationsInput;

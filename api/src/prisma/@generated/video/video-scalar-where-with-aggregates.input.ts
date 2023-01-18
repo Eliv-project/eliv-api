@@ -7,6 +7,7 @@ import { HideField } from '@nestjs/graphql';
 import { JsonNullableWithAggregatesFilter } from '../prisma/json-nullable-with-aggregates-filter.input';
 import { IntNullableWithAggregatesFilter } from '../prisma/int-nullable-with-aggregates-filter.input';
 import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
+import { FloatWithAggregatesFilter } from '../prisma/float-with-aggregates-filter.input';
 
 @InputType()
 export class VideoScalarWhereWithAggregatesInput {
@@ -46,6 +47,9 @@ export class VideoScalarWhereWithAggregatesInput {
 
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
     updatedAt?: DateTimeWithAggregatesFilter;
+
+    @HideField()
+    duration?: FloatWithAggregatesFilter;
 
     @HideField()
     dirId?: StringNullableWithAggregatesFilter;

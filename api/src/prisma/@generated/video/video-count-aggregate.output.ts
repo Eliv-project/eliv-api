@@ -34,6 +34,9 @@ export class VideoCountAggregate {
     updatedAt!: number;
 
     @Field(() => Int, {nullable:false})
+    duration!: number;
+
+    @Field(() => Int, {nullable:false})
     dirId!: number;
 
     @Field(() => Int, {nullable:false})

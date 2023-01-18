@@ -31,6 +31,9 @@ export class VideoMinOrderByAggregateInput {
     updatedAt?: keyof typeof SortOrder;
 
     @HideField()
+    duration?: keyof typeof SortOrder;
+
+    @HideField()
     dirId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

@@ -3,11 +3,12 @@ import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
-import { UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-unchecked-create-nested-many-without-subscribing-user.input';
 import { UserSubscriptionUncheckedCreateNestedManyWithoutUserInput } from '../user-subscription/user-subscription-unchecked-create-nested-many-without-user.input';
+import { UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-unchecked-create-nested-many-without-subscribing-user.input';
 import { VideoUncheckedCreateNestedManyWithoutUserInput } from '../video/video-unchecked-create-nested-many-without-user.input';
 import { CommentUncheckedCreateNestedManyWithoutUserInput } from '../comment/comment-unchecked-create-nested-many-without-user.input';
 import { VoteUncheckedCreateNestedManyWithoutUserInput } from '../vote/vote-unchecked-create-nested-many-without-user.input';
+import { ViewUncheckedCreateNestedManyWithoutUserInput } from '../view/view-unchecked-create-nested-many-without-user.input';
 
 @InputType()
 export class UserUncheckedCreateWithoutOauthLinksInput {
@@ -24,6 +25,9 @@ export class UserUncheckedCreateWithoutOauthLinksInput {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
+    @Field(() => String, {nullable:true})
+    name?: string;
+
     @HideField()
     password!: string;
 
@@ -39,11 +43,11 @@ export class UserUncheckedCreateWithoutOauthLinksInput {
     @Field(() => Int, {nullable:false})
     roleId!: number;
 
-    @Field(() => UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput, {nullable:true})
-    subscribingUsers?: UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput;
-
     @Field(() => UserSubscriptionUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
-    subscribers?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
+    subscribingUsers?: UserSubscriptionUncheckedCreateNestedManyWithoutUserInput;
+
+    @Field(() => UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput, {nullable:true})
+    subscribers?: UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput;
 
     @Field(() => VideoUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     videos?: VideoUncheckedCreateNestedManyWithoutUserInput;
@@ -53,4 +57,10 @@ export class UserUncheckedCreateWithoutOauthLinksInput {
 
     @Field(() => VoteUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     votes?: VoteUncheckedCreateNestedManyWithoutUserInput;
+
+    @Field(() => ViewUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    views?: ViewUncheckedCreateNestedManyWithoutUserInput;
+
+    @HideField()
+    verified?: boolean;
 }

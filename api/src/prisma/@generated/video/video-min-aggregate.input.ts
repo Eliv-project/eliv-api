@@ -30,6 +30,9 @@ export class VideoMinAggregateInput {
     updatedAt?: true;
 
     @HideField()
+    duration?: true;
+
+    @HideField()
     dirId?: true;
 
     @Field(() => Boolean, {nullable:true})

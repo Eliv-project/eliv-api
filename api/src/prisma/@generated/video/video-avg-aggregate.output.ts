@@ -12,5 +12,8 @@ export class VideoAvgAggregate {
     privacy?: number;
 
     @Field(() => Float, {nullable:true})
+    duration?: number;
+
+    @Field(() => Float, {nullable:true})
     userId?: number;
 }

@@ -23,6 +23,9 @@ export class UserOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     gender?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+
     @HideField()
     password?: keyof typeof SortOrder;
 
@@ -37,6 +40,9 @@ export class UserOrderByWithAggregationInput {
 
     @Field(() => SortOrder, {nullable:true})
     roleId?: keyof typeof SortOrder;
+
+    @HideField()
+    verified?: keyof typeof SortOrder;
 
     @Field(() => UserCountOrderByAggregateInput, {nullable:true})
     _count?: UserCountOrderByAggregateInput;

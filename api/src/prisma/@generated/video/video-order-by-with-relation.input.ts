@@ -7,6 +7,7 @@ import { LiveSessionOrderByWithRelationInput } from '../live-session/live-sessio
 import { VodSessionOrderByWithRelationInput } from '../vod-session/vod-session-order-by-with-relation.input';
 import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-by-relation-aggregate.input';
 import { VoteOrderByRelationAggregateInput } from '../vote/vote-order-by-relation-aggregate.input';
+import { ViewOrderByRelationAggregateInput } from '../view/view-order-by-relation-aggregate.input';
 
 @InputType()
 export class VideoOrderByWithRelationInput {
@@ -39,6 +40,9 @@ export class VideoOrderByWithRelationInput {
     updatedAt?: keyof typeof SortOrder;
 
     @HideField()
+    duration?: keyof typeof SortOrder;
+
+    @HideField()
     dirId?: keyof typeof SortOrder;
 
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
@@ -58,4 +62,7 @@ export class VideoOrderByWithRelationInput {
 
     @Field(() => VoteOrderByRelationAggregateInput, {nullable:true})
     votes?: VoteOrderByRelationAggregateInput;
+
+    @Field(() => ViewOrderByRelationAggregateInput, {nullable:true})
+    views?: ViewOrderByRelationAggregateInput;
 }

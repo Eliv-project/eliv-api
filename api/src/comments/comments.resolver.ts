@@ -8,7 +8,6 @@ import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-w
 import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
 import { Comment } from 'src/prisma/@generated/comment/comment.model';
 import { User } from 'src/prisma/@generated/user/user.model';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { CommentsService } from './comments.service';
 import { CommentWithVotes } from './dto/comment-with-votes.dto';
 import { CreateCommentInput } from './dto/create-comment.input';
@@ -66,45 +65,62 @@ export class CommentsResolver {
     @CurrentUser() me: User,
   ) {
     let myVoteQuery = '';
+
     if (me) {
       myVoteQuery = `
       (
         SELECT row_to_json("Vote")
         FROM "Vote"
-        WHERE "Vote"."commentId"="Comment".id AND "Vote"."userId"=${me.id}
+        WHERE "Vote"."commentId"=c1.id AND "Vote"."userId"=${me.id}
       ) as "myVote",
       `;
     }
 
     const whereQuery = [
-      where.videoId && `"Comment"."videoId"=${where.videoId.equals}`,
+      where.videoId && `c1."videoId"=${where.videoId.equals}`,
       where.parentCommentId &&
-        `"Comment"."parentCommentId"=${where.parentCommentId.equals}`,
+        `c1."parentCommentId"=${where.parentCommentId.equals}`,
     ].filter((criteria) => !!criteria);
 
-    const query = `SELECT "Comment".*, row_to_json("User") as user,  
+    const countQuery = [
+      `
+      (
+        SELECT COUNT(*)
+        FROM "Comment" c2
+        WHERE c2."parentCommentId" = c1.id
+      ) as "replyCount",
+      `,
+    ].filter((queryField) => !!queryField);
+
+    const query = `SELECT c1.*, row_to_json("User") as user,  
     ${myVoteQuery}
+    ${countQuery}
     (
       SELECT COUNT(CASE WHEN "Vote"."voteDirection" > 0 THEN 1 END)
       FROM "Vote"
-      WHERE "Vote"."commentId"="Comment".id
+      WHERE "Vote"."commentId"=c1.id
     ) as likes,
     (
       SELECT COUNT(CASE WHEN "Vote"."voteDirection" < 0 THEN 1 END)
       FROM "Vote"
-      WHERE "Vote"."commentId"="Comment".id
+      WHERE "Vote"."commentId"=c1.id
     ) as dislikes
-    FROM "Comment"
-    JOIN "User" ON "User"."id"="Comment"."userId"
+    FROM "Comment" c1
+    JOIN "User" ON "User"."id"=c1."userId"
     ${whereQuery.length > 0 ? `WHERE ${whereQuery.join(' AND ')}` : ''}`;
 
-    const comments = await this.commentsService.raw<CommentWithVotes[]>(
-      Prisma.sql([query]),
-    );
+    const comments = await this.commentsService.raw<
+      (CommentWithVotes & {
+        replyCount?: number;
+      })[]
+    >(Prisma.sql([query]));
 
     return comments.map((c) => {
       return {
         ...c,
+        _count: {
+          childComments: Number(c.replyCount) || 0,
+        },
         likes: Number(c.likes),
         dislikes: Number(c.dislikes),
       };

@@ -22,4 +22,7 @@ export class UserCount {
 
     @Field(() => Int, {nullable:false})
     votes?: number;
+
+    @Field(() => Int, {nullable:false})
+    views?: number;
 }

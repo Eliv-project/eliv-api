@@ -3,10 +3,12 @@ import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
+import { Float } from '@nestjs/graphql';
 import { LiveSessionUncheckedCreateNestedOneWithoutVideoInput } from '../live-session/live-session-unchecked-create-nested-one-without-video.input';
 import { VodSessionUncheckedCreateNestedOneWithoutVideoInput } from '../vod-session/vod-session-unchecked-create-nested-one-without-video.input';
 import { CommentUncheckedCreateNestedManyWithoutVideoInput } from '../comment/comment-unchecked-create-nested-many-without-video.input';
 import { VoteUncheckedCreateNestedManyWithoutVideoInput } from '../vote/vote-unchecked-create-nested-many-without-video.input';
+import { ViewUncheckedCreateNestedManyWithoutVideoInput } from '../view/view-unchecked-create-nested-many-without-video.input';
 
 @InputType()
 export class VideoUncheckedCreateInput {
@@ -39,6 +41,9 @@ export class VideoUncheckedCreateInput {
     updatedAt?: Date | string;
 
     @HideField()
+    duration?: number;
+
+    @HideField()
     dirId?: string;
 
     @Field(() => Int, {nullable:false})
@@ -55,4 +60,7 @@ export class VideoUncheckedCreateInput {
 
     @Field(() => VoteUncheckedCreateNestedManyWithoutVideoInput, {nullable:true})
     votes?: VoteUncheckedCreateNestedManyWithoutVideoInput;
+
+    @Field(() => ViewUncheckedCreateNestedManyWithoutVideoInput, {nullable:true})
+    views?: ViewUncheckedCreateNestedManyWithoutVideoInput;
 }

@@ -12,6 +12,8 @@ import slugify from 'slugify';
 // @ts-ignore
 import nanoid from 'nanoid';
 import { Prisma } from '@prisma/client';
+import Ffmpeg from 'fluent-ffmpeg';
+import ffprobe from '@ffprobe-installer/ffprobe';
 
 @Injectable()
 export class VideosService {
@@ -20,7 +22,9 @@ export class VideosService {
     private readonly configService: ConfigService,
     @InjectQueue('video')
     private readonly videoQueue: Queue,
-  ) {}
+  ) {
+    Ffmpeg.setFfmpegPath(ffprobe.path);
+  }
 
   async toHls(filePath: string, dirId: string) {
     await this.videoQueue.add('convert-to-hls', {
@@ -31,6 +35,18 @@ export class VideosService {
     });
 
     return dirId;
+  }
+
+  getVideoInfo(filePath: string): Promise<Ffmpeg.FfprobeData> {
+    return new Promise((resolve, reject) => {
+      Ffmpeg.ffprobe(filePath, (err, data) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(data);
+      });
+    });
   }
 
   create(data: VideoCreateInput) {

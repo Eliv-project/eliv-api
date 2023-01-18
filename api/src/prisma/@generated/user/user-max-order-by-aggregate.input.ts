@@ -18,6 +18,9 @@ export class UserMaxOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     gender?: keyof typeof SortOrder;
 
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
+
     @HideField()
     password?: keyof typeof SortOrder;
 
@@ -29,4 +32,7 @@ export class UserMaxOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     roleId?: keyof typeof SortOrder;
+
+    @HideField()
+    verified?: keyof typeof SortOrder;
 }

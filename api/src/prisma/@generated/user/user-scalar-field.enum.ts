@@ -5,11 +5,13 @@ export enum UserScalarFieldEnum {
     email = "email",
     username = "username",
     gender = "gender",
+    name = "name",
     password = "password",
     avatar = "avatar",
     createdAt = "createdAt",
     updatedAt = "updatedAt",
-    roleId = "roleId"
+    roleId = "roleId",
+    verified = "verified"
 }
 
 

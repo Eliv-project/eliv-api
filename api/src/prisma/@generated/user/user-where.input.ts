@@ -12,6 +12,7 @@ import { OAuthLinkListRelationFilter } from '../o-auth-link/o-auth-link-list-rel
 import { VideoListRelationFilter } from '../video/video-list-relation-filter.input';
 import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
 import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
+import { ViewListRelationFilter } from '../view/view-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -36,6 +37,9 @@ export class UserWhereInput {
 
     @Field(() => BoolNullableFilter, {nullable:true})
     gender?: BoolNullableFilter;
+
+    @Field(() => StringFilter, {nullable:true})
+    name?: StringFilter;
 
     @HideField()
     password?: StringFilter;
@@ -72,4 +76,10 @@ export class UserWhereInput {
 
     @Field(() => VoteListRelationFilter, {nullable:true})
     votes?: VoteListRelationFilter;
+
+    @Field(() => ViewListRelationFilter, {nullable:true})
+    views?: ViewListRelationFilter;
+
+    @HideField()
+    verified?: BoolNullableFilter;
 }

@@ -6,11 +6,12 @@ import { NullableBoolFieldUpdateOperationsInput } from '../prisma/nullable-bool-
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
-import { UserSubscriptionUncheckedUpdateManyWithoutSubscribingUserNestedInput } from '../user-subscription/user-subscription-unchecked-update-many-without-subscribing-user-nested.input';
 import { UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput } from '../user-subscription/user-subscription-unchecked-update-many-without-user-nested.input';
+import { UserSubscriptionUncheckedUpdateManyWithoutSubscribingUserNestedInput } from '../user-subscription/user-subscription-unchecked-update-many-without-subscribing-user-nested.input';
 import { VideoUncheckedUpdateManyWithoutUserNestedInput } from '../video/video-unchecked-update-many-without-user-nested.input';
 import { CommentUncheckedUpdateManyWithoutUserNestedInput } from '../comment/comment-unchecked-update-many-without-user-nested.input';
 import { VoteUncheckedUpdateManyWithoutUserNestedInput } from '../vote/vote-unchecked-update-many-without-user-nested.input';
+import { ViewUncheckedUpdateManyWithoutUserNestedInput } from '../view/view-unchecked-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUncheckedUpdateWithoutOauthLinksInput {
@@ -27,6 +28,9 @@ export class UserUncheckedUpdateWithoutOauthLinksInput {
     @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     gender?: NullableBoolFieldUpdateOperationsInput;
 
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    name?: StringFieldUpdateOperationsInput;
+
     @HideField()
     password?: StringFieldUpdateOperationsInput;
 
@@ -42,11 +46,11 @@ export class UserUncheckedUpdateWithoutOauthLinksInput {
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     roleId?: IntFieldUpdateOperationsInput;
 
-    @Field(() => UserSubscriptionUncheckedUpdateManyWithoutSubscribingUserNestedInput, {nullable:true})
-    subscribingUsers?: UserSubscriptionUncheckedUpdateManyWithoutSubscribingUserNestedInput;
-
     @Field(() => UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
-    subscribers?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
+    subscribingUsers?: UserSubscriptionUncheckedUpdateManyWithoutUserNestedInput;
+
+    @Field(() => UserSubscriptionUncheckedUpdateManyWithoutSubscribingUserNestedInput, {nullable:true})
+    subscribers?: UserSubscriptionUncheckedUpdateManyWithoutSubscribingUserNestedInput;
 
     @Field(() => VideoUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     videos?: VideoUncheckedUpdateManyWithoutUserNestedInput;
@@ -56,4 +60,10 @@ export class UserUncheckedUpdateWithoutOauthLinksInput {
 
     @Field(() => VoteUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     votes?: VoteUncheckedUpdateManyWithoutUserNestedInput;
+
+    @Field(() => ViewUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
+    views?: ViewUncheckedUpdateManyWithoutUserNestedInput;
+
+    @HideField()
+    verified?: NullableBoolFieldUpdateOperationsInput;
 }

@@ -1,0 +1,317 @@
+Date : 2023-01-18 10:57:51
+Directory : d:\ELIV\PROJECTS\eliv-api
+Total : 190 files,  23178 codes, 259 comments, 1206 blanks, all 24643 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JSON               |          6 |     16,791 |          8 |          3 |     16,802 |
+| TypeScript         |        128 |      2,931 |         59 |        553 |      3,543 |
+| GraphQL            |          1 |      2,690 |         12 |        388 |      3,090 |
+| Prisma             |         14 |        271 |         16 |        112 |        399 |
+| SQL                |         25 |        151 |        121 |         78 |        350 |
+| YAML               |          3 |        130 |          7 |         11 |        148 |
+| Markdown           |          2 |         56 |          2 |         24 |         82 |
+| HTML               |          1 |         39 |          2 |          1 |         42 |
+| Properties         |          2 |         33 |         22 |          9 |         64 |
+| JavaScript         |          1 |         27 |          0 |          1 |         28 |
+| Docker             |          2 |         25 |          8 |         21 |         54 |
+| JSON with Comments |          1 |         24 |          0 |          1 |         25 |
+| Shell Script       |          3 |          5 |          2 |          3 |         10 |
+| Ignore             |          1 |          5 |          0 |          1 |          6 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                    | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                       |        190 |     23,178 |        259 |      1,206 |     24,643 |
+| . (Files)                                                                                               |          6 |        106 |          8 |          6 |        120 |
+| .github                                                                                                 |          1 |         34 |          1 |         11 |         46 |
+| .github\workflows                                                                                       |          1 |         34 |          1 |         11 |         46 |
+| api                                                                                                     |        180 |     22,963 |        226 |      1,179 |     24,368 |
+| api (Files)                                                                                             |         11 |     16,911 |         18 |         47 |     16,976 |
+| api\src                                                                                                 |        167 |      6,023 |        208 |      1,126 |      7,357 |
+| api\src (Files)                                                                                         |          6 |      2,836 |         19 |        406 |      3,261 |
+| api\src\auth                                                                                            |         21 |        433 |          8 |         89 |        530 |
+| api\src\auth (Files)                                                                                    |          5 |        208 |          5 |         35 |        248 |
+| api\src\auth\decorators                                                                                 |          2 |         13 |          0 |          4 |         17 |
+| api\src\auth\decorators (Files)                                                                         |          1 |          8 |          0 |          2 |         10 |
+| api\src\auth\decorators\is-public                                                                       |          1 |          5 |          0 |          2 |          7 |
+| api\src\auth\dto                                                                                        |          4 |         44 |          0 |         16 |         60 |
+| api\src\auth\enums                                                                                      |          2 |          8 |          0 |          2 |         10 |
+| api\src\auth\guards                                                                                     |          3 |         79 |          3 |         17 |         99 |
+| api\src\auth\strategies                                                                                 |          3 |         72 |          0 |         13 |         85 |
+| api\src\auth\types                                                                                      |          2 |          9 |          0 |          2 |         11 |
+| api\src\comments                                                                                        |          8 |        248 |          0 |         49 |        297 |
+| api\src\comments (Files)                                                                                |          6 |        225 |          0 |         43 |        268 |
+| api\src\comments\dto                                                                                    |          2 |         23 |          0 |          6 |         29 |
+| api\src\common                                                                                          |          5 |         50 |          0 |          8 |         58 |
+| api\src\common\constants                                                                                |          4 |         46 |          0 |          7 |         53 |
+| api\src\common\enums                                                                                    |          1 |          4 |          0 |          1 |          5 |
+| api\src\config                                                                                          |          3 |         27 |          0 |          3 |         30 |
+| api\src\live-sessions                                                                                   |         10 |        195 |          0 |         43 |        238 |
+| api\src\live-sessions (Files)                                                                           |          8 |        185 |          0 |         41 |        226 |
+| api\src\live-sessions\dto                                                                               |          1 |          5 |          0 |          1 |          6 |
+| api\src\live-sessions\enums                                                                             |          1 |          5 |          0 |          1 |          6 |
+| api\src\oauth-links                                                                                     |          6 |        113 |          0 |         28 |        141 |
+| api\src\permissions                                                                                     |          9 |        178 |          0 |         40 |        218 |
+| api\src\permissions (Files)                                                                             |          6 |        111 |          0 |         28 |        139 |
+| api\src\permissions-on-roles                                                                            |          2 |         11 |          0 |          4 |         15 |
+| api\src\permissions\decorators                                                                          |          1 |          5 |          0 |          2 |          7 |
+| api\src\permissions\decorators\need-permissions                                                         |          1 |          5 |          0 |          2 |          7 |
+| api\src\permissions\guards                                                                              |          2 |         62 |          0 |         10 |         72 |
+| api\src\prisma                                                                                          |         32 |        472 |        134 |        162 |        768 |
+| api\src\prisma (Files)                                                                                  |          3 |        159 |         12 |         68 |        239 |
+| api\src\prisma\migrations                                                                               |         25 |        151 |        121 |         78 |        350 |
+| api\src\prisma\migrations\20221210033616_init                                                           |          1 |         11 |          3 |          4 |         18 |
+| api\src\prisma\migrations\20221210041831_n_to_n_init                                                    |          1 |         26 |         17 |         14 |         57 |
+| api\src\prisma\migrations\20221210044214_oauth_link_init                                                |          1 |          7 |          2 |          3 |         12 |
+| api\src\prisma\migrations\20221212172413_nullable_avatar                                                |          1 |          1 |          1 |          1 |          3 |
+| api\src\prisma\migrations\20221213172444_videos                                                         |          1 |         23 |          6 |          8 |         37 |
+| api\src\prisma\migrations\20221213173650_video_with_user                                                |          1 |          2 |          8 |          2 |         12 |
+| api\src\prisma\migrations\20221214180457_init                                                           |          1 |          1 |          1 |          1 |          3 |
+| api\src\prisma\migrations\20221214181415_init                                                           |          1 |          2 |          8 |          2 |         12 |
+| api\src\prisma\migrations\20221217041418_init                                                           |          1 |          1 |          7 |          1 |          9 |
+| api\src\prisma\migrations\20221217041856_init                                                           |          1 |          2 |          7 |          1 |         10 |
+| api\src\prisma\migrations\20230101104819_                                                               |          1 |          3 |          8 |          2 |         13 |
+| api\src\prisma\migrations\20230104181758_                                                               |          1 |          2 |          7 |          1 |         10 |
+| api\src\prisma\migrations\20230109081612_                                                               |          1 |          1 |          1 |          1 |          3 |
+| api\src\prisma\migrations\20230109082109_                                                               |          1 |          1 |          1 |          1 |          3 |
+| api\src\prisma\migrations\20230109082425_                                                               |          1 |          2 |          7 |          1 |         10 |
+| api\src\prisma\migrations\20230110160453_                                                               |          1 |         10 |          3 |          4 |         17 |
+| api\src\prisma\migrations\20230110161936_                                                               |          1 |          2 |          8 |          2 |         12 |
+| api\src\prisma\migrations\20230111035716_                                                               |          1 |          1 |          1 |          1 |          3 |
+| api\src\prisma\migrations\20230112031637_                                                               |          1 |          4 |          4 |          4 |         12 |
+| api\src\prisma\migrations\20230112090524_                                                               |          1 |         13 |          7 |          7 |         27 |
+| api\src\prisma\migrations\20230112171940_vote                                                           |          1 |         15 |          5 |          6 |         26 |
+| api\src\prisma\migrations\20230112194644_user_subscriptions                                             |          1 |          8 |          3 |          4 |         15 |
+| api\src\prisma\migrations\20230116022246_                                                               |          1 |          2 |          2 |          2 |          6 |
+| api\src\prisma\migrations\20230118015345_                                                               |          1 |          1 |          1 |          1 |          3 |
+| api\src\prisma\migrations\20230118030513_                                                               |          1 |         10 |          3 |          4 |         17 |
+| api\src\prisma\seed                                                                                     |          4 |        162 |          1 |         16 |        179 |
+| api\src\pub-sub                                                                                         |          1 |         23 |          0 |          3 |         26 |
+| api\src\roles                                                                                           |          6 |        112 |          0 |         28 |        140 |
+| api\src\upload                                                                                          |          4 |         56 |          0 |         12 |         68 |
+| api\src\upload (Files)                                                                                  |          2 |         47 |          0 |          9 |         56 |
+| api\src\upload\interfaces                                                                               |          2 |          9 |          0 |          3 |         12 |
+| api\src\user-subscriptions                                                                              |          7 |        162 |          3 |         31 |        196 |
+| api\src\user-subscriptions (Files)                                                                      |          6 |        155 |          3 |         29 |        187 |
+| api\src\user-subscriptions\dto                                                                          |          1 |          7 |          0 |          2 |          9 |
+| api\src\users                                                                                           |          6 |        139 |          2 |         35 |        176 |
+| api\src\utils                                                                                           |          4 |         30 |          0 |          8 |         38 |
+| api\src\videos                                                                                          |         13 |        451 |         28 |         67 |        546 |
+| api\src\videos (Files)                                                                                  |          6 |        238 |          7 |         42 |        287 |
+| api\src\videos\enums                                                                                    |          1 |          4 |          0 |          1 |          5 |
+| api\src\videos\interfaces                                                                               |          4 |         33 |          1 |          6 |         40 |
+| api\src\videos\models                                                                                   |          1 |          6 |          0 |          2 |          8 |
+| api\src\videos\processors                                                                               |          1 |        170 |         20 |         16 |        206 |
+| api\src\views                                                                                           |          6 |        109 |          0 |         30 |        139 |
+| api\src\vod-sessions                                                                                    |          9 |        112 |          0 |         33 |        145 |
+| api\src\vod-sessions (Files)                                                                            |          6 |         94 |          0 |         28 |        122 |
+| api\src\vod-sessions\dto                                                                                |          2 |         13 |          0 |          4 |         17 |
+| api\src\vod-sessions\enums                                                                              |          1 |          5 |          0 |          1 |          6 |
+| api\src\votes                                                                                           |          9 |        266 |         14 |         47 |        327 |
+| api\src\votes (Files)                                                                                   |          6 |        241 |         14 |         39 |        294 |
+| api\src\votes\dto                                                                                       |          3 |         25 |          0 |          8 |         33 |
+| api\test                                                                                                |          2 |         29 |          0 |          6 |         35 |
+| rtmp                                                                                                    |          3 |         75 |         24 |         10 |        109 |
++---------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                | language           | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\ELIV\PROJECTS\eliv-api\.github\workflows\deploy-gcp.prod.yml                                         | YAML               |         34 |          1 |         11 |         46 |
+| d:\ELIV\PROJECTS\eliv-api\README.md                                                                     | Markdown           |          5 |          0 |          3 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\.dockerignore                                                             | Ignore             |          5 |          0 |          1 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\.eslintrc.js                                                              | JavaScript         |         27 |          0 |          1 |         28 |
+| d:\ELIV\PROJECTS\eliv-api\api\.prettierrc                                                               | JSON               |          4 |          0 |          0 |          4 |
+| d:\ELIV\PROJECTS\eliv-api\api\Dockerfile                                                                | Docker             |         22 |          8 |         20 |         50 |
+| d:\ELIV\PROJECTS\eliv-api\api\README.md                                                                 | Markdown           |         51 |          2 |         21 |         74 |
+| d:\ELIV\PROJECTS\eliv-api\api\nest-cli.json                                                             | JSON               |          5 |          0 |          1 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\nginx.conf                                                                | Properties         |          0 |          0 |          1 |          1 |
+| d:\ELIV\PROJECTS\eliv-api\api\package-lock.json                                                         | JSON               |     16,656 |          0 |          1 |     16,657 |
+| d:\ELIV\PROJECTS\eliv-api\api\package.json                                                              | JSON               |        111 |          6 |          0 |        117 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\app.controller.spec.ts                                                | TypeScript         |         18 |          0 |          5 |         23 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\app.controller.ts                                                     | TypeScript         |         10 |          0 |          3 |         13 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\app.module.ts                                                         | TypeScript         |         90 |          5 |          3 |         98 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\app.service.ts                                                        | TypeScript         |          7 |          0 |          2 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\auth.controller.spec.ts                                          | TypeScript         |         16 |          0 |          5 |         21 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\auth.module.ts                                                   | TypeScript         |         24 |          0 |          2 |         26 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\auth.resolver.ts                                                 | TypeScript         |         60 |          3 |         10 |         73 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\auth.service.spec.ts                                             | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\auth.service.ts                                                  | TypeScript         |         94 |          2 |         13 |        109 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\decorators\current-user.decorator.ts                             | TypeScript         |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\decorators\is-public\is-public.decorator.ts                      | TypeScript         |          5 |          0 |          2 |          7 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\dto\credentials-input.dto.ts                                     | TypeScript         |          8 |          0 |          3 |         11 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\dto\login-response.dto.ts                                        | TypeScript         |         15 |          0 |          6 |         21 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\dto\oauth-input.dto.ts                                           | TypeScript         |         13 |          0 |          5 |         18 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\dto\refresh-tokens-response.dto.ts                               | TypeScript         |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\enums\provider.enum.ts                                           | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\enums\role.enum.ts                                               | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\guards\gql-auth.guard.ts                                         | TypeScript         |         16 |          0 |          3 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\guards\jwt-auth.guard.ts                                         | TypeScript         |         50 |          3 |         11 |         64 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\guards\jwt-refresh-auth.guard.ts                                 | TypeScript         |         13 |          0 |          3 |         16 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\strategies\jwt-refresh.strategy.ts                               | TypeScript         |         21 |          0 |          3 |         24 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\strategies\jwt.strategy.ts                                       | TypeScript         |         28 |          0 |          5 |         33 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\strategies\local.strategy.ts                                     | TypeScript         |         23 |          0 |          5 |         28 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\types\jwt-payload.type.ts                                        | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\auth\types\jwt-tokens.type.ts                                         | TypeScript         |          5 |          0 |          1 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\comment.schema.prisma                                        | Prisma             |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\comments.module.ts                                           | TypeScript         |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\comments.resolver.spec.ts                                    | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\comments.resolver.ts                                         | TypeScript         |        141 |          0 |         17 |        158 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\comments.service.spec.ts                                     | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\comments.service.ts                                          | TypeScript         |         33 |          0 |          9 |         42 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\dto\comment-with-votes.dto.ts                                | TypeScript         |         12 |          0 |          4 |         16 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\comments\dto\create-comment.input.ts                                  | TypeScript         |         11 |          0 |          2 |         13 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\common\constants\errorCodes.ts                                        | TypeScript         |          1 |          0 |          1 |          2 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\common\constants\permissions.ts                                       | TypeScript         |          8 |          0 |          3 |         11 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\common\constants\subscription-events.constant.ts                      | TypeScript         |          3 |          0 |          1 |          4 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\common\constants\videoQualityConfigs.ts                               | TypeScript         |         34 |          0 |          2 |         36 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\common\enums\image-provider.enum.ts                                   | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\config\global.config.ts                                               | TypeScript         |         15 |          0 |          1 |         16 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\config\jwt.config.ts                                                  | TypeScript         |          8 |          0 |          1 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\config\path.config.ts                                                 | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\dto\rtmp-input.dto.ts                                   | TypeScript         |          5 |          0 |          1 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\enums\status.enum.ts                                    | TypeScript         |          5 |          0 |          1 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-session.schema.prisma                              | Prisma             |          9 |          0 |          3 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-sessions.controller.spec.ts                        | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-sessions.controller.ts                             | TypeScript         |         49 |          0 |          7 |         56 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-sessions.module.ts                                 | TypeScript         |         10 |          0 |          2 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-sessions.resolver.spec.ts                          | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-sessions.resolver.ts                               | TypeScript         |         41 |          0 |          7 |         48 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-sessions.service.spec.ts                           | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\live-sessions\live-sessions.service.ts                                | TypeScript         |         33 |          0 |          7 |         40 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\main.ts                                                               | TypeScript         |         21 |          2 |          5 |         28 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\oauth-links\oauth-link.schema.prisma                                  | Prisma             |          7 |          0 |          2 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\oauth-links\oauth-links.module.ts                                     | TypeScript         |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\oauth-links\oauth-links.resolver.spec.ts                              | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\oauth-links\oauth-links.resolver.ts                                   | TypeScript         |         41 |          0 |          7 |         48 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\oauth-links\oauth-links.service.spec.ts                               | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\oauth-links\oauth-links.service.ts                                    | TypeScript         |         28 |          0 |          7 |         35 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions-on-roles\permissions-on-roles.module.ts                   | TypeScript         |          3 |          0 |          2 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions-on-roles\permissions-on-roles.schema.prisma               | Prisma             |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\decorators\need-permissions\need-permissions.decorator.ts | TypeScript         |          5 |          0 |          2 |          7 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\guards\permissions.guard.spec.ts                          | TypeScript         |          6 |          0 |          2 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\guards\permissions.guard.ts                               | TypeScript         |         56 |          0 |          8 |         64 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\permission.schema.prisma                                  | Prisma             |          5 |          0 |          2 |          7 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\permissions.module.ts                                     | TypeScript         |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\permissions.resolver.spec.ts                              | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\permissions.resolver.ts                                   | TypeScript         |         41 |          0 |          7 |         48 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\permissions.service.spec.ts                               | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\permissions\permissions.service.ts                                    | TypeScript         |         28 |          0 |          7 |         35 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\base.prisma                                                    | Prisma             |         11 |          4 |          3 |         18 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221210033616_init\migration.sql                   | SQL                |         11 |          3 |          4 |         18 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221210041831_n_to_n_init\migration.sql            | SQL                |         26 |         17 |         14 |         57 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221210044214_oauth_link_init\migration.sql        | SQL                |          7 |          2 |          3 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221212172413_nullable_avatar\migration.sql        | SQL                |          1 |          1 |          1 |          3 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221213172444_videos\migration.sql                 | SQL                |         23 |          6 |          8 |         37 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221213173650_video_with_user\migration.sql        | SQL                |          2 |          8 |          2 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221214180457_init\migration.sql                   | SQL                |          1 |          1 |          1 |          3 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221214181415_init\migration.sql                   | SQL                |          2 |          8 |          2 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221217041418_init\migration.sql                   | SQL                |          1 |          7 |          1 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20221217041856_init\migration.sql                   | SQL                |          2 |          7 |          1 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230101104819_\migration.sql                       | SQL                |          3 |          8 |          2 |         13 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230104181758_\migration.sql                       | SQL                |          2 |          7 |          1 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230109081612_\migration.sql                       | SQL                |          1 |          1 |          1 |          3 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230109082109_\migration.sql                       | SQL                |          1 |          1 |          1 |          3 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230109082425_\migration.sql                       | SQL                |          2 |          7 |          1 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230110160453_\migration.sql                       | SQL                |         10 |          3 |          4 |         17 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230110161936_\migration.sql                       | SQL                |          2 |          8 |          2 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230111035716_\migration.sql                       | SQL                |          1 |          1 |          1 |          3 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230112031637_\migration.sql                       | SQL                |          4 |          4 |          4 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230112090524_\migration.sql                       | SQL                |         13 |          7 |          7 |         27 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230112171940_vote\migration.sql                   | SQL                |         15 |          5 |          6 |         26 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230112194644_user_subscriptions\migration.sql     | SQL                |          8 |          3 |          4 |         15 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230116022246_\migration.sql                       | SQL                |          2 |          2 |          2 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230118015345_\migration.sql                       | SQL                |          1 |          1 |          1 |          3 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\migrations\20230118030513_\migration.sql                       | SQL                |         10 |          3 |          4 |         17 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\prisma.service.ts                                              | TypeScript         |         13 |          0 |          3 |         16 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\schema.prisma                                                  | Prisma             |        135 |          8 |         62 |        205 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\seed\index.ts                                                  | TypeScript         |         21 |          0 |          4 |         25 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\seed\permissions.ts                                            | TypeScript         |         40 |          1 |          4 |         45 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\seed\roles.ts                                                  | TypeScript         |         42 |          0 |          4 |         46 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\prisma\seed\users.ts                                                  | TypeScript         |         59 |          0 |          4 |         63 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\pub-sub\pub-sub.module.ts                                             | TypeScript         |         23 |          0 |          3 |         26 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\roles\role.schema.prisma                                              | Prisma             |          6 |          0 |          2 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\roles\roles.module.ts                                                 | TypeScript         |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\roles\roles.resolver.spec.ts                                          | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\roles\roles.resolver.ts                                               | TypeScript         |         41 |          0 |          7 |         48 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\roles\roles.service.spec.ts                                           | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\roles\roles.service.ts                                                | TypeScript         |         28 |          0 |          7 |         35 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\schema.gql                                                            | GraphQL            |      2,690 |         12 |        388 |      3,090 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\upload\interfaces\upload-file-options.input.ts                        | TypeScript         |          5 |          0 |          2 |          7 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\upload\interfaces\uploaded-file.interface.ts                          | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\upload\upload.service.spec.ts                                         | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\upload\upload.service.ts                                              | TypeScript         |         33 |          0 |          4 |         37 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\user-subscriptions\dto\user-subscription-response.dto.ts              | TypeScript         |          7 |          0 |          2 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\user-subscriptions\user-subscription.schema.prisma                    | Prisma             |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\user-subscriptions\user-subscriptions.module.ts                       | TypeScript         |         14 |          0 |          2 |         16 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\user-subscriptions\user-subscriptions.resolver.spec.ts                | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\user-subscriptions\user-subscriptions.resolver.ts                     | TypeScript         |         63 |          3 |          7 |         73 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\user-subscriptions\user-subscriptions.service.spec.ts                 | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\user-subscriptions\user-subscriptions.service.ts                      | TypeScript         |         41 |          0 |          8 |         49 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\users\user.schema.prisma                                              | Prisma             |         20 |          2 |          9 |         31 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\users\users.module.ts                                                 | TypeScript         |         12 |          0 |          2 |         14 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\users\users.resolver.spec.ts                                          | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\users\users.resolver.ts                                               | TypeScript         |         44 |          0 |          7 |         51 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\users\users.service.spec.ts                                           | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\users\users.service.ts                                                | TypeScript         |         34 |          0 |          7 |         41 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\utils\getErrorCode.ts                                                 | TypeScript         |          4 |          0 |          2 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\utils\getOrCreateDir.ts                                               | TypeScript         |          7 |          0 |          2 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\utils\getPermissionsByEntity.ts                                       | TypeScript         |         16 |          0 |          3 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\utils\getTokenExp.ts                                                  | TypeScript         |          3 |          0 |          1 |          4 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\enums\privacy.enum.ts                                          | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\interfaces\create-video-with-file.input.ts                     | TypeScript         |          9 |          1 |          2 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\interfaces\ffmpeg-quality-config.ts                            | TypeScript         |         14 |          0 |          2 |         16 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\interfaces\file-upload.ts                                      | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\interfaces\video2hls-options.input.ts                          | TypeScript         |          3 |          0 |          1 |          4 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\models\process-progress.model.ts                               | TypeScript         |          6 |          0 |          2 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\processors\video.processor.ts                                  | TypeScript         |        170 |         20 |         16 |        206 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\video.schema.prisma                                            | Prisma             |         19 |          2 |         10 |         31 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\videos.module.ts                                               | TypeScript         |         20 |          0 |          2 |         22 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\videos.resolver.spec.ts                                        | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\videos.resolver.ts                                             | TypeScript         |        114 |          4 |         10 |        128 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\videos.service.spec.ts                                         | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\videos\videos.service.ts                                              | TypeScript         |         56 |          1 |         10 |         67 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\views\views.module.ts                                                 | TypeScript         |          8 |          0 |          2 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\views\views.resolver.spec.ts                                          | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\views\views.resolver.ts                                               | TypeScript         |         37 |          0 |          7 |         44 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\views\views.schema.prisma                                             | Prisma             |          9 |          0 |          4 |         13 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\views\views.service.spec.ts                                           | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\views\views.service.ts                                                | TypeScript         |         26 |          0 |          7 |         33 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\dto\create-vod-session.input.ts                          | TypeScript         |          6 |          0 |          2 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\dto\update-vod-session.input.ts                          | TypeScript         |          7 |          0 |          2 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\enums\status.enum.ts                                     | TypeScript         |          5 |          0 |          1 |          6 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\vod-session.schema.prisma                                | Prisma             |          8 |          0 |          3 |         11 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\vod-sessions.module.ts                                   | TypeScript         |          7 |          0 |          2 |          9 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\vod-sessions.resolver.spec.ts                            | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\vod-sessions.resolver.ts                                 | TypeScript         |         29 |          0 |          7 |         36 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\vod-sessions.service.spec.ts                             | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\vod-sessions\vod-sessions.service.ts                                  | TypeScript         |         21 |          0 |          6 |         27 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\dto\vote-count-response.dto.ts                                  | TypeScript         |          9 |          0 |          3 |         12 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\dto\vote-count-where.input.ts                                   | TypeScript         |          6 |          0 |          2 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\dto\vote-response.dto.ts                                        | TypeScript         |         10 |          0 |          3 |         13 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\vote.schema.prisma                                              | Prisma             |         12 |          0 |          3 |         15 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\votes.module.ts                                                 | TypeScript         |         21 |          0 |          2 |         23 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\votes.resolver.spec.ts                                          | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\votes.resolver.ts                                               | TypeScript         |        139 |         14 |         14 |        167 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\votes.service.spec.ts                                           | TypeScript         |         14 |          0 |          5 |         19 |
+| d:\ELIV\PROJECTS\eliv-api\api\src\votes\votes.service.ts                                                | TypeScript         |         40 |          0 |         10 |         50 |
+| d:\ELIV\PROJECTS\eliv-api\api\test\app.e2e-spec.ts                                                      | TypeScript         |         20 |          0 |          5 |         25 |
+| d:\ELIV\PROJECTS\eliv-api\api\test\jest-e2e.json                                                        | JSON               |          9 |          0 |          1 |         10 |
+| d:\ELIV\PROJECTS\eliv-api\api\tsconfig.build.json                                                       | JSON               |          6 |          2 |          0 |          8 |
+| d:\ELIV\PROJECTS\eliv-api\api\tsconfig.json                                                             | JSON with Comments |         24 |          0 |          1 |         25 |
+| d:\ELIV\PROJECTS\eliv-api\cleanup-docker-image.sh                                                       | Shell Script       |          1 |          0 |          0 |          1 |
+| d:\ELIV\PROJECTS\eliv-api\deploy-docker.local.sh                                                        | Shell Script       |          2 |          1 |          1 |          4 |
+| d:\ELIV\PROJECTS\eliv-api\deploy-docker.prod.sh                                                         | Shell Script       |          2 |          1 |          2 |          5 |
+| d:\ELIV\PROJECTS\eliv-api\docker-compose.dev.yml                                                        | YAML               |         49 |          3 |          0 |         52 |
+| d:\ELIV\PROJECTS\eliv-api\docker-compose.prod.yml                                                       | YAML               |         47 |          3 |          0 |         50 |
+| d:\ELIV\PROJECTS\eliv-api\rtmp\Dockerfile                                                               | Docker             |          3 |          0 |          1 |          4 |
+| d:\ELIV\PROJECTS\eliv-api\rtmp\index.html                                                               | HTML               |         39 |          2 |          1 |         42 |
+| d:\ELIV\PROJECTS\eliv-api\rtmp\nginx.conf                                                               | Properties         |         33 |         22 |          8 |         63 |
+| Total                                                                                                   |                    |     23,178 |        259 |      1,206 |     24,643 |
++---------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

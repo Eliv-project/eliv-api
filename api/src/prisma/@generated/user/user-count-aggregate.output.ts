@@ -18,6 +18,9 @@ export class UserCountAggregate {
     @Field(() => Int, {nullable:false})
     gender!: number;
 
+    @Field(() => Int, {nullable:false})
+    name!: number;
+
     @HideField()
     password!: number;
 
@@ -32,6 +35,9 @@ export class UserCountAggregate {
 
     @Field(() => Int, {nullable:false})
     roleId!: number;
+
+    @HideField()
+    verified!: number;
 
     @Field(() => Int, {nullable:false})
     _all!: number;

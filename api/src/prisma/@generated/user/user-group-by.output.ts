@@ -24,6 +24,9 @@ export class UserGroupBy {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
+    @Field(() => String, {nullable:false})
+    name!: string;
+
     @HideField()
     password!: string;
 
@@ -38,6 +41,9 @@ export class UserGroupBy {
 
     @Field(() => Int, {nullable:false})
     roleId!: number;
+
+    @HideField()
+    verified?: boolean;
 
     @Field(() => UserCountAggregate, {nullable:true})
     _count?: UserCountAggregate;

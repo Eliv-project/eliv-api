@@ -8,6 +8,7 @@ import { OAuthLinkOrderByRelationAggregateInput } from '../o-auth-link/o-auth-li
 import { VideoOrderByRelationAggregateInput } from '../video/video-order-by-relation-aggregate.input';
 import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-by-relation-aggregate.input';
 import { VoteOrderByRelationAggregateInput } from '../vote/vote-order-by-relation-aggregate.input';
+import { ViewOrderByRelationAggregateInput } from '../view/view-order-by-relation-aggregate.input';
 
 @InputType()
 export class UserOrderByWithRelationInput {
@@ -23,6 +24,9 @@ export class UserOrderByWithRelationInput {
 
     @Field(() => SortOrder, {nullable:true})
     gender?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    name?: keyof typeof SortOrder;
 
     @HideField()
     password?: keyof typeof SortOrder;
@@ -59,4 +63,10 @@ export class UserOrderByWithRelationInput {
 
     @Field(() => VoteOrderByRelationAggregateInput, {nullable:true})
     votes?: VoteOrderByRelationAggregateInput;
+
+    @Field(() => ViewOrderByRelationAggregateInput, {nullable:true})
+    views?: ViewOrderByRelationAggregateInput;
+
+    @HideField()
+    verified?: keyof typeof SortOrder;
 }

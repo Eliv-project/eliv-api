@@ -3,11 +3,12 @@ import { InputType } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { RoleCreateNestedOneWithoutUsersInput } from '../role/role-create-nested-one-without-users.input';
-import { UserSubscriptionCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-create-nested-many-without-subscribing-user.input';
 import { UserSubscriptionCreateNestedManyWithoutUserInput } from '../user-subscription/user-subscription-create-nested-many-without-user.input';
+import { UserSubscriptionCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-create-nested-many-without-subscribing-user.input';
 import { OAuthLinkCreateNestedManyWithoutUserInput } from '../o-auth-link/o-auth-link-create-nested-many-without-user.input';
 import { CommentCreateNestedManyWithoutUserInput } from '../comment/comment-create-nested-many-without-user.input';
 import { VoteCreateNestedManyWithoutUserInput } from '../vote/vote-create-nested-many-without-user.input';
+import { ViewCreateNestedManyWithoutUserInput } from '../view/view-create-nested-many-without-user.input';
 
 @InputType()
 export class UserCreateWithoutVideosInput {
@@ -20,6 +21,9 @@ export class UserCreateWithoutVideosInput {
 
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
+
+    @Field(() => String, {nullable:true})
+    name?: string;
 
     @HideField()
     password!: string;
@@ -36,11 +40,11 @@ export class UserCreateWithoutVideosInput {
     @Field(() => RoleCreateNestedOneWithoutUsersInput, {nullable:false})
     role!: RoleCreateNestedOneWithoutUsersInput;
 
-    @Field(() => UserSubscriptionCreateNestedManyWithoutSubscribingUserInput, {nullable:true})
-    subscribingUsers?: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput;
-
     @Field(() => UserSubscriptionCreateNestedManyWithoutUserInput, {nullable:true})
-    subscribers?: UserSubscriptionCreateNestedManyWithoutUserInput;
+    subscribingUsers?: UserSubscriptionCreateNestedManyWithoutUserInput;
+
+    @Field(() => UserSubscriptionCreateNestedManyWithoutSubscribingUserInput, {nullable:true})
+    subscribers?: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput;
 
     @Field(() => OAuthLinkCreateNestedManyWithoutUserInput, {nullable:true})
     oauthLinks?: OAuthLinkCreateNestedManyWithoutUserInput;
@@ -50,4 +54,10 @@ export class UserCreateWithoutVideosInput {
 
     @Field(() => VoteCreateNestedManyWithoutUserInput, {nullable:true})
     votes?: VoteCreateNestedManyWithoutUserInput;
+
+    @Field(() => ViewCreateNestedManyWithoutUserInput, {nullable:true})
+    views?: ViewCreateNestedManyWithoutUserInput;
+
+    @HideField()
+    verified?: boolean;
 }

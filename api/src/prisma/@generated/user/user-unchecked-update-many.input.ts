@@ -22,6 +22,9 @@ export class UserUncheckedUpdateManyInput {
     @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     gender?: NullableBoolFieldUpdateOperationsInput;
 
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    name?: StringFieldUpdateOperationsInput;
+
     @HideField()
     password?: StringFieldUpdateOperationsInput;
 
@@ -36,4 +39,7 @@ export class UserUncheckedUpdateManyInput {
 
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     roleId?: IntFieldUpdateOperationsInput;
+
+    @HideField()
+    verified?: NullableBoolFieldUpdateOperationsInput;
 }

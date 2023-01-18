@@ -7,9 +7,11 @@ import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
+import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
 import { VodSessionUncheckedUpdateOneWithoutVideoNestedInput } from '../vod-session/vod-session-unchecked-update-one-without-video-nested.input';
 import { CommentUncheckedUpdateManyWithoutVideoNestedInput } from '../comment/comment-unchecked-update-many-without-video-nested.input';
 import { VoteUncheckedUpdateManyWithoutVideoNestedInput } from '../vote/vote-unchecked-update-many-without-video-nested.input';
+import { ViewUncheckedUpdateManyWithoutVideoNestedInput } from '../view/view-unchecked-update-many-without-video-nested.input';
 
 @InputType()
 export class VideoUncheckedUpdateWithoutLiveSessionInput {
@@ -42,6 +44,9 @@ export class VideoUncheckedUpdateWithoutLiveSessionInput {
     updatedAt?: DateTimeFieldUpdateOperationsInput;
 
     @HideField()
+    duration?: FloatFieldUpdateOperationsInput;
+
+    @HideField()
     dirId?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
@@ -55,4 +60,7 @@ export class VideoUncheckedUpdateWithoutLiveSessionInput {
 
     @Field(() => VoteUncheckedUpdateManyWithoutVideoNestedInput, {nullable:true})
     votes?: VoteUncheckedUpdateManyWithoutVideoNestedInput;
+
+    @Field(() => ViewUncheckedUpdateManyWithoutVideoNestedInput, {nullable:true})
+    views?: ViewUncheckedUpdateManyWithoutVideoNestedInput;
 }

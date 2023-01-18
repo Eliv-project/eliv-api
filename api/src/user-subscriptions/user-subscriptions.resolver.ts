@@ -1,4 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
@@ -21,6 +22,27 @@ export class UserSubscriptionsResolver {
   @IsPublic()
   countSubscriber(@Args('where') where: UserSubscriptionWhereInput) {
     return this.userSubscriptionsService.count(where);
+  }
+
+  @Query(() => Boolean)
+  async isSubscribing(
+    @Args('user') userWhere: UserWhereUniqueInput,
+    @CurrentUser() me: User,
+  ): Promise<boolean> {
+    const subscribingUser = await this.usersService.findOne(userWhere);
+    if (!subscribingUser) {
+      throw new NotFoundException('USER_NOT_FOUND');
+    }
+
+    const subscription = await this.userSubscriptionsService.findFirst({
+      subscribingUser: {
+        is: {
+          id: { equals: subscribingUser.id },
+        },
+      },
+      userId: { equals: me.id },
+    });
+    return !!subscription;
   }
 
   @Mutation(() => UserSubscriptionResponse)

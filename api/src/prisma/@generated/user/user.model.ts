@@ -10,6 +10,7 @@ import { OAuthLink } from '../o-auth-link/o-auth-link.model';
 import { Video } from '../video/video.model';
 import { Comment } from '../comment/comment.model';
 import { Vote } from '../vote/vote.model';
+import { View } from '../view/view.model';
 import { UserCount } from './user-count.output';
 
 @ObjectType()
@@ -26,6 +27,9 @@ export class User {
 
     @Field(() => Boolean, {nullable:true,defaultValue:true})
     gender!: boolean | null;
+
+    @Field(() => String, {nullable:false,defaultValue:'UNNAMED_USER'})
+    name!: string;
 
     @HideField()
     password!: string;
@@ -62,6 +66,12 @@ export class User {
 
     @Field(() => [Vote], {nullable:true})
     votes?: Array<Vote>;
+
+    @Field(() => [View], {nullable:true})
+    views?: Array<View>;
+
+    @HideField()
+    verified!: boolean | null;
 
     @Field(() => UserCount, {nullable:false})
     _count?: UserCount;

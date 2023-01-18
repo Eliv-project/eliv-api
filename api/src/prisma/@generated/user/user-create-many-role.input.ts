@@ -19,6 +19,9 @@ export class UserCreateManyRoleInput {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
+    @Field(() => String, {nullable:true})
+    name?: string;
+
     @HideField()
     password!: string;
 
@@ -30,4 +33,7 @@ export class UserCreateManyRoleInput {
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
+
+    @HideField()
+    verified?: boolean;
 }

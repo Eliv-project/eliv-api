@@ -1,7 +1,7 @@
 model UserSubscription {
-    user              User     @relation("subscribedBy", fields: [userId], references: [id])
+    user              User     @relation("subscribingBy", fields: [userId], references: [id])
     userId            Int
-    subscribingUser   User     @relation("subscribing", fields: [subscribingUserId], references: [id])
+    subscribingUser   User     @relation("subscribingTo", fields: [subscribingUserId], references: [id])
     subscribingUserId Int // relation scalar field (used in the `@relation` attribute above)
     createdAt         DateTime @default(now())
 

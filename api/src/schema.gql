@@ -18,8 +18,8 @@ type Comment {
   updatedAt: DateTime!
   user: User!
   userId: Int!
-  video: Video!
-  videoId: Int!
+  video: Video
+  videoId: Int
   votes: [Vote!]
 }
 
@@ -34,7 +34,7 @@ input CommentCreateManyParentCommentInput {
   id: Int
   updatedAt: DateTime
   userId: Int!
-  videoId: Int!
+  videoId: Int
 }
 
 input CommentCreateManyParentCommentInputEnvelope {
@@ -48,7 +48,7 @@ input CommentCreateManyUserInput {
   id: Int
   parentCommentId: Int
   updatedAt: DateTime
-  videoId: Int!
+  videoId: Int
 }
 
 input CommentCreateManyUserInputEnvelope {
@@ -135,7 +135,7 @@ input CommentCreateWithoutChildCommentsInput {
   parentComment: CommentCreateNestedOneWithoutChildCommentsInput
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutCommentsInput!
-  video: VideoCreateNestedOneWithoutCommentsInput!
+  video: VideoCreateNestedOneWithoutCommentsInput
   votes: VoteCreateNestedManyWithoutCommentInput
 }
 
@@ -146,7 +146,7 @@ input CommentCreateWithoutParentCommentInput {
   id: Int
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutCommentsInput!
-  video: VideoCreateNestedOneWithoutCommentsInput!
+  video: VideoCreateNestedOneWithoutCommentsInput
   votes: VoteCreateNestedManyWithoutCommentInput
 }
 
@@ -157,7 +157,7 @@ input CommentCreateWithoutUserInput {
   id: Int
   parentComment: CommentCreateNestedOneWithoutChildCommentsInput
   updatedAt: DateTime
-  video: VideoCreateNestedOneWithoutCommentsInput!
+  video: VideoCreateNestedOneWithoutCommentsInput
   votes: VoteCreateNestedManyWithoutCommentInput
 }
 
@@ -180,7 +180,7 @@ input CommentCreateWithoutVotesInput {
   parentComment: CommentCreateNestedOneWithoutChildCommentsInput
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutCommentsInput!
-  video: VideoCreateNestedOneWithoutCommentsInput!
+  video: VideoCreateNestedOneWithoutCommentsInput
 }
 
 input CommentListRelationFilter {
@@ -204,7 +204,7 @@ input CommentScalarWhereInput {
   parentCommentId: IntNullableFilter
   updatedAt: DateTimeFilter
   userId: IntFilter
-  videoId: IntFilter
+  videoId: IntNullableFilter
 }
 
 input CommentUpdateInput {
@@ -214,7 +214,7 @@ input CommentUpdateInput {
   parentComment: CommentUpdateOneWithoutChildCommentsNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutCommentsNestedInput
-  video: VideoUpdateOneRequiredWithoutCommentsNestedInput
+  video: VideoUpdateOneWithoutCommentsNestedInput
   votes: VoteUpdateManyWithoutCommentNestedInput
 }
 
@@ -322,7 +322,7 @@ input CommentUpdateWithoutChildCommentsInput {
   parentComment: CommentUpdateOneWithoutChildCommentsNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutCommentsNestedInput
-  video: VideoUpdateOneRequiredWithoutCommentsNestedInput
+  video: VideoUpdateOneWithoutCommentsNestedInput
   votes: VoteUpdateManyWithoutCommentNestedInput
 }
 
@@ -332,7 +332,7 @@ input CommentUpdateWithoutParentCommentInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutCommentsNestedInput
-  video: VideoUpdateOneRequiredWithoutCommentsNestedInput
+  video: VideoUpdateOneWithoutCommentsNestedInput
   votes: VoteUpdateManyWithoutCommentNestedInput
 }
 
@@ -342,7 +342,7 @@ input CommentUpdateWithoutUserInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   parentComment: CommentUpdateOneWithoutChildCommentsNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
-  video: VideoUpdateOneRequiredWithoutCommentsNestedInput
+  video: VideoUpdateOneWithoutCommentsNestedInput
   votes: VoteUpdateManyWithoutCommentNestedInput
 }
 
@@ -363,7 +363,7 @@ input CommentUpdateWithoutVotesInput {
   parentComment: CommentUpdateOneWithoutChildCommentsNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutCommentsNestedInput
-  video: VideoUpdateOneRequiredWithoutCommentsNestedInput
+  video: VideoUpdateOneWithoutCommentsNestedInput
 }
 
 input CommentUpsertWithWhereUniqueWithoutParentCommentInput {
@@ -408,7 +408,7 @@ input CommentWhereInput {
   user: UserRelationFilter
   userId: IntFilter
   video: VideoRelationFilter
-  videoId: IntFilter
+  videoId: IntNullableFilter
   votes: VoteListRelationFilter
 }
 
@@ -430,15 +430,15 @@ type CommentWithVotes {
   updatedAt: DateTime!
   user: User!
   userId: Int!
-  video: Video!
-  videoId: Int!
+  video: Video
+  videoId: Int
   votes: [Vote!]
 }
 
 input CreateCommentInput {
   content: String!
   replyTo: CommentWhereUniqueInput
-  video: VideoCreateNestedOneWithoutCommentsInput!
+  video: VideoCreateNestedOneWithoutCommentsInput
 }
 
 input CreateVodSessionInput {
@@ -627,6 +627,7 @@ type Mutation {
   createRole(data: RoleCreateInput!): Role!
   createUser(data: UserCreateInput!): User!
   createVideo(data: VideoCreateInputWithFile!): Video!
+  createView(data: ViewCreateInput!): View!
   createVodSession(createVodSessionInput: CreateVodSessionInput!): VodSession!
   credentialsLogin(loginInput: CredentialsInput!): LoginResponse!
   oauthLogin(loginInput: OAuthInput!): LoginResponse!
@@ -737,6 +738,7 @@ input NullableStringFieldUpdateOperationsInput {
 input OAuthInput {
   avatarUrl: String!
   email: String!
+  name: String!
   provider: String!
   providerId: String!
 }
@@ -1115,6 +1117,7 @@ type Query {
   commentsWithVotes(where: CommentWhereInput!): [CommentWithVotes!]!
   countSubscriber(where: UserSubscriptionWhereInput!): Int!
   countVote(where: VoteCountWhereInput!): VoteCountResponse!
+  isSubscribing(user: UserWhereUniqueInput!): Boolean!
   isVoted(video: VideoWhereUniqueInput!): VoteResponse!
   liveSession(where: LiveSessionWhereUniqueInput!): LiveSession!
   liveSessions(where: LiveSessionWhereInput!): [LiveSession!]!
@@ -1311,6 +1314,7 @@ type User {
   email: String!
   gender: Boolean
   id: ID!
+  name: String!
   oauthLinks: [OAuthLink!]
   role: Role!
   roleId: Int!
@@ -1319,6 +1323,7 @@ type User {
   updatedAt: DateTime!
   username: String!
   videos: [Video!]
+  views: [View!]
   votes: [Vote!]
 }
 
@@ -1333,6 +1338,7 @@ type UserCount {
   subscribers: Int!
   subscribingUsers: Int!
   videos: Int!
+  views: Int!
   votes: Int!
 }
 
@@ -1342,13 +1348,15 @@ input UserCreateInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
-  subscribers: UserSubscriptionCreateNestedManyWithoutUserInput
-  subscribingUsers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
 
@@ -1358,6 +1366,7 @@ input UserCreateManyRoleInput {
   email: String!
   gender: Boolean
   id: Int
+  name: String
   updatedAt: DateTime
   username: String!
 }
@@ -1404,6 +1413,12 @@ input UserCreateNestedOneWithoutVideosInput {
   create: UserCreateWithoutVideosInput
 }
 
+input UserCreateNestedOneWithoutViewsInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutViewsInput
+  create: UserCreateWithoutViewsInput
+}
+
 input UserCreateNestedOneWithoutVotesInput {
   connect: UserWhereUniqueInput
   connectOrCreate: UserCreateOrConnectWithoutVotesInput
@@ -1440,6 +1455,11 @@ input UserCreateOrConnectWithoutVideosInput {
   where: UserWhereUniqueInput!
 }
 
+input UserCreateOrConnectWithoutViewsInput {
+  create: UserCreateWithoutViewsInput!
+  where: UserWhereUniqueInput!
+}
+
 input UserCreateOrConnectWithoutVotesInput {
   create: UserCreateWithoutVotesInput!
   where: UserWhereUniqueInput!
@@ -1450,13 +1470,15 @@ input UserCreateWithoutCommentsInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
-  subscribers: UserSubscriptionCreateNestedManyWithoutUserInput
-  subscribingUsers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
 
@@ -1466,12 +1488,14 @@ input UserCreateWithoutOauthLinksInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   role: RoleCreateNestedOneWithoutUsersInput!
-  subscribers: UserSubscriptionCreateNestedManyWithoutUserInput
-  subscribingUsers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
 
@@ -1481,12 +1505,14 @@ input UserCreateWithoutRoleInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
-  subscribers: UserSubscriptionCreateNestedManyWithoutUserInput
-  subscribingUsers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
 
@@ -1496,12 +1522,14 @@ input UserCreateWithoutSubscribersInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
-  subscribingUsers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
 
@@ -1511,12 +1539,14 @@ input UserCreateWithoutSubscribingUsersInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
-  subscribers: UserSubscriptionCreateNestedManyWithoutUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
 
@@ -1526,12 +1556,31 @@ input UserCreateWithoutVideosInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
-  subscribers: UserSubscriptionCreateNestedManyWithoutUserInput
-  subscribingUsers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
+  views: ViewCreateNestedManyWithoutUserInput
+  votes: VoteCreateNestedManyWithoutUserInput
+}
+
+input UserCreateWithoutViewsInput {
+  avatar: JSON
+  comments: CommentCreateNestedManyWithoutUserInput
+  createdAt: DateTime
+  email: String!
+  gender: Boolean
+  name: String
+  oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
+  role: RoleCreateNestedOneWithoutUsersInput!
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
+  updatedAt: DateTime
+  username: String!
+  videos: VideoCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
 
@@ -1541,13 +1590,15 @@ input UserCreateWithoutVotesInput {
   createdAt: DateTime
   email: String!
   gender: Boolean
+  name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
-  subscribers: UserSubscriptionCreateNestedManyWithoutUserInput
-  subscribingUsers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
   videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
 }
 
 input UserListRelationFilter {
@@ -1570,6 +1621,7 @@ input UserScalarWhereInput {
   email: StringFilter
   gender: BoolNullableFilter
   id: IntFilter
+  name: StringFilter
   roleId: IntFilter
   updatedAt: DateTimeFilter
   username: StringFilter
@@ -1629,12 +1681,12 @@ input UserSubscriptionCreateOrConnectWithoutUserInput {
 
 input UserSubscriptionCreateWithoutSubscribingUserInput {
   createdAt: DateTime
-  user: UserCreateNestedOneWithoutSubscribersInput!
+  user: UserCreateNestedOneWithoutSubscribingUsersInput!
 }
 
 input UserSubscriptionCreateWithoutUserInput {
   createdAt: DateTime
-  subscribingUser: UserCreateNestedOneWithoutSubscribingUsersInput!
+  subscribingUser: UserCreateNestedOneWithoutSubscribersInput!
 }
 
 input UserSubscriptionListRelationFilter {
@@ -1710,12 +1762,12 @@ input UserSubscriptionUpdateWithWhereUniqueWithoutUserInput {
 
 input UserSubscriptionUpdateWithoutSubscribingUserInput {
   createdAt: DateTimeFieldUpdateOperationsInput
-  user: UserUpdateOneRequiredWithoutSubscribersNestedInput
+  user: UserUpdateOneRequiredWithoutSubscribingUsersNestedInput
 }
 
 input UserSubscriptionUpdateWithoutUserInput {
   createdAt: DateTimeFieldUpdateOperationsInput
-  subscribingUser: UserUpdateOneRequiredWithoutSubscribingUsersNestedInput
+  subscribingUser: UserUpdateOneRequiredWithoutSubscribersNestedInput
 }
 
 input UserSubscriptionUpsertWithWhereUniqueWithoutSubscribingUserInput {
@@ -1756,13 +1808,15 @@ input UserUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
-  subscribers: UserSubscriptionUpdateManyWithoutUserNestedInput
-  subscribingUsers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
 
@@ -1771,6 +1825,7 @@ input UserUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
 }
@@ -1842,6 +1897,16 @@ input UserUpdateOneRequiredWithoutVotesNestedInput {
   upsert: UserUpsertWithoutVotesInput
 }
 
+input UserUpdateOneWithoutViewsNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutViewsInput
+  create: UserCreateWithoutViewsInput
+  delete: Boolean
+  disconnect: Boolean
+  update: UserUpdateWithoutViewsInput
+  upsert: UserUpsertWithoutViewsInput
+}
+
 input UserUpdateWithWhereUniqueWithoutRoleInput {
   data: UserUpdateWithoutRoleInput!
   where: UserWhereUniqueInput!
@@ -1852,13 +1917,15 @@ input UserUpdateWithoutCommentsInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
-  subscribers: UserSubscriptionUpdateManyWithoutUserNestedInput
-  subscribingUsers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
 
@@ -1868,12 +1935,14 @@ input UserUpdateWithoutOauthLinksInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
-  subscribers: UserSubscriptionUpdateManyWithoutUserNestedInput
-  subscribingUsers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
 
@@ -1883,12 +1952,14 @@ input UserUpdateWithoutRoleInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
-  subscribers: UserSubscriptionUpdateManyWithoutUserNestedInput
-  subscribingUsers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
 
@@ -1898,12 +1969,14 @@ input UserUpdateWithoutSubscribersInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
-  subscribingUsers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
 
@@ -1913,12 +1986,14 @@ input UserUpdateWithoutSubscribingUsersInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
-  subscribers: UserSubscriptionUpdateManyWithoutUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
 
@@ -1928,12 +2003,31 @@ input UserUpdateWithoutVideosInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
-  subscribers: UserSubscriptionUpdateManyWithoutUserNestedInput
-  subscribingUsers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
+  views: ViewUpdateManyWithoutUserNestedInput
+  votes: VoteUpdateManyWithoutUserNestedInput
+}
+
+input UserUpdateWithoutViewsInput {
+  avatar: JSON
+  comments: CommentUpdateManyWithoutUserNestedInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
+  role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  username: StringFieldUpdateOperationsInput
+  videos: VideoUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
 
@@ -1943,13 +2037,15 @@ input UserUpdateWithoutVotesInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
-  subscribers: UserSubscriptionUpdateManyWithoutUserNestedInput
-  subscribingUsers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
 }
 
 input UserUpsertWithWhereUniqueWithoutRoleInput {
@@ -1983,6 +2079,11 @@ input UserUpsertWithoutVideosInput {
   update: UserUpdateWithoutVideosInput!
 }
 
+input UserUpsertWithoutViewsInput {
+  create: UserCreateWithoutViewsInput!
+  update: UserUpdateWithoutViewsInput!
+}
+
 input UserUpsertWithoutVotesInput {
   create: UserCreateWithoutVotesInput!
   update: UserUpdateWithoutVotesInput!
@@ -1998,6 +2099,7 @@ input UserWhereInput {
   email: StringFilter
   gender: BoolNullableFilter
   id: IntFilter
+  name: StringFilter
   oauthLinks: OAuthLinkListRelationFilter
   role: RoleRelationFilter
   roleId: IntFilter
@@ -2006,6 +2108,7 @@ input UserWhereInput {
   updatedAt: DateTimeFilter
   username: StringFilter
   videos: VideoListRelationFilter
+  views: ViewListRelationFilter
   votes: VoteListRelationFilter
 }
 
@@ -2021,6 +2124,7 @@ type Video {
   createdAt: DateTime!
   desc: String
   dirId: String
+  duration: Float!
   id: ID!
   liveSession: LiveSession
   name: String!
@@ -2030,12 +2134,14 @@ type Video {
   updatedAt: DateTime!
   user: User!
   userId: Int!
+  views: [View!]
   vodSession: VodSession
   votes: [Vote!]
 }
 
 type VideoCount {
   comments: Int!
+  views: Int!
   votes: Int!
 }
 
@@ -2051,6 +2157,7 @@ input VideoCreateInputWithFile {
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
+  views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
 }
@@ -2090,6 +2197,12 @@ input VideoCreateNestedOneWithoutLiveSessionInput {
   create: VideoCreateWithoutLiveSessionInput
 }
 
+input VideoCreateNestedOneWithoutViewsInput {
+  connect: VideoWhereUniqueInput
+  connectOrCreate: VideoCreateOrConnectWithoutViewsInput
+  create: VideoCreateWithoutViewsInput
+}
+
 input VideoCreateNestedOneWithoutVotesInput {
   connect: VideoWhereUniqueInput
   connectOrCreate: VideoCreateOrConnectWithoutVotesInput
@@ -2111,6 +2224,11 @@ input VideoCreateOrConnectWithoutUserInput {
   where: VideoWhereUniqueInput!
 }
 
+input VideoCreateOrConnectWithoutViewsInput {
+  create: VideoCreateWithoutViewsInput!
+  where: VideoWhereUniqueInput!
+}
+
 input VideoCreateOrConnectWithoutVotesInput {
   create: VideoCreateWithoutVotesInput!
   where: VideoWhereUniqueInput!
@@ -2126,6 +2244,7 @@ input VideoCreateWithoutCommentsInput {
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
+  views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
 }
@@ -2140,6 +2259,7 @@ input VideoCreateWithoutLiveSessionInput {
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
+  views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
 }
@@ -2154,6 +2274,22 @@ input VideoCreateWithoutUserInput {
   slug: String
   thumbnail: JSON
   updatedAt: DateTime
+  views: ViewCreateNestedManyWithoutVideoInput
+  vodSession: VodSessionCreateNestedOneWithoutVideoInput
+  votes: VoteCreateNestedManyWithoutVideoInput
+}
+
+input VideoCreateWithoutViewsInput {
+  comments: CommentCreateNestedManyWithoutVideoInput
+  createdAt: DateTime
+  desc: String
+  liveSession: LiveSessionCreateNestedOneWithoutVideoInput
+  name: String!
+  privacy: Int
+  slug: String
+  thumbnail: JSON
+  updatedAt: DateTime
+  user: UserCreateNestedOneWithoutVideosInput!
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
 }
@@ -2169,6 +2305,7 @@ input VideoCreateWithoutVotesInput {
   thumbnail: JSON
   updatedAt: DateTime
   user: UserCreateNestedOneWithoutVideosInput!
+  views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
 }
 
@@ -2209,6 +2346,7 @@ input VideoUpdateInput {
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
+  views: ViewUpdateManyWithoutVideoNestedInput
   vodSession: VodSessionUpdateOneWithoutVideoNestedInput
   votes: VoteUpdateManyWithoutVideoNestedInput
 }
@@ -2242,20 +2380,30 @@ input VideoUpdateManyWithoutUserNestedInput {
   upsert: [VideoUpsertWithWhereUniqueWithoutUserInput!]
 }
 
-input VideoUpdateOneRequiredWithoutCommentsNestedInput {
-  connect: VideoWhereUniqueInput
-  connectOrCreate: VideoCreateOrConnectWithoutCommentsInput
-  create: VideoCreateWithoutCommentsInput
-  update: VideoUpdateWithoutCommentsInput
-  upsert: VideoUpsertWithoutCommentsInput
-}
-
 input VideoUpdateOneRequiredWithoutLiveSessionNestedInput {
   connect: VideoWhereUniqueInput
   connectOrCreate: VideoCreateOrConnectWithoutLiveSessionInput
   create: VideoCreateWithoutLiveSessionInput
   update: VideoUpdateWithoutLiveSessionInput
   upsert: VideoUpsertWithoutLiveSessionInput
+}
+
+input VideoUpdateOneRequiredWithoutViewsNestedInput {
+  connect: VideoWhereUniqueInput
+  connectOrCreate: VideoCreateOrConnectWithoutViewsInput
+  create: VideoCreateWithoutViewsInput
+  update: VideoUpdateWithoutViewsInput
+  upsert: VideoUpsertWithoutViewsInput
+}
+
+input VideoUpdateOneWithoutCommentsNestedInput {
+  connect: VideoWhereUniqueInput
+  connectOrCreate: VideoCreateOrConnectWithoutCommentsInput
+  create: VideoCreateWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  update: VideoUpdateWithoutCommentsInput
+  upsert: VideoUpsertWithoutCommentsInput
 }
 
 input VideoUpdateOneWithoutVotesNestedInput {
@@ -2283,6 +2431,7 @@ input VideoUpdateWithoutCommentsInput {
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
+  views: ViewUpdateManyWithoutVideoNestedInput
   vodSession: VodSessionUpdateOneWithoutVideoNestedInput
   votes: VoteUpdateManyWithoutVideoNestedInput
 }
@@ -2297,6 +2446,7 @@ input VideoUpdateWithoutLiveSessionInput {
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
+  views: ViewUpdateManyWithoutVideoNestedInput
   vodSession: VodSessionUpdateOneWithoutVideoNestedInput
   votes: VoteUpdateManyWithoutVideoNestedInput
 }
@@ -2311,6 +2461,22 @@ input VideoUpdateWithoutUserInput {
   slug: NullableStringFieldUpdateOperationsInput
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
+  views: ViewUpdateManyWithoutVideoNestedInput
+  vodSession: VodSessionUpdateOneWithoutVideoNestedInput
+  votes: VoteUpdateManyWithoutVideoNestedInput
+}
+
+input VideoUpdateWithoutViewsInput {
+  comments: CommentUpdateManyWithoutVideoNestedInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  desc: NullableStringFieldUpdateOperationsInput
+  liveSession: LiveSessionUpdateOneWithoutVideoNestedInput
+  name: StringFieldUpdateOperationsInput
+  privacy: NullableIntFieldUpdateOperationsInput
+  slug: NullableStringFieldUpdateOperationsInput
+  thumbnail: JSON
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutVideosNestedInput
   vodSession: VodSessionUpdateOneWithoutVideoNestedInput
   votes: VoteUpdateManyWithoutVideoNestedInput
 }
@@ -2326,6 +2492,7 @@ input VideoUpdateWithoutVotesInput {
   thumbnail: JSON
   updatedAt: DateTimeFieldUpdateOperationsInput
   user: UserUpdateOneRequiredWithoutVideosNestedInput
+  views: ViewUpdateManyWithoutVideoNestedInput
   vodSession: VodSessionUpdateOneWithoutVideoNestedInput
 }
 
@@ -2343,6 +2510,11 @@ input VideoUpsertWithoutCommentsInput {
 input VideoUpsertWithoutLiveSessionInput {
   create: VideoCreateWithoutLiveSessionInput!
   update: VideoUpdateWithoutLiveSessionInput!
+}
+
+input VideoUpsertWithoutViewsInput {
+  create: VideoCreateWithoutViewsInput!
+  update: VideoUpdateWithoutViewsInput!
 }
 
 input VideoUpsertWithoutVotesInput {
@@ -2366,6 +2538,7 @@ input VideoWhereInput {
   updatedAt: DateTimeFilter
   user: UserRelationFilter
   userId: IntFilter
+  views: ViewListRelationFilter
   vodSession: VodSessionRelationFilter
   votes: VoteListRelationFilter
 }
@@ -2373,6 +2546,194 @@ input VideoWhereInput {
 input VideoWhereUniqueInput {
   id: Int
   slug: String
+}
+
+type View {
+  createdAt: DateTime!
+  id: ID!
+  ip: String!
+  user: User
+  userId: Int
+  video: Video!
+  videoId: Int!
+}
+
+input ViewCreateInput {
+  createdAt: DateTime
+  ip: String!
+  user: UserCreateNestedOneWithoutViewsInput
+  video: VideoCreateNestedOneWithoutViewsInput!
+}
+
+input ViewCreateManyUserInput {
+  createdAt: DateTime
+  id: Int
+  ip: String!
+  videoId: Int!
+}
+
+input ViewCreateManyUserInputEnvelope {
+  data: [ViewCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input ViewCreateManyVideoInput {
+  createdAt: DateTime
+  id: Int
+  ip: String!
+  userId: Int
+}
+
+input ViewCreateManyVideoInputEnvelope {
+  data: [ViewCreateManyVideoInput!]!
+  skipDuplicates: Boolean
+}
+
+input ViewCreateNestedManyWithoutUserInput {
+  connect: [ViewWhereUniqueInput!]
+  connectOrCreate: [ViewCreateOrConnectWithoutUserInput!]
+  create: [ViewCreateWithoutUserInput!]
+  createMany: ViewCreateManyUserInputEnvelope
+}
+
+input ViewCreateNestedManyWithoutVideoInput {
+  connect: [ViewWhereUniqueInput!]
+  connectOrCreate: [ViewCreateOrConnectWithoutVideoInput!]
+  create: [ViewCreateWithoutVideoInput!]
+  createMany: ViewCreateManyVideoInputEnvelope
+}
+
+input ViewCreateOrConnectWithoutUserInput {
+  create: ViewCreateWithoutUserInput!
+  where: ViewWhereUniqueInput!
+}
+
+input ViewCreateOrConnectWithoutVideoInput {
+  create: ViewCreateWithoutVideoInput!
+  where: ViewWhereUniqueInput!
+}
+
+input ViewCreateWithoutUserInput {
+  createdAt: DateTime
+  ip: String!
+  video: VideoCreateNestedOneWithoutViewsInput!
+}
+
+input ViewCreateWithoutVideoInput {
+  createdAt: DateTime
+  ip: String!
+  user: UserCreateNestedOneWithoutViewsInput
+}
+
+input ViewListRelationFilter {
+  every: ViewWhereInput
+  none: ViewWhereInput
+  some: ViewWhereInput
+}
+
+input ViewScalarWhereInput {
+  AND: [ViewScalarWhereInput!]
+  NOT: [ViewScalarWhereInput!]
+  OR: [ViewScalarWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  ip: StringFilter
+  userId: IntNullableFilter
+  videoId: IntFilter
+}
+
+input ViewUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  ip: StringFieldUpdateOperationsInput
+}
+
+input ViewUpdateManyWithWhereWithoutUserInput {
+  data: ViewUpdateManyMutationInput!
+  where: ViewScalarWhereInput!
+}
+
+input ViewUpdateManyWithWhereWithoutVideoInput {
+  data: ViewUpdateManyMutationInput!
+  where: ViewScalarWhereInput!
+}
+
+input ViewUpdateManyWithoutUserNestedInput {
+  connect: [ViewWhereUniqueInput!]
+  connectOrCreate: [ViewCreateOrConnectWithoutUserInput!]
+  create: [ViewCreateWithoutUserInput!]
+  createMany: ViewCreateManyUserInputEnvelope
+  delete: [ViewWhereUniqueInput!]
+  deleteMany: [ViewScalarWhereInput!]
+  disconnect: [ViewWhereUniqueInput!]
+  set: [ViewWhereUniqueInput!]
+  update: [ViewUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [ViewUpdateManyWithWhereWithoutUserInput!]
+  upsert: [ViewUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ViewUpdateManyWithoutVideoNestedInput {
+  connect: [ViewWhereUniqueInput!]
+  connectOrCreate: [ViewCreateOrConnectWithoutVideoInput!]
+  create: [ViewCreateWithoutVideoInput!]
+  createMany: ViewCreateManyVideoInputEnvelope
+  delete: [ViewWhereUniqueInput!]
+  deleteMany: [ViewScalarWhereInput!]
+  disconnect: [ViewWhereUniqueInput!]
+  set: [ViewWhereUniqueInput!]
+  update: [ViewUpdateWithWhereUniqueWithoutVideoInput!]
+  updateMany: [ViewUpdateManyWithWhereWithoutVideoInput!]
+  upsert: [ViewUpsertWithWhereUniqueWithoutVideoInput!]
+}
+
+input ViewUpdateWithWhereUniqueWithoutUserInput {
+  data: ViewUpdateWithoutUserInput!
+  where: ViewWhereUniqueInput!
+}
+
+input ViewUpdateWithWhereUniqueWithoutVideoInput {
+  data: ViewUpdateWithoutVideoInput!
+  where: ViewWhereUniqueInput!
+}
+
+input ViewUpdateWithoutUserInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  ip: StringFieldUpdateOperationsInput
+  video: VideoUpdateOneRequiredWithoutViewsNestedInput
+}
+
+input ViewUpdateWithoutVideoInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  ip: StringFieldUpdateOperationsInput
+  user: UserUpdateOneWithoutViewsNestedInput
+}
+
+input ViewUpsertWithWhereUniqueWithoutUserInput {
+  create: ViewCreateWithoutUserInput!
+  update: ViewUpdateWithoutUserInput!
+  where: ViewWhereUniqueInput!
+}
+
+input ViewUpsertWithWhereUniqueWithoutVideoInput {
+  create: ViewCreateWithoutVideoInput!
+  update: ViewUpdateWithoutVideoInput!
+  where: ViewWhereUniqueInput!
+}
+
+input ViewWhereInput {
+  AND: [ViewWhereInput!]
+  NOT: [ViewWhereInput!]
+  OR: [ViewWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  ip: StringFilter
+  user: UserRelationFilter
+  userId: IntNullableFilter
+  video: VideoRelationFilter
+  videoId: IntFilter
+}
+
+input ViewWhereUniqueInput {
+  id: Int
 }
 
 type VodSession {

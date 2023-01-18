@@ -52,7 +52,6 @@ export class JwtAuthGuard extends AuthGuard('jwt-access') {
 
     // Allow anonymous users to access route
     if (this.publicType === 'withAuth') {
-      console.log('Passing user to decorator', user);
       return user;
     }
 

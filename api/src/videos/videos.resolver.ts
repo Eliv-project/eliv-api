@@ -48,9 +48,15 @@ export class VideosResolver {
     });
 
     try {
+      // Getting video info
+      const videoInfo = await this.videosService.getVideoInfo(
+        uploadedFile.path,
+      );
+
       // Create private video with default vod session
       createdVideo = await this.videosService.create({
         ...data,
+        duration: videoInfo.format.duration,
         dirId,
         privacy: VideoPrivacy.private,
         vodSession: {
@@ -81,7 +87,9 @@ export class VideosResolver {
       _count: true,
       vodSession: true,
       liveSession: true,
-      user: true,
+      user: {
+        include: {_count: {select: {subscribers: true}}}
+      },
     });
   }
 
@@ -91,7 +99,9 @@ export class VideosResolver {
     return this.videosService.findOne(where, {
       vodSession: true,
       liveSession: true,
-      user: true,
+      user: {
+        include: {_count: {select: {subscribers: true}}}
+      },
       _count: true,
     });
   }

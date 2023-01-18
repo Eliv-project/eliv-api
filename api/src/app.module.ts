@@ -27,6 +27,7 @@ import { VodSessionsModule } from './vod-sessions/vod-sessions.module';
 import { CommentsModule } from './comments/comments.module';
 import { VotesModule } from './votes/votes.module';
 import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
+import { ViewsModule } from './views/views.module';
 
 @Module({
   imports: [
@@ -77,6 +78,7 @@ import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions
     CommentsModule,
     VotesModule,
     UserSubscriptionsModule,
+    ViewsModule,
   ],
   controllers: [AppController],
   providers: [

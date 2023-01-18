@@ -18,6 +18,9 @@ export class UserUpdateManyMutationInput {
     @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     gender?: NullableBoolFieldUpdateOperationsInput;
 
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    name?: StringFieldUpdateOperationsInput;
+
     @HideField()
     password?: StringFieldUpdateOperationsInput;
 
@@ -29,4 +32,7 @@ export class UserUpdateManyMutationInput {
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
+
+    @HideField()
+    verified?: NullableBoolFieldUpdateOperationsInput;
 }

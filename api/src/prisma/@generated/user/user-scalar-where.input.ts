@@ -31,6 +31,9 @@ export class UserScalarWhereInput {
     @Field(() => BoolNullableFilter, {nullable:true})
     gender?: BoolNullableFilter;
 
+    @Field(() => StringFilter, {nullable:true})
+    name?: StringFilter;
+
     @HideField()
     password?: StringFilter;
 
@@ -45,4 +48,7 @@ export class UserScalarWhereInput {
 
     @Field(() => IntFilter, {nullable:true})
     roleId?: IntFilter;
+
+    @HideField()
+    verified?: BoolNullableFilter;
 }

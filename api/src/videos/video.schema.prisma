@@ -16,6 +16,9 @@ model Video {
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
+/// @HideField({input: true, output: false})
+    duration Float @default(0)
+
     /// @HideField({input: true, output: false})
     dirId String? @unique
 
@@ -24,6 +27,8 @@ model Video {
 
     liveSession LiveSession?
     vodSession VodSession?
+
     comments Comment[]
-    votes Vote[]
+    votes Vote[] 
+    views View[]
 }
