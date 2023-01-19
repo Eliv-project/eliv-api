@@ -1128,6 +1128,7 @@ type Query {
   role(where: RoleWhereUniqueInput!): Role!
   roles(where: RoleWhereInput!): [Role!]!
   user(where: UserWhereUniqueInput!): User!
+  userSubscriptions: [UserSubscription!]!
   users(where: UserWhereInput!): [User!]!
   video(where: VideoWhereUniqueInput!): Video
   videos(where: VideoWhereInput!): [Video!]!

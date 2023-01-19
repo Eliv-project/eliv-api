@@ -24,6 +24,16 @@ export class UserSubscriptionsResolver {
     return this.userSubscriptionsService.count(where);
   }
 
+  @Query(() => [UserSubscription], { name: 'userSubscriptions' })
+  userSubscriptions(@CurrentUser() me: User) {
+    return this.userSubscriptionsService.findAll(
+      {
+        userId: { equals: me.id },
+      },
+      { subscribingUser: true },
+    );
+  }
+
   @Query(() => Boolean)
   async isSubscribing(
     @Args('user') userWhere: UserWhereUniqueInput,
