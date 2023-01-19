@@ -4,17 +4,16 @@ import { LiveSessionUpdateInput } from 'src/prisma/@generated/live-session/live-
 import { LiveSessionWhereUniqueInput } from 'src/prisma/@generated/live-session/live-session-where-unique.input';
 import { LiveSessionWhereInput } from 'src/prisma/@generated/live-session/live-session-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class LiveSessionsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: LiveSessionCreateInput) {
+  create(data: LiveSessionCreateInput, include?: Prisma.LiveSessionInclude) {
     return this.prisma.liveSession.create({
       data,
-      include: {
-        video: true,
-      },
+      include,
     });
   }
 

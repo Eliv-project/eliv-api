@@ -5,17 +5,45 @@ import { LiveSession } from 'src/prisma/@generated/live-session/live-session.mod
 import { LiveSessionUpdateInput } from 'src/prisma/@generated/live-session/live-session-update.input';
 import { LiveSessionWhereUniqueInput } from 'src/prisma/@generated/live-session/live-session-where-unique.input';
 import { LiveSessionWhereInput } from 'src/prisma/@generated/live-session/live-session-where.input';
+import { VideosService } from 'src/videos/videos.service';
+import { randomUUID } from 'crypto';
+import { VideoPrivacy } from 'src/videos/enums/privacy.enum';
+import { LiveStatus } from './enums/status.enum';
 
 @Resolver(() => LiveSession)
 export class LiveSessionsResolver {
-  constructor(private readonly liveSessionsService: LiveSessionsService) {}
+  constructor(
+    private readonly liveSessionsService: LiveSessionsService,
+    private readonly videosService: VideosService,
+  ) {}
 
   @Mutation(() => LiveSession)
-  createLiveSession(
+  async createLiveSession(
     @Args('data')
     data: LiveSessionCreateInput,
   ) {
-    return this.liveSessionsService.create(data);
+    const dirId = randomUUID();
+    const streamKey = randomUUID();
+    const createdVideo = await this.videosService.create({
+      ...data.video.create,
+      dirId,
+      privacy: VideoPrivacy.private,
+    });
+    return this.liveSessionsService.create(
+      {
+        ...data,
+        status: LiveStatus.OFFLINE,
+        streamKey,
+        video: {
+          connect: {
+            id: createdVideo.id,
+          },
+        },
+      },
+      {
+        video: true,
+      },
+    );
   }
 
   @Query(() => [LiveSession], { name: 'liveSessions' })
