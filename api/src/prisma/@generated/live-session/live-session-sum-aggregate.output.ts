@@ -12,5 +12,8 @@ export class LiveSessionSumAggregate {
     status?: number;
 
     @Field(() => Int, {nullable:true})
+    streamKeyId?: number;
+
+    @Field(() => Int, {nullable:true})
     videoId?: number;
 }

@@ -12,6 +12,7 @@ import { VideoUpdateManyWithoutUserNestedInput } from '../video/video-update-man
 import { CommentUpdateManyWithoutUserNestedInput } from '../comment/comment-update-many-without-user-nested.input';
 import { VoteUpdateManyWithoutUserNestedInput } from '../vote/vote-update-many-without-user-nested.input';
 import { ViewUpdateManyWithoutUserNestedInput } from '../view/view-update-many-without-user-nested.input';
+import { StreamKeyUpdateManyWithoutUserNestedInput } from '../stream-key/stream-key-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUpdateWithoutOauthLinksInput {
@@ -60,6 +61,9 @@ export class UserUpdateWithoutOauthLinksInput {
 
     @Field(() => ViewUpdateManyWithoutUserNestedInput, {nullable:true})
     views?: ViewUpdateManyWithoutUserNestedInput;
+
+    @Field(() => StreamKeyUpdateManyWithoutUserNestedInput, {nullable:true})
+    streamKeys?: StreamKeyUpdateManyWithoutUserNestedInput;
 
     @HideField()
     verified?: NullableBoolFieldUpdateOperationsInput;

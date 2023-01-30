@@ -32,7 +32,7 @@ Total : 190 files,  23178 codes, 259 comments, 1206 blanks, all 24643 lines
 | [api/src/auth/auth.service.spec.ts](/api/src/auth/auth.service.spec.ts) | TypeScript | 14 | 0 | 5 | 19 |
 | [api/src/auth/auth.service.ts](/api/src/auth/auth.service.ts) | TypeScript | 94 | 2 | 13 | 109 |
 | [api/src/auth/decorators/current-user.decorator.ts](/api/src/auth/decorators/current-user.decorator.ts) | TypeScript | 8 | 0 | 2 | 10 |
-| [api/src/auth/decorators/is-public/is-public.decorator.ts](/api/src/auth/decorators/is-public/is-public.decorator.ts) | TypeScript | 5 | 0 | 2 | 7 |
+| [api/src/auth/decorators/is-public.decorator.ts](/api/src/auth/decorators/is-public.decorator.ts) | TypeScript | 5 | 0 | 2 | 7 |
 | [api/src/auth/dto/credentials-input.dto.ts](/api/src/auth/dto/credentials-input.dto.ts) | TypeScript | 8 | 0 | 3 | 11 |
 | [api/src/auth/dto/login-response.dto.ts](/api/src/auth/dto/login-response.dto.ts) | TypeScript | 15 | 0 | 6 | 21 |
 | [api/src/auth/dto/oauth-input.dto.ts](/api/src/auth/dto/oauth-input.dto.ts) | TypeScript | 13 | 0 | 5 | 18 |

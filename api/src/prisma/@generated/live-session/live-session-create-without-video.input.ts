@@ -1,6 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { StreamKeyCreateNestedOneWithoutLiveSessionsInput } from '../stream-key/stream-key-create-nested-one-without-live-sessions.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class LiveSessionCreateWithoutVideoInput {
@@ -8,8 +10,8 @@ export class LiveSessionCreateWithoutVideoInput {
     @Field(() => Int, {nullable:true})
     status?: number;
 
-    @Field(() => String, {nullable:true})
-    streamKey?: string;
+    @HideField()
+    streamKey!: StreamKeyCreateNestedOneWithoutLiveSessionsInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

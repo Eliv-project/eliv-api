@@ -10,6 +10,7 @@ import { VideoCreateNestedManyWithoutUserInput } from '../video/video-create-nes
 import { CommentCreateNestedManyWithoutUserInput } from '../comment/comment-create-nested-many-without-user.input';
 import { VoteCreateNestedManyWithoutUserInput } from '../vote/vote-create-nested-many-without-user.input';
 import { ViewCreateNestedManyWithoutUserInput } from '../view/view-create-nested-many-without-user.input';
+import { StreamKeyCreateNestedManyWithoutUserInput } from '../stream-key/stream-key-create-nested-many-without-user.input';
 
 @InputType()
 export class UserCreateInput {
@@ -61,6 +62,9 @@ export class UserCreateInput {
 
     @Field(() => ViewCreateNestedManyWithoutUserInput, {nullable:true})
     views?: ViewCreateNestedManyWithoutUserInput;
+
+    @Field(() => StreamKeyCreateNestedManyWithoutUserInput, {nullable:true})
+    streamKeys?: StreamKeyCreateNestedManyWithoutUserInput;
 
     @HideField()
     verified?: boolean;

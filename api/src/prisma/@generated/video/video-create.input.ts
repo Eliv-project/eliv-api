@@ -44,7 +44,7 @@ export class VideoCreateInput {
     @HideField()
     dirId?: string;
 
-    @Field(() => UserCreateNestedOneWithoutVideosInput, {nullable:false})
+    @HideField()
     user!: UserCreateNestedOneWithoutVideosInput;
 
     @Field(() => LiveSessionCreateNestedOneWithoutVideoInput, {nullable:true})

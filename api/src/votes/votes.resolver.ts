@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { CommentsService } from 'src/comments/comments.service';
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
 import { User } from 'src/prisma/@generated/user/user.model';

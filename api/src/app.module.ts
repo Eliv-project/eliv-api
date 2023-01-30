@@ -28,6 +28,7 @@ import { CommentsModule } from './comments/comments.module';
 import { VotesModule } from './votes/votes.module';
 import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
 import { ViewsModule } from './views/views.module';
+import { StreamKeysModule } from './stream-keys/stream-keys.module';
 
 @Module({
   imports: [
@@ -79,6 +80,7 @@ import { ViewsModule } from './views/views.module';
     VotesModule,
     UserSubscriptionsModule,
     ViewsModule,
+    StreamKeysModule,
   ],
   controllers: [AppController],
   providers: [

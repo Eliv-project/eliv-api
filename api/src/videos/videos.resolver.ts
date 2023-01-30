@@ -2,7 +2,7 @@ import { Inject, InternalServerErrorException } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args, Subscription } from '@nestjs/graphql';
 import { randomUUID } from 'crypto';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
 import { VideoUpdateInput } from 'src/prisma/@generated/video/video-update.input';
 import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';

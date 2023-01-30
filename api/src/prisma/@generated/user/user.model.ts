@@ -11,6 +11,7 @@ import { Video } from '../video/video.model';
 import { Comment } from '../comment/comment.model';
 import { Vote } from '../vote/vote.model';
 import { View } from '../view/view.model';
+import { StreamKey } from '../stream-key/stream-key.model';
 import { UserCount } from './user-count.output';
 
 @ObjectType()
@@ -69,6 +70,9 @@ export class User {
 
     @Field(() => [View], {nullable:true})
     views?: Array<View>;
+
+    @Field(() => [StreamKey], {nullable:true})
+    streamKeys?: Array<StreamKey>;
 
     @HideField()
     verified!: boolean | null;

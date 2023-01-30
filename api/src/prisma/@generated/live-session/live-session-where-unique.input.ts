@@ -8,9 +8,6 @@ export class LiveSessionWhereUniqueInput {
     @Field(() => Int, {nullable:true})
     id?: number;
 
-    @Field(() => String, {nullable:true})
-    streamKey?: string;
-
     @Field(() => Int, {nullable:true})
     videoId?: number;
 }

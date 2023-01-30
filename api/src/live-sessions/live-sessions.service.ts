@@ -21,6 +21,14 @@ export class LiveSessionsService {
     return this.prisma.liveSession.findMany({ where });
   }
 
+  findFirst(
+    where: LiveSessionWhereInput,
+    orderBy?: Prisma.LiveSessionOrderByWithRelationInput,
+    include?: Prisma.LiveSessionInclude,
+  ) {
+    return this.prisma.liveSession.findFirst({ where, orderBy, include });
+  }
+
   findOne(
     where: LiveSessionWhereUniqueInput,
     include?: Prisma.LiveSessionInclude,

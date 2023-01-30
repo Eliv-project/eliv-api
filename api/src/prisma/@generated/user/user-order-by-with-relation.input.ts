@@ -9,6 +9,7 @@ import { VideoOrderByRelationAggregateInput } from '../video/video-order-by-rela
 import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-by-relation-aggregate.input';
 import { VoteOrderByRelationAggregateInput } from '../vote/vote-order-by-relation-aggregate.input';
 import { ViewOrderByRelationAggregateInput } from '../view/view-order-by-relation-aggregate.input';
+import { StreamKeyOrderByRelationAggregateInput } from '../stream-key/stream-key-order-by-relation-aggregate.input';
 
 @InputType()
 export class UserOrderByWithRelationInput {
@@ -66,6 +67,9 @@ export class UserOrderByWithRelationInput {
 
     @Field(() => ViewOrderByRelationAggregateInput, {nullable:true})
     views?: ViewOrderByRelationAggregateInput;
+
+    @Field(() => StreamKeyOrderByRelationAggregateInput, {nullable:true})
+    streamKeys?: StreamKeyOrderByRelationAggregateInput;
 
     @HideField()
     verified?: keyof typeof SortOrder;

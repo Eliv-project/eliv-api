@@ -9,7 +9,7 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   IS_PUBLIC_KEY,
   PublicType,
-} from 'src/auth/decorators/is-public/is-public.decorator';
+} from 'src/auth/decorators/is-public.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt-access') {

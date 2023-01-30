@@ -12,7 +12,7 @@ export class LiveSessionMaxOrderByAggregateInput {
     status?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    streamKey?: keyof typeof SortOrder;
+    streamKeyId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;

@@ -25,4 +25,7 @@ export class UserCount {
 
     @Field(() => Int, {nullable:false})
     views?: number;
+
+    @Field(() => Int, {nullable:false})
+    streamKeys?: number;
 }

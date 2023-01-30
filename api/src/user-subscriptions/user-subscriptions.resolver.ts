@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { UserSubscriptionWhereInput } from 'src/prisma/@generated/user-subscription/user-subscription-where.input';
 import { UserSubscription } from 'src/prisma/@generated/user-subscription/user-subscription.model';
 import { UserWhereUniqueInput } from 'src/prisma/@generated/user/user-where-unique.input';

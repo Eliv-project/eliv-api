@@ -13,6 +13,7 @@ import { VideoListRelationFilter } from '../video/video-list-relation-filter.inp
 import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
 import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
 import { ViewListRelationFilter } from '../view/view-list-relation-filter.input';
+import { StreamKeyListRelationFilter } from '../stream-key/stream-key-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -79,6 +80,9 @@ export class UserWhereInput {
 
     @Field(() => ViewListRelationFilter, {nullable:true})
     views?: ViewListRelationFilter;
+
+    @Field(() => StreamKeyListRelationFilter, {nullable:true})
+    streamKeys?: StreamKeyListRelationFilter;
 
     @HideField()
     verified?: BoolNullableFilter;

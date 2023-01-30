@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { User } from 'src/prisma/@generated/user/user.model';
 import { ViewCreateInput } from 'src/prisma/@generated/view/view-create.input';
 import { ViewUpdateInput } from 'src/prisma/@generated/view/view-update.input';

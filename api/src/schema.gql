@@ -2,6 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
 input BoolNullableFilter {
   equals: Boolean
   not: NestedBoolNullableFilter
@@ -526,7 +535,8 @@ type LiveSession {
   createdAt: DateTime!
   id: ID!
   status: Int!
-  streamKey: String!
+  streamKey: StreamKey!
+  streamKeyId: Int!
   updatedAt: DateTime!
   video: Video!
   videoId: Int!
@@ -535,9 +545,28 @@ type LiveSession {
 input LiveSessionCreateInput {
   createdAt: DateTime
   status: Int
-  streamKey: String
   updatedAt: DateTime
   video: VideoCreateNestedOneWithoutLiveSessionInput!
+}
+
+input LiveSessionCreateManyStreamKeyInput {
+  createdAt: DateTime
+  id: Int
+  status: Int
+  updatedAt: DateTime
+  videoId: Int!
+}
+
+input LiveSessionCreateManyStreamKeyInputEnvelope {
+  data: [LiveSessionCreateManyStreamKeyInput!]!
+  skipDuplicates: Boolean
+}
+
+input LiveSessionCreateNestedManyWithoutStreamKeyInput {
+  connect: [LiveSessionWhereUniqueInput!]
+  connectOrCreate: [LiveSessionCreateOrConnectWithoutStreamKeyInput!]
+  create: [LiveSessionCreateWithoutStreamKeyInput!]
+  createMany: LiveSessionCreateManyStreamKeyInputEnvelope
 }
 
 input LiveSessionCreateNestedOneWithoutVideoInput {
@@ -546,16 +575,33 @@ input LiveSessionCreateNestedOneWithoutVideoInput {
   create: LiveSessionCreateWithoutVideoInput
 }
 
+input LiveSessionCreateOrConnectWithoutStreamKeyInput {
+  create: LiveSessionCreateWithoutStreamKeyInput!
+  where: LiveSessionWhereUniqueInput!
+}
+
 input LiveSessionCreateOrConnectWithoutVideoInput {
   create: LiveSessionCreateWithoutVideoInput!
   where: LiveSessionWhereUniqueInput!
 }
 
+input LiveSessionCreateWithoutStreamKeyInput {
+  createdAt: DateTime
+  status: Int
+  updatedAt: DateTime
+  video: VideoCreateNestedOneWithoutLiveSessionInput!
+}
+
 input LiveSessionCreateWithoutVideoInput {
   createdAt: DateTime
   status: Int
-  streamKey: String
   updatedAt: DateTime
+}
+
+input LiveSessionListRelationFilter {
+  every: LiveSessionWhereInput
+  none: LiveSessionWhereInput
+  some: LiveSessionWhereInput
 }
 
 input LiveSessionRelationFilter {
@@ -563,12 +609,49 @@ input LiveSessionRelationFilter {
   isNot: LiveSessionWhereInput
 }
 
+input LiveSessionScalarWhereInput {
+  AND: [LiveSessionScalarWhereInput!]
+  NOT: [LiveSessionScalarWhereInput!]
+  OR: [LiveSessionScalarWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  status: IntFilter
+  streamKeyId: IntFilter
+  updatedAt: DateTimeFilter
+  videoId: IntFilter
+}
+
 input LiveSessionUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   status: IntFieldUpdateOperationsInput
-  streamKey: StringFieldUpdateOperationsInput
+  streamKey: StreamKeyUpdateOneRequiredWithoutLiveSessionsNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   video: VideoUpdateOneRequiredWithoutLiveSessionNestedInput
+}
+
+input LiveSessionUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  status: IntFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input LiveSessionUpdateManyWithWhereWithoutStreamKeyInput {
+  data: LiveSessionUpdateManyMutationInput!
+  where: LiveSessionScalarWhereInput!
+}
+
+input LiveSessionUpdateManyWithoutStreamKeyNestedInput {
+  connect: [LiveSessionWhereUniqueInput!]
+  connectOrCreate: [LiveSessionCreateOrConnectWithoutStreamKeyInput!]
+  create: [LiveSessionCreateWithoutStreamKeyInput!]
+  createMany: LiveSessionCreateManyStreamKeyInputEnvelope
+  delete: [LiveSessionWhereUniqueInput!]
+  deleteMany: [LiveSessionScalarWhereInput!]
+  disconnect: [LiveSessionWhereUniqueInput!]
+  set: [LiveSessionWhereUniqueInput!]
+  update: [LiveSessionUpdateWithWhereUniqueWithoutStreamKeyInput!]
+  updateMany: [LiveSessionUpdateManyWithWhereWithoutStreamKeyInput!]
+  upsert: [LiveSessionUpsertWithWhereUniqueWithoutStreamKeyInput!]
 }
 
 input LiveSessionUpdateOneWithoutVideoNestedInput {
@@ -581,11 +664,29 @@ input LiveSessionUpdateOneWithoutVideoNestedInput {
   upsert: LiveSessionUpsertWithoutVideoInput
 }
 
+input LiveSessionUpdateWithWhereUniqueWithoutStreamKeyInput {
+  data: LiveSessionUpdateWithoutStreamKeyInput!
+  where: LiveSessionWhereUniqueInput!
+}
+
+input LiveSessionUpdateWithoutStreamKeyInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  status: IntFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  video: VideoUpdateOneRequiredWithoutLiveSessionNestedInput
+}
+
 input LiveSessionUpdateWithoutVideoInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   status: IntFieldUpdateOperationsInput
-  streamKey: StringFieldUpdateOperationsInput
+  streamKey: StreamKeyUpdateOneRequiredWithoutLiveSessionsNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+}
+
+input LiveSessionUpsertWithWhereUniqueWithoutStreamKeyInput {
+  create: LiveSessionCreateWithoutStreamKeyInput!
+  update: LiveSessionUpdateWithoutStreamKeyInput!
+  where: LiveSessionWhereUniqueInput!
 }
 
 input LiveSessionUpsertWithoutVideoInput {
@@ -600,7 +701,8 @@ input LiveSessionWhereInput {
   createdAt: DateTimeFilter
   id: IntFilter
   status: IntFilter
-  streamKey: StringFilter
+  streamKey: StreamKeyRelationFilter
+  streamKeyId: IntFilter
   updatedAt: DateTimeFilter
   video: VideoRelationFilter
   videoId: IntFilter
@@ -608,7 +710,6 @@ input LiveSessionWhereInput {
 
 input LiveSessionWhereUniqueInput {
   id: Int
-  streamKey: String
   videoId: Int
 }
 
@@ -625,6 +726,7 @@ type Mutation {
   createOAuthLink(data: OAuthLinkCreateInput!): OAuthLink!
   createPermission(data: PermissionCreateInput!): Permission!
   createRole(data: RoleCreateInput!): Role!
+  createStreamKey(data: StreamKeyCreateInput!): StreamKey!
   createUser(data: UserCreateInput!): User!
   createVideo(data: VideoCreateInputWithFile!): Video!
   createView(data: ViewCreateInput!): View!
@@ -637,6 +739,7 @@ type Mutation {
   removeOAuthLink(where: OAuthLinkWhereUniqueInput!): OAuthLink!
   removePermission(where: PermissionWhereUniqueInput!): Permission!
   removeRole(where: RoleWhereUniqueInput!): Role!
+  removeStreamKey(where: StreamKeyWhereUniqueInput!): StreamKey!
   removeUser(where: UserWhereUniqueInput!): User!
   removeVideo(where: VideoWhereUniqueInput!): Video!
   removeVodSession(id: Int!): VodSession!
@@ -651,6 +754,11 @@ type Mutation {
   updateVodSession(updateVodSessionInput: UpdateVodSessionInput!): VodSession!
   voteComment(comment: CommentWhereUniqueInput!, direction: Int!): VoteResponse!
   voteVideo(direction: Int!, video: VideoWhereUniqueInput!): VoteResponse!
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
 input NestedBoolNullableFilter {
@@ -1108,7 +1216,8 @@ input PermissionsOnRolesWhereUniqueInput {
 }
 
 type ProcessProgress {
-  progress: Float!
+  progress: Float
+  status: String!
 }
 
 type Query {
@@ -1127,6 +1236,7 @@ type Query {
   permissions(where: PermissionWhereInput!): [Permission!]!
   role(where: RoleWhereUniqueInput!): Role!
   roles(where: RoleWhereInput!): [Role!]!
+  streamKeys(where: StreamKeyWhereInput!): [StreamKey!]!
   user(where: UserWhereUniqueInput!): User!
   userSubscriptions: [UserSubscription!]!
   users(where: UserWhereInput!): [User!]!
@@ -1260,6 +1370,195 @@ input RoleWhereUniqueInput {
   name: String
 }
 
+type StreamKey {
+  _count: StreamKeyCount!
+  createdAt: DateTime!
+  desc: String!
+  id: ID!
+  isDefault: Boolean!
+  key: String!
+  liveSessions: [LiveSession!]
+  name: String!
+  user: User!
+  userId: Int!
+}
+
+type StreamKeyCount {
+  liveSessions: Int!
+}
+
+input StreamKeyCreateInput {
+  createdAt: DateTime
+  desc: String!
+  isDefault: Boolean
+  key: String
+  liveSessions: LiveSessionCreateNestedManyWithoutStreamKeyInput
+  name: String!
+  user: UserCreateNestedOneWithoutStreamKeysInput!
+}
+
+input StreamKeyCreateManyUserInput {
+  createdAt: DateTime
+  desc: String!
+  id: Int
+  isDefault: Boolean
+  key: String
+  name: String!
+}
+
+input StreamKeyCreateManyUserInputEnvelope {
+  data: [StreamKeyCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input StreamKeyCreateNestedManyWithoutUserInput {
+  connect: [StreamKeyWhereUniqueInput!]
+  connectOrCreate: [StreamKeyCreateOrConnectWithoutUserInput!]
+  create: [StreamKeyCreateWithoutUserInput!]
+  createMany: StreamKeyCreateManyUserInputEnvelope
+}
+
+input StreamKeyCreateOrConnectWithoutLiveSessionsInput {
+  create: StreamKeyCreateWithoutLiveSessionsInput!
+  where: StreamKeyWhereUniqueInput!
+}
+
+input StreamKeyCreateOrConnectWithoutUserInput {
+  create: StreamKeyCreateWithoutUserInput!
+  where: StreamKeyWhereUniqueInput!
+}
+
+input StreamKeyCreateWithoutLiveSessionsInput {
+  createdAt: DateTime
+  desc: String!
+  isDefault: Boolean
+  key: String
+  name: String!
+  user: UserCreateNestedOneWithoutStreamKeysInput!
+}
+
+input StreamKeyCreateWithoutUserInput {
+  createdAt: DateTime
+  desc: String!
+  isDefault: Boolean
+  key: String
+  liveSessions: LiveSessionCreateNestedManyWithoutStreamKeyInput
+  name: String!
+}
+
+input StreamKeyListRelationFilter {
+  every: StreamKeyWhereInput
+  none: StreamKeyWhereInput
+  some: StreamKeyWhereInput
+}
+
+input StreamKeyRelationFilter {
+  is: StreamKeyWhereInput
+  isNot: StreamKeyWhereInput
+}
+
+input StreamKeyScalarWhereInput {
+  AND: [StreamKeyScalarWhereInput!]
+  NOT: [StreamKeyScalarWhereInput!]
+  OR: [StreamKeyScalarWhereInput!]
+  createdAt: DateTimeFilter
+  desc: StringFilter
+  id: IntFilter
+  isDefault: BoolFilter
+  key: StringFilter
+  name: StringFilter
+  userId: IntFilter
+}
+
+input StreamKeyUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  desc: StringFieldUpdateOperationsInput
+  isDefault: BoolFieldUpdateOperationsInput
+  key: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input StreamKeyUpdateManyWithWhereWithoutUserInput {
+  data: StreamKeyUpdateManyMutationInput!
+  where: StreamKeyScalarWhereInput!
+}
+
+input StreamKeyUpdateManyWithoutUserNestedInput {
+  connect: [StreamKeyWhereUniqueInput!]
+  connectOrCreate: [StreamKeyCreateOrConnectWithoutUserInput!]
+  create: [StreamKeyCreateWithoutUserInput!]
+  createMany: StreamKeyCreateManyUserInputEnvelope
+  delete: [StreamKeyWhereUniqueInput!]
+  deleteMany: [StreamKeyScalarWhereInput!]
+  disconnect: [StreamKeyWhereUniqueInput!]
+  set: [StreamKeyWhereUniqueInput!]
+  update: [StreamKeyUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [StreamKeyUpdateManyWithWhereWithoutUserInput!]
+  upsert: [StreamKeyUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input StreamKeyUpdateOneRequiredWithoutLiveSessionsNestedInput {
+  connect: StreamKeyWhereUniqueInput
+  connectOrCreate: StreamKeyCreateOrConnectWithoutLiveSessionsInput
+  create: StreamKeyCreateWithoutLiveSessionsInput
+  update: StreamKeyUpdateWithoutLiveSessionsInput
+  upsert: StreamKeyUpsertWithoutLiveSessionsInput
+}
+
+input StreamKeyUpdateWithWhereUniqueWithoutUserInput {
+  data: StreamKeyUpdateWithoutUserInput!
+  where: StreamKeyWhereUniqueInput!
+}
+
+input StreamKeyUpdateWithoutLiveSessionsInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  desc: StringFieldUpdateOperationsInput
+  isDefault: BoolFieldUpdateOperationsInput
+  key: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutStreamKeysNestedInput
+}
+
+input StreamKeyUpdateWithoutUserInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  desc: StringFieldUpdateOperationsInput
+  isDefault: BoolFieldUpdateOperationsInput
+  key: StringFieldUpdateOperationsInput
+  liveSessions: LiveSessionUpdateManyWithoutStreamKeyNestedInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input StreamKeyUpsertWithWhereUniqueWithoutUserInput {
+  create: StreamKeyCreateWithoutUserInput!
+  update: StreamKeyUpdateWithoutUserInput!
+  where: StreamKeyWhereUniqueInput!
+}
+
+input StreamKeyUpsertWithoutLiveSessionsInput {
+  create: StreamKeyCreateWithoutLiveSessionsInput!
+  update: StreamKeyUpdateWithoutLiveSessionsInput!
+}
+
+input StreamKeyWhereInput {
+  AND: [StreamKeyWhereInput!]
+  NOT: [StreamKeyWhereInput!]
+  OR: [StreamKeyWhereInput!]
+  createdAt: DateTimeFilter
+  desc: StringFilter
+  id: IntFilter
+  isDefault: BoolFilter
+  key: StringFilter
+  liveSessions: LiveSessionListRelationFilter
+  name: StringFilter
+  user: UserRelationFilter
+  userId: IntFilter
+}
+
+input StreamKeyWhereUniqueInput {
+  id: Int
+  key: String
+}
+
 input StringFieldUpdateOperationsInput {
   set: String
 }
@@ -1319,6 +1618,7 @@ type User {
   oauthLinks: [OAuthLink!]
   role: Role!
   roleId: Int!
+  streamKeys: [StreamKey!]
   subscribers: [UserSubscription!]
   subscribingUsers: [UserSubscription!]
   updatedAt: DateTime!
@@ -1336,6 +1636,7 @@ type UserAuthInfo {
 type UserCount {
   comments: Int!
   oauthLinks: Int!
+  streamKeys: Int!
   subscribers: Int!
   subscribingUsers: Int!
   videos: Int!
@@ -1352,6 +1653,7 @@ input UserCreateInput {
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
@@ -1396,6 +1698,12 @@ input UserCreateNestedOneWithoutOauthLinksInput {
   create: UserCreateWithoutOauthLinksInput
 }
 
+input UserCreateNestedOneWithoutStreamKeysInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutStreamKeysInput
+  create: UserCreateWithoutStreamKeysInput
+}
+
 input UserCreateNestedOneWithoutSubscribersInput {
   connect: UserWhereUniqueInput
   connectOrCreate: UserCreateOrConnectWithoutSubscribersInput
@@ -1406,12 +1714,6 @@ input UserCreateNestedOneWithoutSubscribingUsersInput {
   connect: UserWhereUniqueInput
   connectOrCreate: UserCreateOrConnectWithoutSubscribingUsersInput
   create: UserCreateWithoutSubscribingUsersInput
-}
-
-input UserCreateNestedOneWithoutVideosInput {
-  connect: UserWhereUniqueInput
-  connectOrCreate: UserCreateOrConnectWithoutVideosInput
-  create: UserCreateWithoutVideosInput
 }
 
 input UserCreateNestedOneWithoutViewsInput {
@@ -1438,6 +1740,11 @@ input UserCreateOrConnectWithoutOauthLinksInput {
 
 input UserCreateOrConnectWithoutRoleInput {
   create: UserCreateWithoutRoleInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutStreamKeysInput {
+  create: UserCreateWithoutStreamKeysInput!
   where: UserWhereUniqueInput!
 }
 
@@ -1474,6 +1781,7 @@ input UserCreateWithoutCommentsInput {
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
@@ -1491,6 +1799,7 @@ input UserCreateWithoutOauthLinksInput {
   gender: Boolean
   name: String
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
@@ -1508,6 +1817,25 @@ input UserCreateWithoutRoleInput {
   gender: Boolean
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
+  subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
+  subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
+  updatedAt: DateTime
+  username: String!
+  videos: VideoCreateNestedManyWithoutUserInput
+  views: ViewCreateNestedManyWithoutUserInput
+  votes: VoteCreateNestedManyWithoutUserInput
+}
+
+input UserCreateWithoutStreamKeysInput {
+  avatar: JSON
+  comments: CommentCreateNestedManyWithoutUserInput
+  createdAt: DateTime
+  email: String!
+  gender: Boolean
+  name: String
+  oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
+  role: RoleCreateNestedOneWithoutUsersInput!
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
@@ -1526,6 +1854,7 @@ input UserCreateWithoutSubscribersInput {
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
@@ -1543,6 +1872,7 @@ input UserCreateWithoutSubscribingUsersInput {
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   updatedAt: DateTime
   username: String!
@@ -1560,6 +1890,7 @@ input UserCreateWithoutVideosInput {
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
@@ -1577,6 +1908,7 @@ input UserCreateWithoutViewsInput {
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
@@ -1594,6 +1926,7 @@ input UserCreateWithoutVotesInput {
   name: String
   oauthLinks: OAuthLinkCreateNestedManyWithoutUserInput
   role: RoleCreateNestedOneWithoutUsersInput!
+  streamKeys: StreamKeyCreateNestedManyWithoutUserInput
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
@@ -1812,6 +2145,7 @@ input UserUpdateInput {
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1864,6 +2198,14 @@ input UserUpdateOneRequiredWithoutOauthLinksNestedInput {
   create: UserCreateWithoutOauthLinksInput
   update: UserUpdateWithoutOauthLinksInput
   upsert: UserUpsertWithoutOauthLinksInput
+}
+
+input UserUpdateOneRequiredWithoutStreamKeysNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutStreamKeysInput
+  create: UserCreateWithoutStreamKeysInput
+  update: UserUpdateWithoutStreamKeysInput
+  upsert: UserUpsertWithoutStreamKeysInput
 }
 
 input UserUpdateOneRequiredWithoutSubscribersNestedInput {
@@ -1921,6 +2263,7 @@ input UserUpdateWithoutCommentsInput {
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1938,6 +2281,7 @@ input UserUpdateWithoutOauthLinksInput {
   gender: NullableBoolFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1955,6 +2299,25 @@ input UserUpdateWithoutRoleInput {
   gender: NullableBoolFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
+  subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
+  subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  username: StringFieldUpdateOperationsInput
+  videos: VideoUpdateManyWithoutUserNestedInput
+  views: ViewUpdateManyWithoutUserNestedInput
+  votes: VoteUpdateManyWithoutUserNestedInput
+}
+
+input UserUpdateWithoutStreamKeysInput {
+  avatar: JSON
+  comments: CommentUpdateManyWithoutUserNestedInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  gender: NullableBoolFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
+  role: RoleUpdateOneRequiredWithoutUsersNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -1973,6 +2336,7 @@ input UserUpdateWithoutSubscribersInput {
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
@@ -1990,6 +2354,7 @@ input UserUpdateWithoutSubscribingUsersInput {
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
@@ -2007,6 +2372,7 @@ input UserUpdateWithoutVideosInput {
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -2024,6 +2390,7 @@ input UserUpdateWithoutViewsInput {
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -2041,6 +2408,7 @@ input UserUpdateWithoutVotesInput {
   name: StringFieldUpdateOperationsInput
   oauthLinks: OAuthLinkUpdateManyWithoutUserNestedInput
   role: RoleUpdateOneRequiredWithoutUsersNestedInput
+  streamKeys: StreamKeyUpdateManyWithoutUserNestedInput
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -2063,6 +2431,11 @@ input UserUpsertWithoutCommentsInput {
 input UserUpsertWithoutOauthLinksInput {
   create: UserCreateWithoutOauthLinksInput!
   update: UserUpdateWithoutOauthLinksInput!
+}
+
+input UserUpsertWithoutStreamKeysInput {
+  create: UserCreateWithoutStreamKeysInput!
+  update: UserUpdateWithoutStreamKeysInput!
 }
 
 input UserUpsertWithoutSubscribersInput {
@@ -2104,6 +2477,7 @@ input UserWhereInput {
   oauthLinks: OAuthLinkListRelationFilter
   role: RoleRelationFilter
   roleId: IntFilter
+  streamKeys: StreamKeyListRelationFilter
   subscribers: UserSubscriptionListRelationFilter
   subscribingUsers: UserSubscriptionListRelationFilter
   updatedAt: DateTimeFilter
@@ -2157,7 +2531,6 @@ input VideoCreateInputWithFile {
   slug: String
   thumbnail: JSON
   updatedAt: DateTime
-  user: UserCreateNestedOneWithoutVideosInput!
   views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
@@ -2244,7 +2617,6 @@ input VideoCreateWithoutCommentsInput {
   slug: String
   thumbnail: JSON
   updatedAt: DateTime
-  user: UserCreateNestedOneWithoutVideosInput!
   views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
@@ -2259,7 +2631,6 @@ input VideoCreateWithoutLiveSessionInput {
   slug: String
   thumbnail: JSON
   updatedAt: DateTime
-  user: UserCreateNestedOneWithoutVideosInput!
   views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
@@ -2290,7 +2661,6 @@ input VideoCreateWithoutViewsInput {
   slug: String
   thumbnail: JSON
   updatedAt: DateTime
-  user: UserCreateNestedOneWithoutVideosInput!
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
   votes: VoteCreateNestedManyWithoutVideoInput
 }
@@ -2305,7 +2675,6 @@ input VideoCreateWithoutVotesInput {
   slug: String
   thumbnail: JSON
   updatedAt: DateTime
-  user: UserCreateNestedOneWithoutVideosInput!
   views: ViewCreateNestedManyWithoutVideoInput
   vodSession: VodSessionCreateNestedOneWithoutVideoInput
 }

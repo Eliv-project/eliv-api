@@ -11,5 +11,8 @@ export class LiveSessionAvgAggregateInput {
     status?: true;
 
     @Field(() => Boolean, {nullable:true})
+    streamKeyId?: true;
+
+    @Field(() => Boolean, {nullable:true})
     videoId?: true;
 }

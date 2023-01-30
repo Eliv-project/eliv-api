@@ -12,6 +12,7 @@ import { VideoUncheckedUpdateManyWithoutUserNestedInput } from '../video/video-u
 import { CommentUncheckedUpdateManyWithoutUserNestedInput } from '../comment/comment-unchecked-update-many-without-user-nested.input';
 import { VoteUncheckedUpdateManyWithoutUserNestedInput } from '../vote/vote-unchecked-update-many-without-user-nested.input';
 import { ViewUncheckedUpdateManyWithoutUserNestedInput } from '../view/view-unchecked-update-many-without-user-nested.input';
+import { StreamKeyUncheckedUpdateManyWithoutUserNestedInput } from '../stream-key/stream-key-unchecked-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUncheckedUpdateWithoutOauthLinksInput {
@@ -63,6 +64,9 @@ export class UserUncheckedUpdateWithoutOauthLinksInput {
 
     @Field(() => ViewUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     views?: ViewUncheckedUpdateManyWithoutUserNestedInput;
+
+    @Field(() => StreamKeyUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
+    streamKeys?: StreamKeyUncheckedUpdateManyWithoutUserNestedInput;
 
     @HideField()
     verified?: NullableBoolFieldUpdateOperationsInput;

@@ -16,8 +16,8 @@ export class LiveSessionGroupBy {
     @Field(() => Int, {nullable:false})
     status!: number;
 
-    @Field(() => String, {nullable:false})
-    streamKey!: string;
+    @Field(() => Int, {nullable:false})
+    streamKeyId!: number;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;

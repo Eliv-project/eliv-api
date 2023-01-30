@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { UserCreateInput } from 'src/prisma/@generated/user/user-create.input';
 import { UserUpdateInput } from 'src/prisma/@generated/user/user-update.input';
 import { UserWhereUniqueInput } from 'src/prisma/@generated/user/user-where-unique.input';

@@ -9,6 +9,7 @@ import { OAuthLinkUncheckedCreateNestedManyWithoutUserInput } from '../o-auth-li
 import { CommentUncheckedCreateNestedManyWithoutUserInput } from '../comment/comment-unchecked-create-nested-many-without-user.input';
 import { VoteUncheckedCreateNestedManyWithoutUserInput } from '../vote/vote-unchecked-create-nested-many-without-user.input';
 import { ViewUncheckedCreateNestedManyWithoutUserInput } from '../view/view-unchecked-create-nested-many-without-user.input';
+import { StreamKeyUncheckedCreateNestedManyWithoutUserInput } from '../stream-key/stream-key-unchecked-create-nested-many-without-user.input';
 
 @InputType()
 export class UserUncheckedCreateWithoutVideosInput {
@@ -60,6 +61,9 @@ export class UserUncheckedCreateWithoutVideosInput {
 
     @Field(() => ViewUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     views?: ViewUncheckedCreateNestedManyWithoutUserInput;
+
+    @Field(() => StreamKeyUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    streamKeys?: StreamKeyUncheckedCreateNestedManyWithoutUserInput;
 
     @HideField()
     verified?: boolean;

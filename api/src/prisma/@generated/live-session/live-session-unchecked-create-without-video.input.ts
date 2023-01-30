@@ -11,8 +11,8 @@ export class LiveSessionUncheckedCreateWithoutVideoInput {
     @Field(() => Int, {nullable:true})
     status?: number;
 
-    @Field(() => String, {nullable:true})
-    streamKey?: string;
+    @Field(() => Int, {nullable:false})
+    streamKeyId!: number;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

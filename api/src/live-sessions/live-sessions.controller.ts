@@ -1,12 +1,13 @@
 import { Controller } from '@nestjs/common';
 import { Post, Redirect, Req, Res, UseGuards } from '@nestjs/common/decorators';
 import { ConfigService } from '@nestjs/config';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import path from 'path';
-import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { LiveSession } from 'src/prisma/@generated/live-session/live-session.model';
 import { VideosService } from 'src/videos/videos.service';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
+import { RtmpInput } from './dto/rtmp-input.dto';
 import { RtmpRecord } from './dto/rtmp-record.dto';
 import { LiveStatus } from './enums/status.enum';
 import { IsValidStream } from './guards/is-valid-stream.guard';
@@ -17,7 +18,6 @@ interface RequestWithLiveSession extends Request {
 }
 
 @Controller('live-sessions')
-@UseGuards(IsValidStream)
 export class LiveSessionsController {
   constructor(
     private liveSessionsService: LiveSessionsService,
@@ -27,8 +27,11 @@ export class LiveSessionsController {
 
   @Post('/on-publish')
   @IsPublic()
-  @Redirect()
+  @UseGuards(IsValidStream)
   async beforePublish(@Req() request: RequestWithLiveSession) {
+    console.log('Stream info', request.body);
+
+    // Update live status on live
     await this.liveSessionsService.update(
       {
         id: request.liveSession.id,
@@ -48,9 +51,19 @@ export class LiveSessionsController {
   @Post('/on-publish-done')
   @IsPublic()
   async afterPublish(@Req() request: RequestWithLiveSession) {
+    const publishInfo: RtmpInput = request.body;
+
+    // console.log(request.body);
+
+    const currentLiveSessions = await this.liveSessionsService.findFirst({
+      streamKey: { is: { key: { equals: publishInfo.name } } },
+      status: { equals: LiveStatus.ON_LIVE },
+    });
+
+    // Update live status on live done
     await this.liveSessionsService.update(
       {
-        id: request.liveSession.id,
+        id: currentLiveSessions.id,
       },
       {
         status: { set: LiveStatus.ENDED },
@@ -58,7 +71,7 @@ export class LiveSessionsController {
     );
     console.log(
       'An user ended a live stream session with id',
-      request.liveSession.id,
+      currentLiveSessions.id,
     );
     return true;
   }
@@ -67,18 +80,33 @@ export class LiveSessionsController {
   @IsPublic()
   async afterRecord(@Req() request: RequestWithLiveSession) {
     const recordInfo: RtmpRecord = request.body;
-    const recordPath = path.join(
-      this.configService.get('recordingPath'),
-      [recordInfo.name, 'flv'].join('.'),
-    );
+    let recordPath = recordInfo.path;
+    if (this.configService.get('isDev')) {
+      const fileName = path.basename(recordInfo.path);
+      recordPath = path.join(this.configService.get('recordingPath'), fileName);
+    }
 
     // Update video info
     // Create vod session (live record)
     const videoInfo = await this.videosService.getVideoInfo(recordPath);
 
+    const currentLiveSessions = await this.liveSessionsService.findFirst(
+      {
+        streamKey: { is: { key: { equals: recordInfo.name } } },
+        status: { equals: LiveStatus.ENDED },
+      },
+      {},
+      { video: true },
+    );
+
+    console.log(
+      'A live session has been recorded with id',
+      currentLiveSessions.id,
+    );
+
     await this.videosService.update(
       {
-        id: request.liveSession.videoId,
+        id: currentLiveSessions.videoId,
       },
       {
         duration: { set: videoInfo.format.duration },
@@ -90,7 +118,7 @@ export class LiveSessionsController {
       },
     );
 
-    await this.videosService.toHls(recordPath, request.liveSession.video.dirId);
+    await this.videosService.toHls(recordPath, currentLiveSessions.video.dirId);
 
     return true;
   }
