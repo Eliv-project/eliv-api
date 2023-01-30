@@ -1,78 +1,97 @@
-import { Controller, ForbiddenException } from '@nestjs/common';
-import { Body, Get, Post } from '@nestjs/common/decorators';
-import Ffmpeg from 'fluent-ffmpeg';
+import { Controller } from '@nestjs/common';
+import { Post, Redirect, Req, Res, UseGuards } from '@nestjs/common/decorators';
+import { ConfigService } from '@nestjs/config';
+import { Request, Response } from 'express';
+import path from 'path';
 import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
-import { RtmpInput } from './dto/rtmp-input.dto';
+import { LiveSession } from 'src/prisma/@generated/live-session/live-session.model';
+import { VideosService } from 'src/videos/videos.service';
+import { VodStatus } from 'src/vod-sessions/enums/status.enum';
+import { RtmpRecord } from './dto/rtmp-record.dto';
 import { LiveStatus } from './enums/status.enum';
+import { IsValidStream } from './guards/is-valid-stream.guard';
 import { LiveSessionsService } from './live-sessions.service';
-import ffprobe from '@ffprobe-installer/ffprobe';
-import { join } from 'path';
-import { existsSync } from 'fs';
+
+interface RequestWithLiveSession extends Request {
+  liveSession: LiveSession;
+}
 
 @Controller('live-sessions')
+@UseGuards(IsValidStream)
 export class LiveSessionsController {
-  constructor(private liveSessionsService: LiveSessionsService) {}
+  constructor(
+    private liveSessionsService: LiveSessionsService,
+    private videosService: VideosService,
+    private configService: ConfigService,
+  ) {}
 
-  @Get('/test')
+  @Post('/on-publish')
   @IsPublic()
-  async test() {
-    Ffmpeg.setFfmpegPath(ffprobe.path);
-    console.log(existsSync(join('../upload/hls/abc/index.m3u8')));
-    const result: Ffmpeg.FfprobeData = await new Promise((resolve, reject) => {
-      Ffmpeg.ffprobe(join('../upload/hls/abc/index.m3u8'), (err, data) => {
-        if (err) {
-          reject(err);
-        }
-
-        resolve(data);
-      });
-    });
-    console.log(result);
-    return result;
-  }
-
-  @Post('/connect')
-  @IsPublic()
-  async beforeConnect(@Body() body) {
-    console.log(body);
-    const streamKey = body.name;
-    const liveSession = await this.liveSessionsService.findOne({
-      streamKey,
-    });
-    if (!liveSession) {
-      return new ForbiddenException();
-    }
-
-    if (liveSession.status !== LiveStatus.OFFLINE) {
-      return new ForbiddenException('INVALID_LIVE_SESSION');
-    }
-
+  @Redirect()
+  async beforePublish(@Req() request: RequestWithLiveSession) {
     await this.liveSessionsService.update(
       {
-        streamKey,
+        id: request.liveSession.id,
       },
       {
         status: { set: LiveStatus.ON_LIVE },
       },
     );
-    console.log('An user started a live stream session with key', streamKey);
+    console.log(
+      'An user started a live stream session with id',
+      request.liveSession.id,
+    );
+
     return true;
   }
 
-  @Post('/end')
+  @Post('/on-publish-done')
   @IsPublic()
-  async afterEnd(@Body() body: RtmpInput) {
-    const streamKey = body.name;
-
+  async afterPublish(@Req() request: RequestWithLiveSession) {
     await this.liveSessionsService.update(
       {
-        streamKey,
+        id: request.liveSession.id,
       },
       {
         status: { set: LiveStatus.ENDED },
       },
     );
-    console.log('An user ended a live stream session with key', streamKey);
+    console.log(
+      'An user ended a live stream session with id',
+      request.liveSession.id,
+    );
+    return true;
+  }
+
+  @Post('/on-record-done')
+  @IsPublic()
+  async afterRecord(@Req() request: RequestWithLiveSession) {
+    const recordInfo: RtmpRecord = request.body;
+    const recordPath = path.join(
+      this.configService.get('recordingPath'),
+      [recordInfo.name, 'flv'].join('.'),
+    );
+
+    // Update video info
+    // Create vod session (live record)
+    const videoInfo = await this.videosService.getVideoInfo(recordPath);
+
+    await this.videosService.update(
+      {
+        id: request.liveSession.videoId,
+      },
+      {
+        duration: { set: videoInfo.format.duration },
+        vodSession: {
+          create: {
+            status: VodStatus.empty,
+          },
+        },
+      },
+    );
+
+    await this.videosService.toHls(recordPath, request.liveSession.video.dirId);
+
     return true;
   }
 }

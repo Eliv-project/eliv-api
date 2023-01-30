@@ -14,20 +14,24 @@ import nanoid from 'nanoid';
 import { Prisma } from '@prisma/client';
 import Ffmpeg from 'fluent-ffmpeg';
 import ffprobe from '@ffprobe-installer/ffprobe';
+import { Flv2Mp4ConvertDto } from './processors/flv2mp4.processor';
+import { Mp42HlsConvertDto } from './processors/mp42hls.processor';
 
 @Injectable()
 export class VideosService {
   constructor(
     private prisma: PrismaService,
     private readonly configService: ConfigService,
-    @InjectQueue('video')
-    private readonly videoQueue: Queue,
+    @InjectQueue('mp42hls')
+    private readonly mp42hlsQueue: Queue<Mp42HlsConvertDto>,
+    @InjectQueue('flv2mp4')
+    private readonly flv2mp4Queue: Queue<Flv2Mp4ConvertDto>,
   ) {
     Ffmpeg.setFfmpegPath(ffprobe.path);
   }
 
   async toHls(filePath: string, dirId: string) {
-    await this.videoQueue.add('convert-to-hls', {
+    await this.mp42hlsQueue.add({
       dirId,
       filePath,
       hlsSaveDirname: dirId,
@@ -35,6 +39,14 @@ export class VideosService {
     });
 
     return dirId;
+  }
+
+  async toMp4(filePath: string, dirId: string) {
+    await this.flv2mp4Queue.add({
+      dirId,
+      saveDirPath: this.configService.get('recordingPath'),
+      filePath,
+    });
   }
 
   getVideoInfo(filePath: string): Promise<Ffmpeg.FfprobeData> {

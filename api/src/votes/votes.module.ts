@@ -9,7 +9,10 @@ import { PubSubModule } from 'src/pub-sub/pub-sub.module';
 import { CommentsService } from 'src/comments/comments.service';
 
 @Module({
-  imports: [BullModule.registerQueue({ name: 'video' }), PubSubModule],
+  imports: [
+    BullModule.registerQueue({ name: 'mp42hls' }, { name: 'flv2mp4' }),
+    PubSubModule,
+  ],
   providers: [
     VotesResolver,
     VotesService,

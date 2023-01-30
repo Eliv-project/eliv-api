@@ -19,31 +19,39 @@ import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
+import { ProcessProgress } from '../models/process-progress.model';
 
-interface ConvertDto {
+export interface Mp42HlsConvertDto {
   hlsSavePath: string;
   filePath: string;
   hlsSaveDirname: string;
   dirId: string;
 }
 
-@Processor('video')
-export class VideoProcessor {
+@Processor('mp42hls')
+export class Mp42HlsProcessor {
   constructor(
     @Inject(PUB_SUB) private pubSub: RedisPubSub,
     private readonly videosService: VideosService,
   ) {}
 
-  getHlsBitrateConfigByQuality(qualityConfig: FfmpegQualityConfig) {
+  getStreamMapString(qualityConfig: FfmpegQualityConfig, index: number) {
+    return [`v:${index}`, `a:${index}`].join(',');
+  }
+
+  getHlsBitrateConfigByQuality(
+    qualityConfig: FfmpegQualityConfig,
+    index: number,
+  ) {
     return [
-      `-s:v:${qualityConfig.id} ${qualityConfig.rendition.resolution}`,
-      `-c:v:${qualityConfig.id} libx264`,
-      `-b:v:${qualityConfig.id} ${qualityConfig.rendition.videoBitrate}`,
+      `-s:v:${index} ${qualityConfig.rendition.resolution}`, // Scale
+      `-c:v:${index} libx264`, // Codec
+      `-b:v:${index} ${qualityConfig.rendition.videoBitrate}`, // Bitrate
     ];
   }
 
   @OnQueueCompleted()
-  async onComplete(job: Job<ConvertDto>, result) {
+  async onComplete(job: Job<Mp42HlsConvertDto>, result) {
     console.log(`Complete job ${job.id}`, result);
 
     try {
@@ -70,7 +78,7 @@ export class VideoProcessor {
   }
 
   @OnQueueFailed()
-  async onFail(job: Job<ConvertDto>, err: Error) {
+  async onFail(job: Job<Mp42HlsConvertDto>, err: Error) {
     console.log(`Failed job ${job.id} of type ${job.name} with error`, err);
 
     try {
@@ -97,7 +105,7 @@ export class VideoProcessor {
   }
 
   @OnQueueActive()
-  async onActive(job: Job<ConvertDto>) {
+  async onActive(job: Job<Mp42HlsConvertDto>) {
     console.log(
       `Processing job ${job.id} of type ${job.name} with data`,
       job.data,
@@ -124,8 +132,8 @@ export class VideoProcessor {
     }
   }
 
-  @Process('convert-to-hls')
-  async convertToHls(job: Job<ConvertDto>) {
+  @Process()
+  async convertToHls(job: Job<Mp42HlsConvertDto>) {
     const { hlsSavePath, filePath, hlsSaveDirname, dirId } = job.data;
 
     const playlistName = hlsSaveDirname;
@@ -134,6 +142,13 @@ export class VideoProcessor {
     const publishEvent = [SubscriptionEvents.UPLOAD_VIDEO_PROGRESS, dirId].join(
       '_',
     );
+
+    const bitrateConfigs = [
+      // this.getHlsBitrateConfigByQuality(VideoQualityConfigs['1080p']),
+      // this.getHlsBitrateConfigByQuality(VideoQualityConfigs['720p']),
+      VideoQualityConfigs['480p'],
+      VideoQualityConfigs['360p'],
+    ];
 
     return new Promise<string>((resolve, reject) => {
       let totalTime;
@@ -145,23 +160,15 @@ export class VideoProcessor {
           // the next pair of commands represent the second variant and will be labelled as v:1 and a:1, and so on.
           // (If we wanted to generate 3 variants streams, we would need 6 map statements, assuming that each variant has a video and audio stream.)
           [
-            '-map 0:0',
-            '-map 0:1',
-            '-map 0:0',
-            '-map 0:1',
-            '-map 0:0',
-            '-map 0:1',
+            ...bitrateConfigs.map(() => ['-map 0:0', '-map 0:1']).flat(),
             '-threads 0',
             // The next lines specify how each video stream should be encoded
-            // ...this.getQualityStringConfig(VideoQualityConfigs['360p']),
-            ...this.getHlsBitrateConfigByQuality(VideoQualityConfigs['480p']),
-            // ...this.getQualityStringConfig(VideoQualityConfigs['720p']),
-            '-c:a copy',
-            // '-var_stream_map',
-            // Mapping each stream to master playlist
-            // this.getQualityVarStreamMapString(VideoQualityConfigs['360p'].id),
-            // this.getQualityVarStreamMapString(VideoQualityConfigs['480p'].id),
-            // this.getQualityVarStreamMapString(VideoQualityConfigs['720p'].id),
+            ...bitrateConfigs
+              .map((item, index) =>
+                this.getHlsBitrateConfigByQuality(item, index),
+              )
+              .flat(),
+            `-c:a copy`, // Audio codec
             '-master_pl_name master.m3u8',
             '-f hls',
             '-hls_time 6',
@@ -170,6 +177,13 @@ export class VideoProcessor {
             // Saved segments location
             path.join(savePath, 'v%v/fileSequence%d.ts'),
           ],
+        )
+        // Mapping each stream to master playlist
+        .outputOption(
+          '-var_stream_map',
+          bitrateConfigs
+            .map((item, index) => this.getStreamMapString(item, index))
+            .join(' '),
         )
         // And its playlist file's location
         .output(path.join(savePath, 'v%v/playlist.m3u8'))
@@ -182,6 +196,15 @@ export class VideoProcessor {
         })
         .on('error', function (err, stdout, stderr) {
           console.log('An error occurred: ' + err.message, err, stderr);
+          publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+            publishEvent,
+            {
+              currentProcessProgress: {
+                status: 'failed',
+              },
+            },
+          );
+
           reject();
         })
         .on('progress', function (progress) {
@@ -189,14 +212,26 @@ export class VideoProcessor {
           const percent = ((time / totalTime) * 100).toFixed(2);
 
           console.log('Processing: ' + percent + '% done');
-          publisher.publish(publishEvent, {
-            currentProcessProgress: {
-              progress: percent,
+          publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+            publishEvent,
+            {
+              currentProcessProgress: {
+                status: 'processing',
+                progress: parseFloat(percent),
+              },
             },
-          });
+          );
         })
         .on('end', function (err, stdout, stderr) {
           console.log('Finished processing!' /*, err, stdout, stderr*/);
+          publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+            publishEvent,
+            {
+              currentProcessProgress: {
+                status: 'success',
+              },
+            },
+          );
           resolve(playlistName);
         })
         .run();

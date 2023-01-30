@@ -1,12 +1,5 @@
 import { Inject, InternalServerErrorException } from '@nestjs/common';
-import {
-  Resolver,
-  Query,
-  Mutation,
-  Args,
-  Int,
-  Subscription,
-} from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Subscription } from '@nestjs/graphql';
 import { randomUUID } from 'crypto';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { IsPublic } from 'src/auth/decorators/is-public/is-public.decorator';
@@ -24,6 +17,8 @@ import fs from 'fs';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
 import { VideoPrivacy } from './enums/privacy.enum';
 import slugify from 'slugify';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { User } from 'src/prisma/@generated/user/user.model';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -88,22 +83,29 @@ export class VideosResolver {
       vodSession: true,
       liveSession: true,
       user: {
-        include: {_count: {select: {subscribers: true}}}
+        include: { _count: { select: { subscribers: true } } },
       },
     });
   }
 
   @Query(() => Video, { name: 'video', nullable: true })
-  @IsPublic()
-  findOne(@Args('where') where: VideoWhereUniqueInput) {
-    return this.videosService.findOne(where, {
+  @IsPublic(true)
+  async findOne(
+    @Args('where') where: VideoWhereUniqueInput,
+    @CurrentUser() me: User,
+  ) {
+    const video = await this.videosService.findOne(where, {
       vodSession: true,
       liveSession: true,
-      user: {
-        include: {_count: {select: {subscribers: true}}}
-      },
       _count: true,
     });
+
+    // Only serve private videos to its owner
+    if (!me && video.privacy === VideoPrivacy.private) {
+      return null;
+    }
+
+    return video;
   }
 
   @Mutation(() => Video)
