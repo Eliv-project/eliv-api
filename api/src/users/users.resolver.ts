@@ -1,4 +1,5 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { UserCreateInput } from 'src/prisma/@generated/user/user-create.input';
 import { UserUpdateInput } from 'src/prisma/@generated/user/user-update.input';
@@ -36,11 +37,11 @@ export class UsersResolver {
 
   @Mutation(() => User)
   updateUser(
-    @Args('where') where: UserWhereUniqueInput,
+    @CurrentUser() me: User,
     @Args('data')
     data: UserUpdateInput,
   ) {
-    return this.usersService.update(where, data);
+    return this.usersService.update({ id: me.id }, data);
   }
 
   @Mutation(() => User)

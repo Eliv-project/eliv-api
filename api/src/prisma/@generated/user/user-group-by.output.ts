@@ -42,7 +42,7 @@ export class UserGroupBy {
     @Field(() => Int, {nullable:false})
     roleId!: number;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 
     @Field(() => UserCountAggregate, {nullable:true})

@@ -149,7 +149,7 @@ model User {
 
     streamKeys StreamKey[]
 
-    /// @HideField({output: true, input: true})
+    /// @HideField({output: false, input: true})
     verified Boolean? @default(false)
 
 }

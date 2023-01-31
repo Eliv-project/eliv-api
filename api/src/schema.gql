@@ -768,7 +768,7 @@ type Mutation {
   updateOAuthLink(data: OAuthLinkUpdateInput!, where: OAuthLinkWhereUniqueInput!): OAuthLink!
   updatePermission(data: PermissionUpdateInput!, where: PermissionWhereUniqueInput!): Permission!
   updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  updateUser(data: UserUpdateInput!): User!
   updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video!
   updateVodSession(updateVodSessionInput: UpdateVodSessionInput!): VodSession!
   voteComment(comment: CommentWhereUniqueInput!, direction: Int!): VoteResponse!
@@ -1678,6 +1678,7 @@ type User {
   subscribingUsers: [UserSubscription!]
   updatedAt: DateTime!
   username: String!
+  verified: Boolean
   videos: [Video!]
   views: [View!]
   votes: [Vote!]
@@ -1685,7 +1686,9 @@ type User {
 
 type UserAuthInfo {
   email: String!
+  name: String!
   username: String!
+  verified: Boolean
 }
 
 type UserCount {

@@ -9,6 +9,7 @@
     "schema": "src/prisma/schema.prisma"
   },
   "scripts": {
+    "prisma:reset:local": "dotenv -e .env.dev --  prisma migrate reset",
     "prisma:seed:local": "dotenv -e .env.dev -- ts-node src/prisma/seed/index.ts",
     "prisma:seed:docker": "dotenv -e .env.docker -- ts-node src/prisma/seed/index.ts",
     "prisma:migrate:local": " dotenv -e .env.dev -- prisma migrate dev --name ''",

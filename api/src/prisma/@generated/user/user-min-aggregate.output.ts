@@ -33,6 +33,6 @@ export class UserMinAggregate {
     @Field(() => Int, {nullable:true})
     roleId?: number;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 }

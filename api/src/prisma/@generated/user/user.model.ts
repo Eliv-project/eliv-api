@@ -74,7 +74,7 @@ export class User {
     @Field(() => [StreamKey], {nullable:true})
     streamKeys?: Array<StreamKey>;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true,defaultValue:false})
     verified!: boolean | null;
 
     @Field(() => UserCount, {nullable:false})
