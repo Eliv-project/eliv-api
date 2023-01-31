@@ -1,5 +1,12 @@
 import { Inject, InternalServerErrorException } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, Subscription } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Subscription,
+  Int,
+} from '@nestjs/graphql';
 import { randomUUID } from 'crypto';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
@@ -19,6 +26,7 @@ import { VideoPrivacy } from './enums/privacy.enum';
 import slugify from 'slugify';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from 'src/prisma/@generated/user/user.model';
+import { VideoOrderByWithRelationInput } from 'src/prisma/@generated/video/video-order-by-with-relation.input';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -77,15 +85,34 @@ export class VideosResolver {
   findAll(
     @Args('where')
     where: VideoWhereInput,
+    @Args({
+      name: 'orderBy',
+      type: () => [VideoOrderByWithRelationInput],
+      nullable: true,
+    })
+    orderBy?: VideoOrderByWithRelationInput[],
+    @Args({
+      name: 'take',
+      type: () => [Int],
+      nullable: true,
+    })
+    take?: number,
   ) {
-    return this.videosService.findAll(where, {
-      _count: true,
-      vodSession: true,
-      liveSession: true,
-      user: {
-        include: { _count: { select: { subscribers: true } } },
+    return this.videosService.findAll(
+      {
+        where,
+        orderBy,
+        take,
       },
-    });
+      {
+        _count: true,
+        vodSession: true,
+        liveSession: true,
+        user: {
+          include: { _count: { select: { subscribers: true } } },
+        },
+      },
+    );
   }
 
   @Query(() => Video, { name: 'video', nullable: true })

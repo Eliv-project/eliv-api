@@ -198,6 +198,10 @@ input CommentListRelationFilter {
   some: CommentWhereInput
 }
 
+input CommentOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input CommentRelationFilter {
   is: CommentWhereInput
   isNot: CommentWhereInput
@@ -604,6 +608,21 @@ input LiveSessionListRelationFilter {
   some: LiveSessionWhereInput
 }
 
+input LiveSessionOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input LiveSessionOrderByWithRelationInput {
+  createdAt: SortOrder
+  id: SortOrder
+  status: SortOrder
+  streamKey: StreamKeyOrderByWithRelationInput
+  streamKeyId: SortOrder
+  updatedAt: SortOrder
+  video: VideoOrderByWithRelationInput
+  videoId: SortOrder
+}
+
 input LiveSessionRelationFilter {
   is: LiveSessionWhereInput
   isNot: LiveSessionWhereInput
@@ -897,6 +916,10 @@ input OAuthLinkListRelationFilter {
   some: OAuthLinkWhereInput
 }
 
+input OAuthLinkOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OAuthLinkProviderProviderIdCompoundUniqueInput {
   provider: String!
   providerId: String!
@@ -1112,6 +1135,10 @@ input PermissionsOnRolesListRelationFilter {
   some: PermissionsOnRolesWhereInput
 }
 
+input PermissionsOnRolesOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input PermissionsOnRolesRoleIdPermissionIdCompoundUniqueInput {
   permissionId: Int!
   roleId: Int!
@@ -1241,7 +1268,7 @@ type Query {
   userSubscriptions: [UserSubscription!]!
   users(where: UserWhereInput!): [User!]!
   video(where: VideoWhereUniqueInput!): Video
-  videos(where: VideoWhereInput!): [Video!]!
+  videos(orderBy: [VideoOrderByWithRelationInput!], take: [Int!], where: VideoWhereInput!): [Video!]!
   vodSession(id: Int!): VodSession!
   vodSessions: [VodSession!]!
 }
@@ -1308,6 +1335,13 @@ input RoleCreateWithoutUsersInput {
   permissions: PermissionsOnRolesCreateNestedManyWithoutRoleInput
 }
 
+input RoleOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  permissions: PermissionsOnRolesOrderByRelationAggregateInput
+  users: UserOrderByRelationAggregateInput
+}
+
 input RoleRelationFilter {
   is: RoleWhereInput
   isNot: RoleWhereInput
@@ -1368,6 +1402,11 @@ input RoleWhereInput {
 input RoleWhereUniqueInput {
   id: Int
   name: String
+}
+
+enum SortOrder {
+  asc
+  desc
 }
 
 type StreamKey {
@@ -1450,6 +1489,22 @@ input StreamKeyListRelationFilter {
   every: StreamKeyWhereInput
   none: StreamKeyWhereInput
   some: StreamKeyWhereInput
+}
+
+input StreamKeyOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input StreamKeyOrderByWithRelationInput {
+  createdAt: SortOrder
+  desc: SortOrder
+  id: SortOrder
+  isDefault: SortOrder
+  key: SortOrder
+  liveSessions: LiveSessionOrderByRelationAggregateInput
+  name: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
 }
 
 input StreamKeyRelationFilter {
@@ -1941,6 +1996,31 @@ input UserListRelationFilter {
   some: UserWhereInput
 }
 
+input UserOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input UserOrderByWithRelationInput {
+  avatar: SortOrder
+  comments: CommentOrderByRelationAggregateInput
+  createdAt: SortOrder
+  email: SortOrder
+  gender: SortOrder
+  id: SortOrder
+  name: SortOrder
+  oauthLinks: OAuthLinkOrderByRelationAggregateInput
+  role: RoleOrderByWithRelationInput
+  roleId: SortOrder
+  streamKeys: StreamKeyOrderByRelationAggregateInput
+  subscribers: UserSubscriptionOrderByRelationAggregateInput
+  subscribingUsers: UserSubscriptionOrderByRelationAggregateInput
+  updatedAt: SortOrder
+  username: SortOrder
+  videos: VideoOrderByRelationAggregateInput
+  views: ViewOrderByRelationAggregateInput
+  votes: VoteOrderByRelationAggregateInput
+}
+
 input UserRelationFilter {
   is: UserWhereInput
   isNot: UserWhereInput
@@ -2027,6 +2107,10 @@ input UserSubscriptionListRelationFilter {
   every: UserSubscriptionWhereInput
   none: UserSubscriptionWhereInput
   some: UserSubscriptionWhereInput
+}
+
+input UserSubscriptionOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 type UserSubscriptionResponse {
@@ -2685,6 +2769,28 @@ input VideoListRelationFilter {
   some: VideoWhereInput
 }
 
+input VideoOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input VideoOrderByWithRelationInput {
+  comments: CommentOrderByRelationAggregateInput
+  createdAt: SortOrder
+  desc: SortOrder
+  id: SortOrder
+  liveSession: LiveSessionOrderByWithRelationInput
+  name: SortOrder
+  privacy: SortOrder
+  slug: SortOrder
+  thumbnail: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+  views: ViewOrderByRelationAggregateInput
+  vodSession: VodSessionOrderByWithRelationInput
+  votes: VoteOrderByRelationAggregateInput
+}
+
 input VideoRelationFilter {
   is: VideoWhereInput
   isNot: VideoWhereInput
@@ -3001,6 +3107,10 @@ input ViewListRelationFilter {
   some: ViewWhereInput
 }
 
+input ViewOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input ViewScalarWhereInput {
   AND: [ViewScalarWhereInput!]
   NOT: [ViewScalarWhereInput!]
@@ -3130,6 +3240,15 @@ input VodSessionCreateWithoutVideoInput {
   createdAt: DateTime
   status: Int
   updatedAt: DateTime
+}
+
+input VodSessionOrderByWithRelationInput {
+  createdAt: SortOrder
+  id: SortOrder
+  status: SortOrder
+  updatedAt: SortOrder
+  video: VideoOrderByWithRelationInput
+  videoId: SortOrder
 }
 
 input VodSessionRelationFilter {
@@ -3314,6 +3433,10 @@ input VoteListRelationFilter {
   every: VoteWhereInput
   none: VoteWhereInput
   some: VoteWhereInput
+}
+
+input VoteOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 type VoteResponse {

@@ -16,6 +16,7 @@ import Ffmpeg from 'fluent-ffmpeg';
 import ffprobe from '@ffprobe-installer/ffprobe';
 import { Flv2Mp4ConvertDto } from './processors/flv2mp4.processor';
 import { Mp42HlsConvertDto } from './processors/mp42hls.processor';
+import { FindManyVideoArgs } from 'src/prisma/@generated/video/find-many-video.args';
 
 @Injectable()
 export class VideosService {
@@ -73,8 +74,8 @@ export class VideosService {
     });
   }
 
-  findAll(where: VideoWhereInput, include?: Prisma.VideoInclude) {
-    return this.prisma.video.findMany({ where, include });
+  findAll(args: FindManyVideoArgs, include?: Prisma.VideoInclude) {
+    return this.prisma.video.findMany({ ...args, include });
   }
 
   findOne(where: VideoWhereUniqueInput, include?: Prisma.VideoInclude) {
