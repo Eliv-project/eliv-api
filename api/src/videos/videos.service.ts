@@ -62,12 +62,20 @@ export class VideosService {
     });
   }
 
-  create(data: VideoCreateInput) {
-    const searchableName = slugify(data.name, {
+  getSearchableName(name: string) {
+    return slugify(name, {
       strict: true,
       lower: true,
     });
-    const slug = nanoid(10);
+  }
+
+  getSlug() {
+    return nanoid(10);
+  }
+
+  create(data: VideoCreateInput) {
+    const searchableName = this.getSearchableName(data.name);
+    const slug = this.getSlug();
 
     return this.prisma.video.create({
       data: { ...data, searchableName, slug },

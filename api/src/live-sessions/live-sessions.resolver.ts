@@ -34,16 +34,6 @@ export class LiveSessionsResolver {
     me: User,
   ) {
     const dirId = randomUUID();
-    const createdVideo = await this.videosService.create({
-      ...data.video.create,
-      user: {
-        connect: {
-          id: me.id,
-        },
-      },
-      dirId,
-      privacy: VideoPrivacy.private,
-    });
     return this.liveSessionsService.create(
       {
         ...data,
@@ -54,8 +44,19 @@ export class LiveSessionsResolver {
           },
         },
         video: {
-          connect: {
-            id: createdVideo.id,
+          create: {
+            ...data.video.create,
+            dirId,
+            privacy: VideoPrivacy.private,
+            searchableName: this.videosService.getSearchableName(
+              data.video.create.name,
+            ),
+            slug: this.videosService.getSlug(),
+            user: {
+              connect: {
+                id: me.id,
+              },
+            },
           },
         },
       },

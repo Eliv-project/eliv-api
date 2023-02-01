@@ -40,6 +40,7 @@ export class VideosResolver {
   async createVideo(
     @Args('data')
     { file, ...data }: VideoCreateInputWithFile,
+    @CurrentUser() me: User,
   ) {
     const { createReadStream, filename } = await file;
     let createdVideo: Video = null;
@@ -59,6 +60,9 @@ export class VideosResolver {
       // Create private video with default vod session
       createdVideo = await this.videosService.create({
         ...data,
+        user: {
+          connect: { id: me.id },
+        },
         duration: videoInfo.format.duration,
         dirId,
         privacy: VideoPrivacy.private,
@@ -123,8 +127,11 @@ export class VideosResolver {
   ) {
     const video = await this.videosService.findOne(where, {
       vodSession: true,
-      liveSession: true,
+      liveSession: {
+        include: { streamKey: true },
+      },
       _count: true,
+      user: true,
     });
 
     // Only serve private videos to its owner

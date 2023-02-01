@@ -186,7 +186,7 @@ export class Mp42HlsProcessor {
             .join(' '),
         )
         // And its playlist file's location
-        .output(path.join(savePath, 'v%v\\playlist.m3u8'))
+        .output(path.join(savePath, 'v%v/playlist.m3u8'))
         .on('codecData', (data) => {
           // HERE YOU GET THE TOTAL TIME
           totalTime = parseInt(data.duration.replace(/:/g, ''));
