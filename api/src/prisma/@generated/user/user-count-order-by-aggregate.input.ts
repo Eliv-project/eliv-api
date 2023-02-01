@@ -36,6 +36,6 @@ export class UserCountOrderByAggregateInput {
     @Field(() => SortOrder, {nullable:true})
     roleId?: keyof typeof SortOrder;
 
-    @HideField()
+    @Field(() => SortOrder, {nullable:true})
     verified?: keyof typeof SortOrder;
 }

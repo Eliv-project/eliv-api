@@ -84,6 +84,6 @@ export class UserWhereInput {
     @Field(() => StreamKeyListRelationFilter, {nullable:true})
     streamKeys?: StreamKeyListRelationFilter;
 
-    @HideField()
+    @Field(() => BoolNullableFilter, {nullable:true})
     verified?: BoolNullableFilter;
 }

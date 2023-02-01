@@ -66,6 +66,6 @@ export class UserCreateInput {
     @Field(() => StreamKeyCreateNestedManyWithoutUserInput, {nullable:true})
     streamKeys?: StreamKeyCreateNestedManyWithoutUserInput;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 }

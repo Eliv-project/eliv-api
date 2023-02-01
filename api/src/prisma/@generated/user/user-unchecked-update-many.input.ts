@@ -40,6 +40,6 @@ export class UserUncheckedUpdateManyInput {
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     roleId?: IntFieldUpdateOperationsInput;
 
-    @HideField()
+    @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     verified?: NullableBoolFieldUpdateOperationsInput;
 }

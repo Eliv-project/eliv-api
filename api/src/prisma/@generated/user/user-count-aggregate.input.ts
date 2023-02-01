@@ -35,7 +35,7 @@ export class UserCountAggregateInput {
     @Field(() => Boolean, {nullable:true})
     roleId?: true;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: true;
 
     @Field(() => Boolean, {nullable:true})

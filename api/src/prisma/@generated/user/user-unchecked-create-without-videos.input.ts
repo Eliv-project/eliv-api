@@ -65,6 +65,6 @@ export class UserUncheckedCreateWithoutVideosInput {
     @Field(() => StreamKeyUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     streamKeys?: StreamKeyUncheckedCreateNestedManyWithoutUserInput;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 }

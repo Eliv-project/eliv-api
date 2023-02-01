@@ -32,6 +32,6 @@ export class UserMaxAggregateInput {
     @Field(() => Boolean, {nullable:true})
     roleId?: true;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: true;
 }

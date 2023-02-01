@@ -49,6 +49,6 @@ export class UserScalarWhereInput {
     @Field(() => IntFilter, {nullable:true})
     roleId?: IntFilter;
 
-    @HideField()
+    @Field(() => BoolNullableFilter, {nullable:true})
     verified?: BoolNullableFilter;
 }

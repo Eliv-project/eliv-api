@@ -72,6 +72,6 @@ export class UserUncheckedUpdateInput {
     @Field(() => StreamKeyUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     streamKeys?: StreamKeyUncheckedUpdateManyWithoutUserNestedInput;
 
-    @HideField()
+    @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     verified?: NullableBoolFieldUpdateOperationsInput;
 }

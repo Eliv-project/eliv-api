@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
@@ -36,11 +37,21 @@ export class UsersResolver {
   }
 
   @Mutation(() => User)
-  updateUser(
+  async updateUser(
     @CurrentUser() me: User,
     @Args('data')
     data: UserUpdateInput,
   ) {
+    if (data.username) {
+      const userExited =
+        (await this.usersService.count({
+          username: { mode: 'insensitive', equals: data.username.set },
+        })) > 0;
+      if (userExited) {
+        throw new BadRequestException('USERNAME_EXISTED');
+      }
+    }
+
     return this.usersService.update({ id: me.id }, data);
   }
 

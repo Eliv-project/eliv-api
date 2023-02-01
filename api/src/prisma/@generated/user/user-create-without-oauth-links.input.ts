@@ -62,6 +62,6 @@ export class UserCreateWithoutOauthLinksInput {
     @Field(() => StreamKeyCreateNestedManyWithoutUserInput, {nullable:true})
     streamKeys?: StreamKeyCreateNestedManyWithoutUserInput;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 }

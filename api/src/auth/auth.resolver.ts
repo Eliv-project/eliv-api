@@ -1,5 +1,6 @@
 import { UseGuards } from '@nestjs/common/decorators';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { User } from 'src/prisma/@generated/user/user.model';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { IsPublic } from './decorators/is-public.decorator';
@@ -23,6 +24,21 @@ export class AuthResolver {
     const currentUser = await this.authService.validateLinkedUser(loginInput);
 
     const payload: JwtPayload = {
+      id: currentUser.id,
+      email: currentUser.email,
+      username: currentUser.username,
+    };
+
+    return {
+      ...this.authService.getTokensWithExp(payload),
+      user: currentUser,
+    };
+  }
+
+  @Mutation((returns) => LoginResponse)
+  async jwtLogin(@CurrentUser() currentUser: User) {
+    const payload: JwtPayload = {
+      id: currentUser.id,
       email: currentUser.email,
       username: currentUser.username,
     };
@@ -46,6 +62,7 @@ export class AuthResolver {
     // }
 
     const payload: JwtPayload = {
+      id: currentUser.id,
       email: currentUser.email,
       username: currentUser.username,
     };
@@ -61,6 +78,7 @@ export class AuthResolver {
   @UseGuards(JwtRefreshAuthGuard)
   refreshTokens(@CurrentUser() currentUser): RefreshTokensResponse {
     const payload: JwtPayload = {
+      id: currentUser.id,
       email: currentUser.email,
       username: currentUser.username,
     };

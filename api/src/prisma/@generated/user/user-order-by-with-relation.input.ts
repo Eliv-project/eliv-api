@@ -71,6 +71,6 @@ export class UserOrderByWithRelationInput {
     @Field(() => StreamKeyOrderByRelationAggregateInput, {nullable:true})
     streamKeys?: StreamKeyOrderByRelationAggregateInput;
 
-    @HideField()
+    @Field(() => SortOrder, {nullable:true})
     verified?: keyof typeof SortOrder;
 }

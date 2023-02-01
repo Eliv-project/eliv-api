@@ -34,6 +34,6 @@ export class UserCreateManyRoleInput {
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 }

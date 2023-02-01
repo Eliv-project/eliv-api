@@ -37,6 +37,6 @@ export class UserUncheckedUpdateManyWithoutUsersInput {
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     updatedAt?: DateTimeFieldUpdateOperationsInput;
 
-    @HideField()
+    @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     verified?: NullableBoolFieldUpdateOperationsInput;
 }

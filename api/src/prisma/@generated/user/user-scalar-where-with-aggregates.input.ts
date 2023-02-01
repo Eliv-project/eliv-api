@@ -49,6 +49,6 @@ export class UserScalarWhereWithAggregatesInput {
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     roleId?: IntWithAggregatesFilter;
 
-    @HideField()
+    @Field(() => BoolNullableWithAggregatesFilter, {nullable:true})
     verified?: BoolNullableWithAggregatesFilter;
 }
