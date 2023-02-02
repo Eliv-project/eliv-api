@@ -202,6 +202,21 @@ input CommentOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input CommentOrderByWithRelationInput {
+  childComments: CommentOrderByRelationAggregateInput
+  content: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  parentComment: CommentOrderByWithRelationInput
+  parentCommentId: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+  video: VideoOrderByWithRelationInput
+  videoId: SortOrder
+  votes: VoteOrderByRelationAggregateInput
+}
+
 input CommentRelationFilter {
   is: CommentWhereInput
   isNot: CommentWhereInput
@@ -1243,9 +1258,9 @@ type ProcessProgress {
 
 type Query {
   comment(where: CommentWhereUniqueInput!): Comment!
-  comments(where: CommentWhereInput!): [Comment!]!
-  commentsWithVotes(where: CommentWhereInput!): [CommentWithVotes!]!
-  countSubscriber(where: UserSubscriptionWhereInput!): Int!
+  comments(orderBy: [CommentOrderByWithRelationInput!], where: CommentWhereInput!): [Comment!]!
+  commentsWithVotes(orderBy: [CommentOrderByWithRelationInput!], where: CommentWhereInput!): [CommentWithVotes!]!
+  countSubscriber(where: UserWhereUniqueInput!): Int!
   countVote(where: VoteCountWhereInput!): VoteCountResponse!
   isSubscribing(user: UserWhereUniqueInput!): Boolean!
   isVoted(video: VideoWhereUniqueInput!): VoteResponse!
@@ -1832,6 +1847,7 @@ input UserCreateWithoutCommentsInput {
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
+  verified: Boolean
   videos: VideoCreateNestedManyWithoutUserInput
   views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
@@ -1888,6 +1904,7 @@ input UserCreateWithoutStreamKeysInput {
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
+  verified: Boolean
   videos: VideoCreateNestedManyWithoutUserInput
   views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
@@ -1906,6 +1923,7 @@ input UserCreateWithoutSubscribersInput {
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
+  verified: Boolean
   videos: VideoCreateNestedManyWithoutUserInput
   views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
@@ -1924,6 +1942,7 @@ input UserCreateWithoutSubscribingUsersInput {
   subscribers: UserSubscriptionCreateNestedManyWithoutSubscribingUserInput
   updatedAt: DateTime
   username: String!
+  verified: Boolean
   videos: VideoCreateNestedManyWithoutUserInput
   views: ViewCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
@@ -1962,6 +1981,7 @@ input UserCreateWithoutViewsInput {
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
+  verified: Boolean
   videos: VideoCreateNestedManyWithoutUserInput
   votes: VoteCreateNestedManyWithoutUserInput
 }
@@ -1980,6 +2000,7 @@ input UserCreateWithoutVotesInput {
   subscribingUsers: UserSubscriptionCreateNestedManyWithoutUserInput
   updatedAt: DateTime
   username: String!
+  verified: Boolean
   videos: VideoCreateNestedManyWithoutUserInput
   views: ViewCreateNestedManyWithoutUserInput
 }
@@ -2350,6 +2371,7 @@ input UserUpdateWithoutCommentsInput {
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
+  verified: NullableBoolFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
   views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
@@ -2406,6 +2428,7 @@ input UserUpdateWithoutStreamKeysInput {
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
+  verified: NullableBoolFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
   views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
@@ -2424,6 +2447,7 @@ input UserUpdateWithoutSubscribersInput {
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
+  verified: NullableBoolFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
   views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
@@ -2442,6 +2466,7 @@ input UserUpdateWithoutSubscribingUsersInput {
   subscribers: UserSubscriptionUpdateManyWithoutSubscribingUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
+  verified: NullableBoolFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
   views: ViewUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
@@ -2480,6 +2505,7 @@ input UserUpdateWithoutViewsInput {
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
+  verified: NullableBoolFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
   votes: VoteUpdateManyWithoutUserNestedInput
 }
@@ -2498,6 +2524,7 @@ input UserUpdateWithoutVotesInput {
   subscribingUsers: UserSubscriptionUpdateManyWithoutUserNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   username: StringFieldUpdateOperationsInput
+  verified: NullableBoolFieldUpdateOperationsInput
   videos: VideoUpdateManyWithoutUserNestedInput
   views: ViewUpdateManyWithoutUserNestedInput
 }

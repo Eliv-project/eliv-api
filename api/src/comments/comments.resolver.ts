@@ -3,6 +3,7 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { Prisma } from '@prisma/client';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+import { CommentOrderByWithRelationInput } from 'src/prisma/@generated/comment/comment-order-by-with-relation.input';
 import { CommentUpdateInput } from 'src/prisma/@generated/comment/comment-update.input';
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
 import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
@@ -54,14 +55,30 @@ export class CommentsResolver {
 
   @Query(() => [Comment], { name: 'comments' })
   @IsPublic()
-  findAll(@Args('where') where: CommentWhereInput) {
-    return this.commentsService.findAll(where, { user: true, _count: true });
+  findAll(
+    @Args('where') where: CommentWhereInput,
+    @Args('orderBy', {
+      type: () => [CommentOrderByWithRelationInput],
+      nullable: true,
+    })
+    orderBy: CommentOrderByWithRelationInput[],
+  ) {
+    return this.commentsService.findAll({
+      where,
+      orderBy,
+      include: { user: true, _count: true },
+    });
   }
 
   @Query(() => [CommentWithVotes], { name: 'commentsWithVotes' })
   @IsPublic(true)
   async findAllWithVotes(
     @Args('where') where: CommentWhereInput,
+    @Args('orderBy', {
+      type: () => [CommentOrderByWithRelationInput],
+      nullable: true,
+    })
+    orderBy: CommentOrderByWithRelationInput[],
     @CurrentUser() me: User,
   ) {
     let myVoteQuery = '';
@@ -92,6 +109,14 @@ export class CommentsResolver {
       `,
     ].filter((queryField) => !!queryField);
 
+    const orderByQuery = (orderBy || []).map((criteria) => {
+      if (criteria.createdAt) {
+        return `c1."createdAt" ${criteria.createdAt}`;
+      } else if (criteria.updatedAt) {
+        return `c1."updatedAt" ${criteria.updatedAt}`;
+      }
+    });
+
     const query = `SELECT c1.*, row_to_json("User") as user,  
     ${myVoteQuery}
     ${countQuery}
@@ -107,7 +132,8 @@ export class CommentsResolver {
     ) as dislikes
     FROM "Comment" c1
     JOIN "User" ON "User"."id"=c1."userId"
-    ${whereQuery.length > 0 ? `WHERE ${whereQuery.join(' AND ')}` : ''}`;
+    ${whereQuery.length > 0 ? `WHERE ${whereQuery.join(' AND ')}` : ''}
+    ${orderByQuery.length > 0 ? `ORDER BY ${orderByQuery.join(',')}` : ''}`;
 
     const comments = await this.commentsService.raw<
       (CommentWithVotes & {

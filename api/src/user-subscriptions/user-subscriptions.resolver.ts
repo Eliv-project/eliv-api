@@ -3,7 +3,6 @@ import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
-import { UserSubscriptionWhereInput } from 'src/prisma/@generated/user-subscription/user-subscription-where.input';
 import { UserSubscription } from 'src/prisma/@generated/user-subscription/user-subscription.model';
 import { UserWhereUniqueInput } from 'src/prisma/@generated/user/user-where-unique.input';
 import { User } from 'src/prisma/@generated/user/user.model';
@@ -20,8 +19,18 @@ export class UserSubscriptionsResolver {
 
   @Query(() => Int)
   @IsPublic()
-  countSubscriber(@Args('where') where: UserSubscriptionWhereInput) {
-    return this.userSubscriptionsService.count(where);
+  countSubscriber(@Args('where') userWhere: UserWhereUniqueInput) {
+    return this.userSubscriptionsService.count({
+      subscribingUser: {
+        is: {
+          OR: [
+            userWhere.username && { username: { equals: userWhere.username } },
+            userWhere.email && { email: { equals: userWhere.email } },
+            userWhere.id && { id: { equals: userWhere.id } },
+          ].filter((i) => !!i),
+        },
+      },
+    });
   }
 
   @Query(() => [UserSubscription], { name: 'userSubscriptions' })

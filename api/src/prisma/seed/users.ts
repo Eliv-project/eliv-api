@@ -40,11 +40,15 @@ export async function seedUsers(
     const lastName = faker.name.lastName();
     const email = faker.internet.email(firstName, lastName);
     const password = 'test_user';
+    const gender = faker.name.sex() === 'male';
     const username = faker.internet.userName(firstName, lastName);
+    const name = faker.name.fullName({ firstName, lastName });
     const user = await prisma.user.upsert({
       create: {
         email,
-        gender: true,
+        gender,
+        name,
+        verified: true,
         password: bcrypt.hashSync(password, 10),
         username,
         role: {
@@ -55,7 +59,9 @@ export async function seedUsers(
       },
       update: {
         email,
-        gender: true,
+        gender,
+        name,
+        verified: true,
         password: bcrypt.hashSync(password, 10),
         username,
         role: {

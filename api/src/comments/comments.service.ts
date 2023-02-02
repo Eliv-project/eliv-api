@@ -4,6 +4,7 @@ import { CommentCreateInput } from 'src/prisma/@generated/comment/comment-create
 import { CommentUpdateInput } from 'src/prisma/@generated/comment/comment-update.input';
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
 import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
+import { FindManyCommentArgs } from 'src/prisma/@generated/comment/find-many-comment.args';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -14,8 +15,8 @@ export class CommentsService {
     return this.prisma.comment.create({ data, include });
   }
 
-  findAll(where: CommentWhereInput, include?: Prisma.CommentInclude) {
-    return this.prisma.comment.findMany({ where, include });
+  findAll(args: Prisma.CommentFindManyArgs) {
+    return this.prisma.comment.findMany(args);
   }
 
   async raw<T>(query: Prisma.Sql) {
