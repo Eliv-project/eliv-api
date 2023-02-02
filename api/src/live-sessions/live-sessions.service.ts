@@ -23,7 +23,7 @@ export class LiveSessionsService {
 
   findFirst(
     where: LiveSessionWhereInput,
-    orderBy?: Prisma.LiveSessionOrderByWithRelationInput,
+    orderBy?: Prisma.LiveSessionOrderByWithRelationInput[],
     include?: Prisma.LiveSessionInclude,
   ) {
     return this.prisma.liveSession.findFirst({ where, orderBy, include });

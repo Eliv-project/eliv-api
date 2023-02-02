@@ -46,7 +46,8 @@ export class IsValidStream implements CanActivate {
           },
         },
       },
-      { updatedAt: 'desc' },
+      [{ updatedAt: 'desc' }],
+      { video: true },
     );
     if (!liveSession) {
       throw new NotFoundException('LIVE_SESSION_NOT_FOUND');

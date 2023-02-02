@@ -27,9 +27,10 @@ export class WithStreamKey implements CanActivate {
         },
         isDefault: true,
       });
+    } else {
+      request.streamKey = defaultStreamKey;
     }
 
-    request.streamKey = defaultStreamKey;
 
     return true;
   }

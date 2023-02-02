@@ -1,12 +1,22 @@
 import { Controller } from '@nestjs/common';
-import { Post, Redirect, Req, Res, UseGuards } from '@nestjs/common/decorators';
+import {
+  Inject,
+  Post,
+  Redirect,
+  Req,
+  UseGuards,
+} from '@nestjs/common/decorators';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 import path from 'path';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
 import { LiveSession } from 'src/prisma/@generated/live-session/live-session.model';
+import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
 import { VideosService } from 'src/videos/videos.service';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
+import { LiveSessionStatus } from './dto/live-session-status.output';
 import { RtmpInput } from './dto/rtmp-input.dto';
 import { RtmpRecord } from './dto/rtmp-record.dto';
 import { LiveStatus } from './enums/status.enum';
@@ -23,11 +33,13 @@ export class LiveSessionsController {
     private liveSessionsService: LiveSessionsService,
     private videosService: VideosService,
     private configService: ConfigService,
+    @Inject(PUB_SUB) private pubSub: RedisPubSub,
   ) {}
 
   @Post('/on-publish')
   @IsPublic()
   @UseGuards(IsValidStream)
+  @Redirect()
   async beforePublish(@Req() request: RequestWithLiveSession) {
     console.log('Stream info', request.body);
 
@@ -40,12 +52,24 @@ export class LiveSessionsController {
         status: { set: LiveStatus.ON_LIVE },
       },
     );
+
+    const dirId = request.liveSession.video.dirId;
+    const publisher = this.pubSub;
+    const publishEvent = [SubscriptionEvents.LIVE_STATUS, dirId].join('_');
+    publisher.publish<{ currentLiveStatus: LiveSessionStatus }>(publishEvent, {
+      currentLiveStatus: {
+        status: LiveStatus.ON_LIVE,
+      },
+    });
+
     console.log(
       'An user started a live stream session with id',
       request.liveSession.id,
     );
 
-    return true;
+    return {
+      url: request.liveSession.video.dirId,
+    };
   }
 
   @Post('/on-publish-done')
@@ -69,6 +93,16 @@ export class LiveSessionsController {
         status: { set: LiveStatus.ENDED },
       },
     );
+
+    const dirId = request.liveSession.video.dirId;
+    const publisher = this.pubSub;
+    const publishEvent = [SubscriptionEvents.LIVE_STATUS, dirId].join('_');
+    publisher.publish<{ currentLiveStatus: LiveSessionStatus }>(publishEvent, {
+      currentLiveStatus: {
+        status: LiveStatus.ENDED,
+      },
+    });
+
     console.log(
       'An user ended a live stream session with id',
       currentLiveSessions.id,
@@ -89,13 +123,13 @@ export class LiveSessionsController {
     // Update video info
     // Create vod session (live record)
     const videoInfo = await this.videosService.getVideoInfo(recordPath);
+    const recordedDirId = recordInfo.name;
 
     const currentLiveSessions = await this.liveSessionsService.findFirst(
       {
-        streamKey: { is: { key: { equals: recordInfo.name } } },
-        status: { equals: LiveStatus.ENDED },
+        video: { is: { dirId: { equals: recordedDirId } } },
       },
-      {},
+      null,
       { video: true },
     );
 

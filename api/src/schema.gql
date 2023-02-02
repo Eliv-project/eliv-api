@@ -650,6 +650,10 @@ input LiveSessionScalarWhereInput {
   videoId: IntFilter
 }
 
+type LiveSessionStatus {
+  status: Float!
+}
+
 input LiveSessionUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   status: IntFieldUpdateOperationsInput
@@ -1656,6 +1660,7 @@ input StringNullableFilter {
 }
 
 type Subscription {
+  currentLiveStatus(dirId: String!): LiveSessionStatus!
   currentProcessProgress(dirId: String!): ProcessProgress!
 }
 

@@ -16,24 +16,12 @@ http {
         #     root /www;
         # }
 
-        location /vod {
+        location /hls {
             types {
                 application/vnd.apple.mpegurl m3u8;
                 application/octet-stream ts;
             }
-            alias /eliv/upload/hls;
-            add_header Cache-Control no-cache;
-
-            # To avoid issues with cross-domain HTTP requests (e.g. during development)
-            add_header Access-Control-Allow-Origin *;
-        }
-
-        location /live {
-            types {
-                application/vnd.apple.mpegurl m3u8;
-                application/octet-stream ts;
-            }
-            alias /eliv/upload/tmp/hls;
+            root /eliv/upload/;
             add_header Cache-Control no-cache;
 
             # To avoid issues with cross-domain HTTP requests (e.g. during development)
@@ -47,20 +35,9 @@ http {
 rtmp {
     server {
         listen 1935;	# RTMP listen port. Open it in your router/firewall. Options: (addr[:port]|port|unix:path) [bind] [ipv6only=on|off] [so_keepalive=on|off|keepidle:keepintvl:keepcnt|proxy_protocol]
-
         application live {
-            live on;
-
-            # No RTMP playback
-            deny play all;
-
             on_publish http://host.docker.internal:27361/live-sessions/on-publish;
             on_publish_done http://host.docker.internal:27361/live-sessions/on-publish-done;
-
-            push rtmp://localhost:1935/live_verified;
-        }
-
-        application live_verified {
 
             live on; # on|off. Enables this application and allowing live streaming to it. Default=on.
             # max_streams 32;	# Sets maximum number of RTMP streams. Default value is 32 which is usually ok for most cases. Default=32.
