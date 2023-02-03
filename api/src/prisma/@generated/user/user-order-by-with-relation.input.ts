@@ -10,6 +10,7 @@ import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-b
 import { VoteOrderByRelationAggregateInput } from '../vote/vote-order-by-relation-aggregate.input';
 import { ViewOrderByRelationAggregateInput } from '../view/view-order-by-relation-aggregate.input';
 import { StreamKeyOrderByRelationAggregateInput } from '../stream-key/stream-key-order-by-relation-aggregate.input';
+import { LiveChatMessageOrderByRelationAggregateInput } from '../live-chat-message/live-chat-message-order-by-relation-aggregate.input';
 
 @InputType()
 export class UserOrderByWithRelationInput {
@@ -70,6 +71,9 @@ export class UserOrderByWithRelationInput {
 
     @Field(() => StreamKeyOrderByRelationAggregateInput, {nullable:true})
     streamKeys?: StreamKeyOrderByRelationAggregateInput;
+
+    @Field(() => LiveChatMessageOrderByRelationAggregateInput, {nullable:true})
+    liveChatMessages?: LiveChatMessageOrderByRelationAggregateInput;
 
     @Field(() => SortOrder, {nullable:true})
     verified?: keyof typeof SortOrder;

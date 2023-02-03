@@ -29,6 +29,7 @@ import { VotesModule } from './votes/votes.module';
 import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
 import { ViewsModule } from './views/views.module';
 import { StreamKeysModule } from './stream-keys/stream-keys.module';
+import { LiveChatMessagesModule } from './live-chat-messages/live-chat-messages.module';
 
 @Module({
   imports: [
@@ -81,6 +82,7 @@ import { StreamKeysModule } from './stream-keys/stream-keys.module';
     UserSubscriptionsModule,
     ViewsModule,
     StreamKeysModule,
+    LiveChatMessagesModule,
   ],
   controllers: [AppController],
   providers: [

@@ -144,10 +144,9 @@ export class Mp42HlsProcessor {
     );
 
     const bitrateConfigs = [
-      // this.getHlsBitrateConfigByQuality(VideoQualityConfigs['1080p']),
-      // this.getHlsBitrateConfigByQuality(VideoQualityConfigs['720p']),
+      VideoQualityConfigs['720p'],
       VideoQualityConfigs['480p'],
-      VideoQualityConfigs['360p'],
+      // VideoQualityConfigs['360p'],
     ];
 
     return new Promise<string>((resolve, reject) => {

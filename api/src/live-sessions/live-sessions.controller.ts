@@ -79,7 +79,7 @@ export class LiveSessionsController {
 
     // console.log(request.body);
 
-    const currentLiveSessions = await this.liveSessionsService.findFirst({
+    const currentLiveSession = await this.liveSessionsService.findFirst({
       streamKey: { is: { key: { equals: publishInfo.name } } },
       status: { equals: LiveStatus.ON_LIVE },
     });
@@ -87,14 +87,14 @@ export class LiveSessionsController {
     // Update live status on live done
     await this.liveSessionsService.update(
       {
-        id: currentLiveSessions.id,
+        id: currentLiveSession.id,
       },
       {
         status: { set: LiveStatus.ENDED },
       },
     );
 
-    const dirId = request.liveSession.video.dirId;
+    const dirId = currentLiveSession.video.dirId;
     const publisher = this.pubSub;
     const publishEvent = [SubscriptionEvents.LIVE_STATUS, dirId].join('_');
     publisher.publish<{ currentLiveStatus: LiveSessionStatus }>(publishEvent, {
@@ -105,7 +105,7 @@ export class LiveSessionsController {
 
     console.log(
       'An user ended a live stream session with id',
-      currentLiveSessions.id,
+      currentLiveSession.id,
     );
     return true;
   }
@@ -129,7 +129,7 @@ export class LiveSessionsController {
       {
         video: { is: { dirId: { equals: recordedDirId } } },
       },
-      null,
+      [],
       { video: true },
     );
 

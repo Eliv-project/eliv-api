@@ -14,6 +14,7 @@ import { CommentListRelationFilter } from '../comment/comment-list-relation-filt
 import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
 import { ViewListRelationFilter } from '../view/view-list-relation-filter.input';
 import { StreamKeyListRelationFilter } from '../stream-key/stream-key-list-relation-filter.input';
+import { LiveChatMessageListRelationFilter } from '../live-chat-message/live-chat-message-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -83,6 +84,9 @@ export class UserWhereInput {
 
     @Field(() => StreamKeyListRelationFilter, {nullable:true})
     streamKeys?: StreamKeyListRelationFilter;
+
+    @Field(() => LiveChatMessageListRelationFilter, {nullable:true})
+    liveChatMessages?: LiveChatMessageListRelationFilter;
 
     @Field(() => BoolNullableFilter, {nullable:true})
     verified?: BoolNullableFilter;

@@ -14,6 +14,7 @@ import { CommentUpdateManyWithoutUserNestedInput } from '../comment/comment-upda
 import { VoteUpdateManyWithoutUserNestedInput } from '../vote/vote-update-many-without-user-nested.input';
 import { ViewUpdateManyWithoutUserNestedInput } from '../view/view-update-many-without-user-nested.input';
 import { StreamKeyUpdateManyWithoutUserNestedInput } from '../stream-key/stream-key-update-many-without-user-nested.input';
+import { LiveChatMessageUpdateManyWithoutUserNestedInput } from '../live-chat-message/live-chat-message-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUpdateInput {
@@ -68,6 +69,9 @@ export class UserUpdateInput {
 
     @Field(() => StreamKeyUpdateManyWithoutUserNestedInput, {nullable:true})
     streamKeys?: StreamKeyUpdateManyWithoutUserNestedInput;
+
+    @Field(() => LiveChatMessageUpdateManyWithoutUserNestedInput, {nullable:true})
+    liveChatMessages?: LiveChatMessageUpdateManyWithoutUserNestedInput;
 
     @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     verified?: NullableBoolFieldUpdateOperationsInput;

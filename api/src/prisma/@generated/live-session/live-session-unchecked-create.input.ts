@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
+import { LiveChatMessageUncheckedCreateNestedManyWithoutLiveSessionInput } from '../live-chat-message/live-chat-message-unchecked-create-nested-many-without-live-session.input';
 
 @InputType()
 export class LiveSessionUncheckedCreateInput {
@@ -22,4 +23,7 @@ export class LiveSessionUncheckedCreateInput {
 
     @Field(() => Int, {nullable:false})
     videoId!: number;
+
+    @Field(() => LiveChatMessageUncheckedCreateNestedManyWithoutLiveSessionInput, {nullable:true})
+    liveChatMessages?: LiveChatMessageUncheckedCreateNestedManyWithoutLiveSessionInput;
 }

@@ -10,6 +10,7 @@ import { CommentUncheckedCreateNestedManyWithoutUserInput } from '../comment/com
 import { VoteUncheckedCreateNestedManyWithoutUserInput } from '../vote/vote-unchecked-create-nested-many-without-user.input';
 import { ViewUncheckedCreateNestedManyWithoutUserInput } from '../view/view-unchecked-create-nested-many-without-user.input';
 import { StreamKeyUncheckedCreateNestedManyWithoutUserInput } from '../stream-key/stream-key-unchecked-create-nested-many-without-user.input';
+import { LiveChatMessageUncheckedCreateNestedManyWithoutUserInput } from '../live-chat-message/live-chat-message-unchecked-create-nested-many-without-user.input';
 
 @InputType()
 export class UserUncheckedCreateWithoutOauthLinksInput {
@@ -64,6 +65,9 @@ export class UserUncheckedCreateWithoutOauthLinksInput {
 
     @Field(() => StreamKeyUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     streamKeys?: StreamKeyUncheckedCreateNestedManyWithoutUserInput;
+
+    @Field(() => LiveChatMessageUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
+    liveChatMessages?: LiveChatMessageUncheckedCreateNestedManyWithoutUserInput;
 
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;

@@ -21,6 +21,7 @@ import { SubscriptionEvents } from 'src/common/constants/subscription-events.con
 import { LiveSessionStatus } from './dto/live-session-status.output';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { IsOnlyStream } from './guards/is-only-stream.guard';
+import { LiveChatMessage } from 'src/prisma/@generated/live-chat-message/live-chat-message.model';
 
 @Resolver(() => LiveSession)
 export class LiveSessionsResolver {

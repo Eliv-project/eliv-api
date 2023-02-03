@@ -11,6 +11,7 @@ import { CommentCreateNestedManyWithoutUserInput } from '../comment/comment-crea
 import { VoteCreateNestedManyWithoutUserInput } from '../vote/vote-create-nested-many-without-user.input';
 import { ViewCreateNestedManyWithoutUserInput } from '../view/view-create-nested-many-without-user.input';
 import { StreamKeyCreateNestedManyWithoutUserInput } from '../stream-key/stream-key-create-nested-many-without-user.input';
+import { LiveChatMessageCreateNestedManyWithoutUserInput } from '../live-chat-message/live-chat-message-create-nested-many-without-user.input';
 
 @InputType()
 export class UserCreateInput {
@@ -65,6 +66,9 @@ export class UserCreateInput {
 
     @Field(() => StreamKeyCreateNestedManyWithoutUserInput, {nullable:true})
     streamKeys?: StreamKeyCreateNestedManyWithoutUserInput;
+
+    @Field(() => LiveChatMessageCreateNestedManyWithoutUserInput, {nullable:true})
+    liveChatMessages?: LiveChatMessageCreateNestedManyWithoutUserInput;
 
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;

@@ -28,6 +28,8 @@ model User {
 
     streamKeys StreamKey[]
 
+    liveChatMessages LiveChatMessage[]
+
     verified Boolean? @default(false)
 
 }

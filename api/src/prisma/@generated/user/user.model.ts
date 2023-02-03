@@ -12,6 +12,7 @@ import { Comment } from '../comment/comment.model';
 import { Vote } from '../vote/vote.model';
 import { View } from '../view/view.model';
 import { StreamKey } from '../stream-key/stream-key.model';
+import { LiveChatMessage } from '../live-chat-message/live-chat-message.model';
 import { UserCount } from './user-count.output';
 
 @ObjectType()
@@ -73,6 +74,9 @@ export class User {
 
     @Field(() => [StreamKey], {nullable:true})
     streamKeys?: Array<StreamKey>;
+
+    @Field(() => [LiveChatMessage], {nullable:true})
+    liveChatMessages?: Array<LiveChatMessage>;
 
     @Field(() => Boolean, {nullable:true,defaultValue:false})
     verified!: boolean | null;

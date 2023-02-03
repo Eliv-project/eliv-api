@@ -13,6 +13,7 @@ import { CommentUncheckedUpdateManyWithoutUserNestedInput } from '../comment/com
 import { VoteUncheckedUpdateManyWithoutUserNestedInput } from '../vote/vote-unchecked-update-many-without-user-nested.input';
 import { ViewUncheckedUpdateManyWithoutUserNestedInput } from '../view/view-unchecked-update-many-without-user-nested.input';
 import { StreamKeyUncheckedUpdateManyWithoutUserNestedInput } from '../stream-key/stream-key-unchecked-update-many-without-user-nested.input';
+import { LiveChatMessageUncheckedUpdateManyWithoutUserNestedInput } from '../live-chat-message/live-chat-message-unchecked-update-many-without-user-nested.input';
 
 @InputType()
 export class UserUncheckedUpdateWithoutOauthLinksInput {
@@ -67,6 +68,9 @@ export class UserUncheckedUpdateWithoutOauthLinksInput {
 
     @Field(() => StreamKeyUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     streamKeys?: StreamKeyUncheckedUpdateManyWithoutUserNestedInput;
+
+    @Field(() => LiveChatMessageUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
+    liveChatMessages?: LiveChatMessageUncheckedUpdateManyWithoutUserNestedInput;
 
     @Field(() => NullableBoolFieldUpdateOperationsInput, {nullable:true})
     verified?: NullableBoolFieldUpdateOperationsInput;

@@ -4,6 +4,7 @@ import { IntFilter } from '../prisma/int-filter.input';
 import { StreamKeyRelationFilter } from '../stream-key/stream-key-relation-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { VideoRelationFilter } from '../video/video-relation-filter.input';
+import { LiveChatMessageListRelationFilter } from '../live-chat-message/live-chat-message-list-relation-filter.input';
 
 @InputType()
 export class LiveSessionWhereInput {
@@ -40,4 +41,7 @@ export class LiveSessionWhereInput {
 
     @Field(() => IntFilter, {nullable:true})
     videoId?: IntFilter;
+
+    @Field(() => LiveChatMessageListRelationFilter, {nullable:true})
+    liveChatMessages?: LiveChatMessageListRelationFilter;
 }

@@ -28,4 +28,7 @@ export class UserCount {
 
     @Field(() => Int, {nullable:false})
     streamKeys?: number;
+
+    @Field(() => Int, {nullable:false})
+    liveChatMessages?: number;
 }

@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
+import { LiveChatMessageUncheckedUpdateManyWithoutLiveSessionNestedInput } from '../live-chat-message/live-chat-message-unchecked-update-many-without-live-session-nested.input';
 
 @InputType()
 export class LiveSessionUncheckedUpdateInput {
@@ -23,4 +24,7 @@ export class LiveSessionUncheckedUpdateInput {
 
     @Field(() => IntFieldUpdateOperationsInput, {nullable:true})
     videoId?: IntFieldUpdateOperationsInput;
+
+    @Field(() => LiveChatMessageUncheckedUpdateManyWithoutLiveSessionNestedInput, {nullable:true})
+    liveChatMessages?: LiveChatMessageUncheckedUpdateManyWithoutLiveSessionNestedInput;
 }
