@@ -55,6 +55,12 @@ export class Mp42HlsProcessor {
   async onComplete(job: Job<Mp42HlsConvertDto>, result) {
     console.log(`Complete job ${job.id}`, result);
 
+    const savePath = getOrCreateDir(job.data.hlsSavePath);
+    const thumbnailFileName = await this.getThumbnail(
+      job.data.filePath,
+      savePath,
+    );
+    // Update vod status
     try {
       // Clean up tmp file
       const { filePath } = job.data;
@@ -66,6 +72,12 @@ export class Mp42HlsProcessor {
           dirId: job.data.dirId,
         },
         {
+          thumbnail: {
+            provider: 'local',
+            data: {
+              url: `/${job.data.dirId}/${thumbnailFileName}`,
+            },
+          },
           vodSession: {
             update: {
               status: { set: VodStatus.ready },
@@ -176,22 +188,6 @@ export class Mp42HlsProcessor {
       VideoQualityConfigs['480p'],
       // VideoQualityConfigs['360p'],
     ];
-
-    const thumbnailFileName = await this.getThumbnail(filePath, savePath);
-    // Update vod status
-    await this.videosService.update(
-      {
-        dirId: job.data.dirId,
-      },
-      {
-        thumbnail: {
-          provider: 'local',
-          data: {
-            url: `/${dirId}/${thumbnailFileName}`,
-          },
-        },
-      },
-    );
 
     return new Promise<string>((resolve, reject) => {
       let totalTime;

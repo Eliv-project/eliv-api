@@ -545,6 +545,11 @@ input JsonNullableFilter {
   string_starts_with: String
 }
 
+type LiveChatChangeData {
+  data: LiveChatMessage!
+  type: String!
+}
+
 type LiveChatMessage {
   content: String!
   createdAt: DateTime!
@@ -1920,7 +1925,7 @@ input StringNullableFilter {
 type Subscription {
   currentLiveStatus(dirId: String!): LiveSessionStatus!
   currentProcessProgress(dirId: String!): ProcessProgress!
-  watchDeletedLiveChat(where: LiveSessionWhereUniqueInput!): LiveChatMessage!
+  watchLiveChatChange(where: LiveSessionWhereUniqueInput!): LiveChatChangeData!
   watchNewLiveChat(where: LiveSessionWhereUniqueInput!): LiveChatMessage!
 }
 

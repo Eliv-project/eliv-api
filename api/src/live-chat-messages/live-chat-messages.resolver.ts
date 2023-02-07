@@ -21,6 +21,7 @@ import { LiveChatMessage } from 'src/prisma/@generated/live-chat-message/live-ch
 import { LiveSessionWhereUniqueInput } from 'src/prisma/@generated/live-session/live-session-where-unique.input';
 import { User } from 'src/prisma/@generated/user/user.model';
 import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
+import { LiveChatChangeData } from './dto/live-chat-change-data.dto';
 import { LiveChatMessagesService } from './live-chat-messages.service';
 
 @Resolver(() => LiveChatMessage)
@@ -48,14 +49,15 @@ export class LiveChatMessagesResolver {
       },
       include: { user: true, liveSession: { select: { id: true } } },
     });
-    console.log(newLiveChatMessage);
-    this.pubSub.publish<{ watchNewLiveChat: LiveChatMessage }>(
-      [
-        SubscriptionEvents.NEW_LIVE_CHAT_MESSAGE,
-        newLiveChatMessage.liveSessionId,
-      ].join('_'),
+    this.pubSub.publish<{ watchLiveChatChange: LiveChatChangeData }>(
+      [SubscriptionEvents.LIVE_CHAT, newLiveChatMessage.liveSessionId].join(
+        '_',
+      ),
       {
-        watchNewLiveChat: newLiveChatMessage,
+        watchLiveChatChange: {
+          type: 'create',
+          data: newLiveChatMessage,
+        },
       },
     );
 
@@ -99,18 +101,19 @@ export class LiveChatMessagesResolver {
   ) {
     const deletedLiveChatMessage = await this.liveChatMessagesService.remove({
       where,
-      include: { liveSession: { select: { id: true } } },
+      include: { liveSession: { select: { id: true } }, user: true },
     });
 
-    this.pubSub.publish<{ watchDeletedLiveChat: LiveChatMessage }>(
-      [
-        SubscriptionEvents.LIVE_CHAT_MSG_DELETED,
-        deletedLiveChatMessage.liveSessionId,
-      ].join('_'),
+    this.pubSub.publish<{ watchLiveChatChange: LiveChatChangeData }>(
+      [SubscriptionEvents.LIVE_CHAT, deletedLiveChatMessage.liveSessionId].join(
+        '_',
+      ),
       {
-        watchDeletedLiveChat: deletedLiveChatMessage,
+        watchLiveChatChange: { type: 'delete', data: deletedLiveChatMessage },
       },
     );
+
+    return deletedLiveChatMessage;
   }
 
   @IsPublic()
@@ -133,8 +136,8 @@ export class LiveChatMessagesResolver {
   }
 
   @IsPublic()
-  @Subscription(() => LiveChatMessage)
-  async watchDeletedLiveChat(
+  @Subscription(() => LiveChatChangeData)
+  async watchLiveChatChange(
     @Args('where') liveSessionWhere: LiveSessionWhereUniqueInput,
   ) {
     const liveSession = await this.liveSessionsService.findOne(
@@ -144,10 +147,10 @@ export class LiveChatMessagesResolver {
       throw new NotFoundException('LIVE_SESSION_NOT_FOUND');
     }
 
-    console.log('Watching chat deletion at live session', liveSession.id);
+    console.log('Watching chat at live session', liveSession.id);
 
     return this.pubSub.asyncIterator(
-      [SubscriptionEvents.LIVE_CHAT_MSG_DELETED, liveSession.id].join('_'),
+      [SubscriptionEvents.LIVE_CHAT, liveSession.id].join('_'),
     );
   }
 }
