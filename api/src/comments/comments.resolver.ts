@@ -53,6 +53,12 @@ export class CommentsResolver {
     );
   }
 
+  @Query(() => Int)
+  @IsPublic()
+  countComment(@Args('where') where: CommentWhereInput) {
+    return this.commentsService.count(where);
+  }
+
   @Query(() => [Comment], { name: 'comments' })
   @IsPublic()
   findAll(

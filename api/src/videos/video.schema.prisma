@@ -4,7 +4,7 @@ model Video {
     name String
     desc String?
 
-    /// @HideField({input: true, output: true})
+    /// @HideField({input: false, output: true})
     searchableName String?
 
     thumbnail Json?
@@ -23,7 +23,7 @@ model Video {
     dirId String? @unique
 
     /// @HideField({match: 'VideoCreate*Input'})
-    user User @relation(fields: [userId], references: [id])
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int
 
     liveSession LiveSession?

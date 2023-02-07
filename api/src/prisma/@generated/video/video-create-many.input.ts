@@ -1,9 +1,9 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Float } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class VideoCreateManyInput {
@@ -17,7 +17,7 @@ export class VideoCreateManyInput {
     @Field(() => String, {nullable:true})
     desc?: string;
 
-    @HideField()
+    @Field(() => String, {nullable:true})
     searchableName?: string;
 
     @Field(() => GraphQLJSON, {nullable:true})

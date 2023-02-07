@@ -6,6 +6,8 @@ import { CommentsService } from 'src/comments/comments.service';
 import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
 import { User } from 'src/prisma/@generated/user/user.model';
 import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-unique.input';
+import { VoteOrderByWithRelationInput } from 'src/prisma/@generated/vote/vote-order-by-with-relation.input';
+import { VoteWhereInput } from 'src/prisma/@generated/vote/vote-where.input';
 import { Vote } from 'src/prisma/@generated/vote/vote.model';
 import { VideosService } from 'src/videos/videos.service';
 import { VoteCountResponse } from './dto/vote-count-response.dto';
@@ -27,6 +29,42 @@ export class VotesResolver {
     @Args('where') where: VoteCountWhereInput,
   ): Promise<VoteCountResponse> {
     return this.votesService.count(where);
+  }
+
+  @Query(() => [Vote], { name: 'votes' })
+  findAll(
+    @Args('where')
+    where: VoteWhereInput,
+    @Args({
+      name: 'orderBy',
+      type: () => [VoteOrderByWithRelationInput],
+      nullable: true,
+    })
+    orderBy: VoteOrderByWithRelationInput[],
+    @Args({
+      name: 'take',
+      type: () => Int,
+      nullable: true,
+    })
+    take: number,
+  ) {
+    return this.votesService.findAll({
+      where,
+      orderBy,
+      take,
+      include: {
+        video: {
+          include: {
+            _count: true,
+            vodSession: true,
+            liveSession: true,
+            user: {
+              include: { _count: { select: { subscribers: true } } },
+            },
+          },
+        },
+      },
+    });
   }
 
   @Query(() => VoteResponse)

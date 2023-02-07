@@ -35,12 +35,13 @@ export class UserSubscriptionsResolver {
 
   @Query(() => [UserSubscription], { name: 'userSubscriptions' })
   userSubscriptions(@CurrentUser() me: User) {
-    return this.userSubscriptionsService.findAll(
-      {
+    return this.userSubscriptionsService.findAll({
+      where: {
         userId: { equals: me.id },
       },
-      { subscribingUser: true },
-    );
+      orderBy: [{ user: { onLive: 'desc' } }],
+      include: { subscribingUser: true },
+    });
   }
 
   @Query(() => Boolean)

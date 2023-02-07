@@ -14,6 +14,7 @@ import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
 import { LiveSession } from 'src/prisma/@generated/live-session/live-session.model';
 import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
+import { UsersService } from 'src/users/users.service';
 import { VideosService } from 'src/videos/videos.service';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
 import { LiveSessionStatus } from './dto/live-session-status.output';
@@ -33,6 +34,7 @@ export class LiveSessionsController {
     private liveSessionsService: LiveSessionsService,
     private videosService: VideosService,
     private configService: ConfigService,
+    private usersService: UsersService,
     @Inject(PUB_SUB) private pubSub: RedisPubSub,
   ) {}
 
@@ -50,6 +52,13 @@ export class LiveSessionsController {
       },
       {
         status: { set: LiveStatus.ON_LIVE },
+      },
+    );
+    // Update user status
+    await this.usersService.update(
+      { id: request.liveSession.video.userId },
+      {
+        onLive: { set: true },
       },
     );
 
@@ -79,10 +88,18 @@ export class LiveSessionsController {
 
     // console.log(request.body);
 
-    const currentLiveSession = await this.liveSessionsService.findFirst({
-      streamKey: { is: { key: { equals: publishInfo.name } } },
-      status: { equals: LiveStatus.ON_LIVE },
-    });
+    const currentLiveSession = await this.liveSessionsService.findFirst(
+      {
+        streamKey: { is: { key: { equals: publishInfo.name } } },
+        status: { equals: LiveStatus.ON_LIVE },
+      },
+      [],
+      { video: { include: { user: true } } },
+    );
+
+    if (!currentLiveSession) {
+      return true;
+    }
 
     // Update live status on live done
     await this.liveSessionsService.update(
@@ -92,6 +109,11 @@ export class LiveSessionsController {
       {
         status: { set: LiveStatus.ENDED },
       },
+    );
+    // Update user status
+    await this.usersService.update(
+      { id: currentLiveSession.video.userId },
+      { onLive: { set: false } },
     );
 
     const dirId = currentLiveSession.video.dirId;

@@ -3,10 +3,10 @@ model View {
 
     ip String 
 
-    user User? @relation(references: [id], fields: [userId])
+    user User? @relation(references: [id], fields: [userId], onDelete: Cascade)
     userId Int?
 
-    video Video @relation(references: [id], fields: [videoId])
+    video Video @relation(references: [id], fields: [videoId], onDelete: Cascade)
     videoId Int
 
     createdAt DateTime @default(now())

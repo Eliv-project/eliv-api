@@ -1,7 +1,7 @@
 model UserSubscription {
-    user              User     @relation("subscribingBy", fields: [userId], references: [id])
+    user              User     @relation("subscribingBy", fields: [userId], references: [id], onDelete: Cascade)
     userId            Int
-    subscribingUser   User     @relation("subscribingTo", fields: [subscribingUserId], references: [id])
+    subscribingUser   User     @relation("subscribingTo", fields: [subscribingUserId], references: [id], onDelete: Cascade)
     subscribingUserId Int // relation scalar field (used in the `@relation` attribute above)
     createdAt         DateTime @default(now())
 

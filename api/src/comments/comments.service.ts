@@ -24,6 +24,10 @@ export class CommentsService {
     return result;
   }
 
+  count(where: CommentWhereInput) {
+    return this.prisma.comment.count({ where });
+  }
+
   findOne(where: CommentWhereUniqueInput, include?: Prisma.CommentInclude) {
     return this.prisma.comment.findUnique({ where, include });
   }

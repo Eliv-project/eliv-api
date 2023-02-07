@@ -40,5 +40,8 @@ export class UserCountAggregate {
     verified!: number;
 
     @Field(() => Int, {nullable:false})
+    onLive!: number;
+
+    @Field(() => Int, {nullable:false})
     _all!: number;
 }

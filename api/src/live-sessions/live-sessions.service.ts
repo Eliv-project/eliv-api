@@ -17,8 +17,8 @@ export class LiveSessionsService {
     });
   }
 
-  findAll(where: LiveSessionWhereInput) {
-    return this.prisma.liveSession.findMany({ where });
+  findAll(args: Prisma.LiveSessionFindManyArgs) {
+    return this.prisma.liveSession.findMany(args);
   }
 
   findFirst(

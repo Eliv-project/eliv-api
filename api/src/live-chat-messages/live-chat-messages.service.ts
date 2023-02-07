@@ -1,4 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { CreateOneLiveChatMessageArgs } from 'src/prisma/@generated/live-chat-message/create-one-live-chat-message.args';
+import { DeleteOneLiveChatMessageArgs } from 'src/prisma/@generated/live-chat-message/delete-one-live-chat-message.args';
 import { FindManyLiveChatMessageArgs } from 'src/prisma/@generated/live-chat-message/find-many-live-chat-message.args';
 import { FindUniqueLiveChatMessageArgs } from 'src/prisma/@generated/live-chat-message/find-unique-live-chat-message.args';
 import { LiveChatMessageCreateInput } from 'src/prisma/@generated/live-chat-message/live-chat-message-create.input';
@@ -11,11 +14,11 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class LiveChatMessagesService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: LiveChatMessageCreateInput) {
-    return this.prisma.liveChatMessage.create({ data });
+  create(args: Prisma.LiveChatMessageCreateArgs) {
+    return this.prisma.liveChatMessage.create(args);
   }
 
-  findAll(args: FindManyLiveChatMessageArgs) {
+  findAll(args: Prisma.LiveChatMessageFindManyArgs) {
     return this.prisma.liveChatMessage.findMany(args);
   }
 
@@ -34,7 +37,7 @@ export class LiveChatMessagesService {
     return this.prisma.liveChatMessage.update({ where, data });
   }
 
-  remove(where: LiveChatMessageWhereUniqueInput) {
-    return this.prisma.liveChatMessage.delete({ where });
+  remove(args: Prisma.LiveChatMessageDeleteArgs) {
+    return this.prisma.liveChatMessage.delete(args);
   }
 }

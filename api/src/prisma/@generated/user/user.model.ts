@@ -81,6 +81,9 @@ export class User {
     @Field(() => Boolean, {nullable:true,defaultValue:false})
     verified!: boolean | null;
 
+    @Field(() => Boolean, {nullable:true,defaultValue:false})
+    onLive!: boolean | null;
+
     @Field(() => UserCount, {nullable:false})
     _count?: UserCount;
 }

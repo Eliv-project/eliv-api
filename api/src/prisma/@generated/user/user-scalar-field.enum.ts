@@ -11,7 +11,8 @@ export enum UserScalarFieldEnum {
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     roleId = "roleId",
-    verified = "verified"
+    verified = "verified",
+    onLive = "onLive"
 }
 
 

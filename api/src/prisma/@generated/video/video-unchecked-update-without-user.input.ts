@@ -3,11 +3,11 @@ import { InputType } from '@nestjs/graphql';
 import { IntFieldUpdateOperationsInput } from '../prisma/int-field-update-operations.input';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 import { LiveSessionUncheckedUpdateOneWithoutVideoNestedInput } from '../live-session/live-session-unchecked-update-one-without-video-nested.input';
 import { VodSessionUncheckedUpdateOneWithoutVideoNestedInput } from '../vod-session/vod-session-unchecked-update-one-without-video-nested.input';
 import { CommentUncheckedUpdateManyWithoutVideoNestedInput } from '../comment/comment-unchecked-update-many-without-video-nested.input';
@@ -26,7 +26,7 @@ export class VideoUncheckedUpdateWithoutUserInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     desc?: NullableStringFieldUpdateOperationsInput;
 
-    @HideField()
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     searchableName?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => GraphQLJSON, {nullable:true})

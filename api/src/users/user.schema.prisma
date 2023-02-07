@@ -6,14 +6,14 @@ model User {
 
     name String @default("UNNAMED_USER")
 
-    /// @HideField({output: true, input: true})
+    /// @HideField({output: true, input: false})
     password String
 
     avatar    Json?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    role   Role @relation(fields: [roleId], references: [id])
+    role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
     roleId Int
 
     subscribingUsers UserSubscription[] @relation("subscribingBy")
@@ -30,6 +30,7 @@ model User {
 
     liveChatMessages LiveChatMessage[]
 
-    verified Boolean? @default(false)
+verified Boolean? @default(false)
+    onLive Boolean? @default(false)
 
 }

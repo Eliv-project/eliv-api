@@ -7,6 +7,7 @@ class UserAuthInfo extends PickType(User, [
   'username',
   'verified',
   'name',
+  'avatar',
 ]) {}
 
 @ObjectType()

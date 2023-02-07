@@ -35,4 +35,7 @@ export class UserMinAggregate {
 
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
+
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
 }

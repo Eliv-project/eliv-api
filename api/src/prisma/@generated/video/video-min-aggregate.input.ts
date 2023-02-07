@@ -14,7 +14,7 @@ export class VideoMinAggregateInput {
     @Field(() => Boolean, {nullable:true})
     desc?: true;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     searchableName?: true;
 
     @Field(() => Boolean, {nullable:true})

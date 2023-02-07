@@ -7,6 +7,7 @@ import { VideosService } from 'src/videos/videos.service';
 import { PubSubModule } from 'src/pub-sub/pub-sub.module';
 import { BullModule } from '@nestjs/bull';
 import { StreamKeysService } from 'src/stream-keys/stream-keys.service';
+import { UsersService } from 'src/users/users.service';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { StreamKeysService } from 'src/stream-keys/stream-keys.service';
     LiveSessionsService,
     PrismaService,
     VideosService,
+    UsersService,
     StreamKeysService,
   ],
   controllers: [LiveSessionsController],

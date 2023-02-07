@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { UserSubscriptionUncheckedCreateNestedManyWithoutUserInput } from '../user-subscription/user-subscription-unchecked-create-nested-many-without-user.input';
 import { UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-unchecked-create-nested-many-without-subscribing-user.input';
@@ -30,7 +29,7 @@ export class UserUncheckedCreateWithoutVideosInput {
     @Field(() => String, {nullable:true})
     name?: string;
 
-    @HideField()
+    @Field(() => String, {nullable:false})
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -71,4 +70,7 @@ export class UserUncheckedCreateWithoutVideosInput {
 
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
+
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
 }

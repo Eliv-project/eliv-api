@@ -35,4 +35,7 @@ export class UserMaxAggregate {
 
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
+
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
 }

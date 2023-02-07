@@ -16,6 +16,7 @@ import ffprobe from '@ffprobe-installer/ffprobe';
 import { Flv2Mp4ConvertDto } from './processors/flv2mp4.processor';
 import { Mp42HlsConvertDto } from './processors/mp42hls.processor';
 import { FindManyVideoArgs } from 'src/prisma/@generated/video/find-many-video.args';
+import { VideoWhereInput } from 'src/prisma/@generated/video/video-where.input';
 
 @Injectable()
 export class VideosService {
@@ -32,6 +33,7 @@ export class VideosService {
 
   async toHls(filePath: string, dirId: string) {
     await this.mp42hlsQueue.add({
+      threadCount: this.configService.get('threadCount'),
       dirId,
       filePath,
       hlsSaveDirname: dirId,
@@ -87,6 +89,10 @@ export class VideosService {
 
   findOne(where: VideoWhereUniqueInput, include?: Prisma.VideoInclude) {
     return this.prisma.video.findUnique({ where, include });
+  }
+
+  count(where: VideoWhereInput) {
+    return this.prisma.video.count({ where });
   }
 
   update(where: VideoWhereUniqueInput, data: VideoUpdateInput) {

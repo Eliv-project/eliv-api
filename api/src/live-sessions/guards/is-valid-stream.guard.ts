@@ -28,11 +28,11 @@ export class IsValidStream implements CanActivate {
     }
 
     // Verify 1 stream per key
-    const currentLiveSessions = await this.liveSessionsService.findAll({
+    const currentLiveSessions = await this.liveSessionsService.findFirst({
       streamKeyId: { equals: streamKey.id },
       status: { equals: LiveStatus.ON_LIVE },
     });
-    if (currentLiveSessions?.length > 0) {
+    if (currentLiveSessions) {
       throw new BadRequestException('STREAM_KEY_IS_CURRENTLY_USING');
     }
 
@@ -47,7 +47,7 @@ export class IsValidStream implements CanActivate {
         },
       },
       [{ updatedAt: 'desc' }],
-      { video: true },
+      { video: { include: { user: true } } },
     );
     if (!liveSession) {
       throw new NotFoundException('LIVE_SESSION_NOT_FOUND');

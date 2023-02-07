@@ -3,7 +3,7 @@ model LiveSession {
 
     status Int @default(0)
     /// @HideField({ match: '@(StreamKey|LiveSession)Create*Input' })
-    streamKey StreamKey @relation(fields: [streamKeyId], references: [id])
+    streamKey StreamKey @relation(fields: [streamKeyId], references: [id], onDelete: Cascade)
     streamKeyId Int
 
     createdAt DateTime @default(now())

@@ -97,7 +97,7 @@ export class VideosResolver {
     orderBy?: VideoOrderByWithRelationInput[],
     @Args({
       name: 'take',
-      type: () => [Int],
+      type: () => Int,
       nullable: true,
     })
     take?: number,
@@ -111,7 +111,7 @@ export class VideosResolver {
       {
         _count: true,
         vodSession: true,
-        liveSession: true,
+        liveSession: { include: { _count: true } },
         user: {
           include: { _count: { select: { subscribers: true } } },
         },
@@ -140,6 +140,12 @@ export class VideosResolver {
     }
 
     return video;
+  }
+
+  @Query(() => Int)
+  @IsPublic()
+  countVideo(@Args('where') where: VideoWhereInput) {
+    return this.videosService.count(where);
   }
 
   @Mutation(() => Video)

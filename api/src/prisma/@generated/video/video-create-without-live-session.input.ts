@@ -1,9 +1,9 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Int } from '@nestjs/graphql';
 import { Float } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { UserCreateNestedOneWithoutVideosInput } from '../user/user-create-nested-one-without-videos.input';
 import { VodSessionCreateNestedOneWithoutVideoInput } from '../vod-session/vod-session-create-nested-one-without-video.input';
 import { CommentCreateNestedManyWithoutVideoInput } from '../comment/comment-create-nested-many-without-video.input';
@@ -19,7 +19,7 @@ export class VideoCreateWithoutLiveSessionInput {
     @Field(() => String, {nullable:true})
     desc?: string;
 
-    @HideField()
+    @Field(() => String, {nullable:true})
     searchableName?: string;
 
     @Field(() => GraphQLJSON, {nullable:true})

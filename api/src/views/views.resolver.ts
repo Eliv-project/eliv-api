@@ -22,12 +22,6 @@ export class ViewsResolver {
     });
   }
 
-  // @Query(() => [View], { name: 'views' })
-  // @IsPublic()
-  // findAll(@Args('where') where: ViewWhereInput) {
-  //   return this.viewsService.findAll(where);
-  // }
-
   // @Query(() => View, { name: 'view' })
   // findOne(@Args('where') where: ViewWhereUniqueInput) {
   //   return this.viewsService.findOne(where);

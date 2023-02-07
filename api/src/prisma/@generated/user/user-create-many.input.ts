@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 
 @InputType()
@@ -22,7 +21,7 @@ export class UserCreateManyInput {
     @Field(() => String, {nullable:true})
     name?: string;
 
-    @HideField()
+    @Field(() => String, {nullable:false})
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -39,4 +38,7 @@ export class UserCreateManyInput {
 
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
+
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
 }

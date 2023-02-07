@@ -1,6 +1,5 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { UserSubscriptionCreateNestedManyWithoutUserInput } from '../user-subscription/user-subscription-create-nested-many-without-user.input';
 import { UserSubscriptionCreateNestedManyWithoutSubscribingUserInput } from '../user-subscription/user-subscription-create-nested-many-without-subscribing-user.input';
@@ -27,7 +26,7 @@ export class UserCreateWithoutRoleInput {
     @Field(() => String, {nullable:true})
     name?: string;
 
-    @HideField()
+    @Field(() => String, {nullable:false})
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -68,4 +67,7 @@ export class UserCreateWithoutRoleInput {
 
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
+
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
 }

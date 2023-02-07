@@ -20,8 +20,8 @@ export class UsersService {
     });
   }
 
-  findAll(where: UserWhereInput) {
-    return this.prisma.user.findMany({ where });
+  findAll(args: Prisma.UserFindManyArgs) {
+    return this.prisma.user.findMany(args);
   }
 
   findOne(where: UserWhereUniqueInput, include?: Prisma.UserInclude) {

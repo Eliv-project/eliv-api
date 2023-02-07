@@ -26,6 +26,7 @@ export interface Mp42HlsConvertDto {
   filePath: string;
   hlsSaveDirname: string;
   dirId: string;
+  threadCount?: number;
 }
 
 @Processor('mp42hls')
@@ -132,9 +133,36 @@ export class Mp42HlsProcessor {
     }
   }
 
+  async getThumbnail(mp4Path, savePath) {
+    return new Promise((resolve, reject) => {
+      Ffmpeg({ source: mp4Path })
+        .setFfmpegPath(ffmpegPath)
+        .outputOptions(['-ss 00:00:01.000', '-vframes 1'])
+        .output(path.join(savePath, 'thumbnail.png'))
+        .on('start', function (commandLine) {
+          console.log('Generating thumbnail for', mp4Path, commandLine);
+        })
+        .on('error', function (err, stdout, stderr) {
+          console.log('An error occurred: ' + err.message, err, stderr);
+          resolve(false);
+        })
+        .on('end', function (err, stdout, stderr) {
+          console.log('Thumbnail generated for', mp4Path);
+          resolve('thumbnail.png');
+        })
+        .run();
+    });
+  }
+
   @Process()
   async convertToHls(job: Job<Mp42HlsConvertDto>) {
-    const { hlsSavePath, filePath, hlsSaveDirname, dirId } = job.data;
+    const {
+      hlsSavePath,
+      filePath,
+      hlsSaveDirname,
+      dirId,
+      threadCount = 0,
+    } = job.data;
 
     const playlistName = hlsSaveDirname;
     const savePath = getOrCreateDir(hlsSavePath);
@@ -149,6 +177,22 @@ export class Mp42HlsProcessor {
       // VideoQualityConfigs['360p'],
     ];
 
+    const thumbnailFileName = await this.getThumbnail(filePath, savePath);
+    // Update vod status
+    await this.videosService.update(
+      {
+        dirId: job.data.dirId,
+      },
+      {
+        thumbnail: {
+          provider: 'local',
+          data: {
+            url: `/${dirId}/${thumbnailFileName}`,
+          },
+        },
+      },
+    );
+
     return new Promise<string>((resolve, reject) => {
       let totalTime;
       Ffmpeg({ source: filePath })
@@ -159,8 +203,8 @@ export class Mp42HlsProcessor {
           // the next pair of commands represent the second variant and will be labelled as v:1 and a:1, and so on.
           // (If we wanted to generate 3 variants streams, we would need 6 map statements, assuming that each variant has a video and audio stream.)
           [
+            `-threads ${threadCount}`,
             ...bitrateConfigs.map(() => ['-map 0:0', '-map 0:1']).flat(),
-            '-threads 0',
             // The next lines specify how each video stream should be encoded
             ...bitrateConfigs
               .map((item, index) =>

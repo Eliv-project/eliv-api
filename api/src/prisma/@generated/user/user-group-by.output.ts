@@ -45,6 +45,9 @@ export class UserGroupBy {
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
+
     @Field(() => UserCountAggregate, {nullable:true})
     _count?: UserCountAggregate;
 

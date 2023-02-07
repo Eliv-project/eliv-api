@@ -15,8 +15,8 @@ export class VotesService {
     return this.prisma.vote.create({ data });
   }
 
-  findAll(where: VoteWhereInput, include?: Prisma.VoteInclude) {
-    return this.prisma.vote.findMany({ where, include });
+  findAll(args: Prisma.VoteFindManyArgs) {
+    return this.prisma.vote.findMany(args);
   }
 
   async count(where: VoteCountWhereInput) {

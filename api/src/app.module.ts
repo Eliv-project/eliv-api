@@ -30,6 +30,7 @@ import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions
 import { ViewsModule } from './views/views.module';
 import { StreamKeysModule } from './stream-keys/stream-keys.module';
 import { LiveChatMessagesModule } from './live-chat-messages/live-chat-messages.module';
+import ffmpegConfig from './config/ffmpeg.config';
 
 @Module({
   imports: [
@@ -38,7 +39,7 @@ import { LiveChatMessagesModule } from './live-chat-messages/live-chat-messages.
       ignoreEnvFile: process.env.NODE_ENV === 'prod',
       cache: true,
       isGlobal: true,
-      load: [globalConfig, jwtConfig, pathConfig],
+      load: [globalConfig, jwtConfig, pathConfig, ffmpegConfig],
     }),
     // Code-first approach
     GraphQLModule.forRoot({

@@ -2,11 +2,11 @@ import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
 import { NullableStringFieldUpdateOperationsInput } from '../prisma/nullable-string-field-update-operations.input';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 import { FloatFieldUpdateOperationsInput } from '../prisma/float-field-update-operations.input';
+import { HideField } from '@nestjs/graphql';
 
 @InputType()
 export class VideoUpdateManyMutationInput {
@@ -17,7 +17,7 @@ export class VideoUpdateManyMutationInput {
     @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     desc?: NullableStringFieldUpdateOperationsInput;
 
-    @HideField()
+    @Field(() => NullableStringFieldUpdateOperationsInput, {nullable:true})
     searchableName?: NullableStringFieldUpdateOperationsInput;
 
     @Field(() => GraphQLJSON, {nullable:true})

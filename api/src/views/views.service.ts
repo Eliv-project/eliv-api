@@ -14,8 +14,8 @@ export class ViewsService {
     return this.prisma.view.create({ data });
   }
 
-  findAll(where: ViewWhereInput, include?: Prisma.ViewInclude) {
-    return this.prisma.view.findMany({ where, include });
+  findAll(args: Prisma.ViewFindManyArgs) {
+    return this.prisma.view.findMany(args);
   }
 
   findOne(where: ViewWhereUniqueInput, include?: Prisma.ViewInclude) {

@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, Subscription } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Subscription,
+  Int,
+} from '@nestjs/graphql';
 import { LiveSessionsService } from './live-sessions.service';
 import { LiveSessionCreateInput } from 'src/prisma/@generated/live-session/live-session-create.input';
 import { LiveSession } from 'src/prisma/@generated/live-session/live-session.model';
@@ -22,6 +29,7 @@ import { LiveSessionStatus } from './dto/live-session-status.output';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { IsOnlyStream } from './guards/is-only-stream.guard';
 import { LiveChatMessage } from 'src/prisma/@generated/live-chat-message/live-chat-message.model';
+import { LiveSessionOrderByWithRelationInput } from 'src/prisma/@generated/live-session/live-session-order-by-with-relation.input';
 
 @Resolver(() => LiveSession)
 export class LiveSessionsResolver {
@@ -79,8 +87,19 @@ export class LiveSessionsResolver {
   findAll(
     @Args('where')
     where: LiveSessionWhereInput,
+    @Args('orderBy', {
+      type: () => [LiveSessionOrderByWithRelationInput],
+      nullable: true,
+    })
+    orderBy: LiveSessionOrderByWithRelationInput[],
+    @Args('take', { nullable: true, type: () => Int })
+    take: number,
   ) {
-    return this.liveSessionsService.findAll(where);
+    return this.liveSessionsService.findAll({
+      where,
+      take,
+      orderBy,
+    });
   }
 
   @Query(() => LiveSession, { name: 'liveSession' })

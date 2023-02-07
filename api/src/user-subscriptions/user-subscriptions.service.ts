@@ -17,11 +17,8 @@ export class UserSubscriptionsService {
     return this.prisma.userSubscription.count({ where });
   }
 
-  findAll(
-    where: UserSubscriptionWhereInput,
-    include?: Prisma.UserSubscriptionInclude,
-  ) {
-    return this.prisma.userSubscription.findMany({ where, include });
+  findAll(args: Prisma.UserSubscriptionFindManyArgs) {
+    return this.prisma.userSubscription.findMany(args);
   }
 
   findOne(

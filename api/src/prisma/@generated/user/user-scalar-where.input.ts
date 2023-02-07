@@ -3,7 +3,6 @@ import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
 import { BoolNullableFilter } from '../prisma/bool-nullable-filter.input';
-import { HideField } from '@nestjs/graphql';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
@@ -34,7 +33,7 @@ export class UserScalarWhereInput {
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;
 
-    @HideField()
+    @Field(() => StringFilter, {nullable:true})
     password?: StringFilter;
 
     @Field(() => JsonNullableFilter, {nullable:true})
@@ -51,4 +50,7 @@ export class UserScalarWhereInput {
 
     @Field(() => BoolNullableFilter, {nullable:true})
     verified?: BoolNullableFilter;
+
+    @Field(() => BoolNullableFilter, {nullable:true})
+    onLive?: BoolNullableFilter;
 }
