@@ -52,18 +52,12 @@ export class VideosResolver {
     });
 
     try {
-      // Getting video info
-      const videoInfo = await this.videosService.getVideoInfo(
-        uploadedFile.path,
-      );
-
       // Create private video with default vod session
       createdVideo = await this.videosService.create({
         ...data,
         user: {
           connect: { id: me.id },
         },
-        duration: videoInfo.format.duration,
         dirId,
         privacy: VideoPrivacy.private,
         vodSession: {

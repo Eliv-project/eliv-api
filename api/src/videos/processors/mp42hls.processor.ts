@@ -5,14 +5,8 @@ import {
   OnQueueCompleted,
   OnQueueFailed,
 } from '@nestjs/bull';
-import ffmpegPath from 'ffmpeg-static';
-import Ffmpeg from 'fluent-ffmpeg';
-import path from 'path';
 import fs from 'fs';
-import { FfmpegQualityConfig } from '../interfaces/ffmpeg-quality-config';
-import { VideoQualityConfigs } from 'src/common/constants/videoQualityConfigs';
 import { Job } from 'bull';
-import { getOrCreateDir } from 'src/utils/getOrCreateDir';
 import { Inject } from '@nestjs/common';
 import { VideosService } from '../videos.service';
 import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
@@ -20,6 +14,7 @@ import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { SubscriptionEvents } from 'src/common/constants/subscription-events.constant';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
 import { ProcessProgress } from '../models/process-progress.model';
+import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
 
 export interface Mp42HlsConvertDto {
   hlsSavePath: string;
@@ -27,6 +22,12 @@ export interface Mp42HlsConvertDto {
   hlsSaveDirname: string;
   dirId: string;
   threadCount?: number;
+  withThumbnail?: boolean;
+}
+
+interface Mp42HlsResult {
+  thumbnailFileName;
+  hlsPath;
 }
 
 @Processor('mp42hls')
@@ -34,33 +35,13 @@ export class Mp42HlsProcessor {
   constructor(
     @Inject(PUB_SUB) private pubSub: RedisPubSub,
     private readonly videosService: VideosService,
+    private readonly ffmpegService: FfmpegService,
   ) {}
 
-  getStreamMapString(qualityConfig: FfmpegQualityConfig, index: number) {
-    return [`v:${index}`, `a:${index}`].join(',');
-  }
-
-  getHlsBitrateConfigByQuality(
-    qualityConfig: FfmpegQualityConfig,
-    index: number,
-  ) {
-    return [
-      `-s:v:${index} ${qualityConfig.rendition.resolution}`, // Scale
-      `-c:v:${index} libx264`, // Codec
-      `-b:v:${index} ${qualityConfig.rendition.videoBitrate}`, // Bitrate
-    ];
-  }
-
   @OnQueueCompleted()
-  async onComplete(job: Job<Mp42HlsConvertDto>, result) {
+  async onComplete(job: Job<Mp42HlsConvertDto>, result: Mp42HlsResult) {
     console.log(`Complete job ${job.id}`, result);
 
-    const savePath = getOrCreateDir(job.data.hlsSavePath);
-    const thumbnailFileName = await this.getThumbnail(
-      job.data.filePath,
-      savePath,
-    );
-    // Update vod status
     try {
       // Clean up tmp file
       const { filePath } = job.data;
@@ -75,7 +56,7 @@ export class Mp42HlsProcessor {
           thumbnail: {
             provider: 'local',
             data: {
-              url: `/${job.data.dirId}/${thumbnailFileName}`,
+              url: `/${result.hlsPath}/${result.thumbnailFileName}`,
             },
           },
           vodSession: {
@@ -93,6 +74,21 @@ export class Mp42HlsProcessor {
   @OnQueueFailed()
   async onFail(job: Job<Mp42HlsConvertDto>, err: Error) {
     console.log(`Failed job ${job.id} of type ${job.name} with error`, err);
+
+    const { dirId } = job.data;
+
+    const publisher = this.pubSub;
+    const publishEvent = [SubscriptionEvents.UPLOAD_VIDEO_PROGRESS, dirId].join(
+      '_',
+    );
+    publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+      publishEvent,
+      {
+        currentProcessProgress: {
+          status: 'failed',
+        },
+      },
+    );
 
     try {
       // Clean up tmp file
@@ -145,135 +141,58 @@ export class Mp42HlsProcessor {
     }
   }
 
-  async getThumbnail(mp4Path, savePath) {
-    return new Promise((resolve, reject) => {
-      Ffmpeg({ source: mp4Path })
-        .setFfmpegPath(ffmpegPath)
-        .outputOptions(['-ss 00:00:01.000', '-vframes 1'])
-        .output(path.join(savePath, 'thumbnail.png'))
-        .on('start', function (commandLine) {
-          console.log('Generating thumbnail for', mp4Path, commandLine);
-        })
-        .on('error', function (err, stdout, stderr) {
-          console.log('An error occurred: ' + err.message, err, stderr);
-          resolve(false);
-        })
-        .on('end', function (err, stdout, stderr) {
-          console.log('Thumbnail generated for', mp4Path);
-          resolve('thumbnail.png');
-        })
-        .run();
-    });
-  }
-
   @Process()
-  async convertToHls(job: Job<Mp42HlsConvertDto>) {
-    const {
-      hlsSavePath,
-      filePath,
-      hlsSaveDirname,
-      dirId,
-      threadCount = 0,
-    } = job.data;
-
-    const playlistName = hlsSaveDirname;
-    const savePath = getOrCreateDir(hlsSavePath);
+  async convertToHls(job: Job<Mp42HlsConvertDto>): Promise<Mp42HlsResult> {
+    const { hlsSavePath, filePath, dirId, withThumbnail = true } = job.data;
+    let savedThumbnailFileName;
     const publisher = this.pubSub;
     const publishEvent = [SubscriptionEvents.UPLOAD_VIDEO_PROGRESS, dirId].join(
       '_',
     );
 
-    const bitrateConfigs = [
-      VideoQualityConfigs['720p'],
-      VideoQualityConfigs['480p'],
-      // VideoQualityConfigs['360p'],
-    ];
+    if (withThumbnail) {
+      publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+        publishEvent,
+        {
+          currentProcessProgress: {
+            status: 'processing',
+            message: 'GENERATING_THUMBNAIL',
+          },
+        },
+      );
 
-    return new Promise<string>((resolve, reject) => {
-      let totalTime;
-      Ffmpeg({ source: filePath })
-        .setFfmpegPath(ffmpegPath)
-        .outputOptions(
-          // 0:0 refers to the video stream and 0:1 to the audio stream in the input file.
-          // The first pair of map commands represent the video and audio stream of the first variant and will be referred to subsequently in the output as v:0 and a:0;
-          // the next pair of commands represent the second variant and will be labelled as v:1 and a:1, and so on.
-          // (If we wanted to generate 3 variants streams, we would need 6 map statements, assuming that each variant has a video and audio stream.)
-          [
-            `-threads ${threadCount}`,
-            ...bitrateConfigs.map(() => ['-map 0:0', '-map 0:1']).flat(),
-            // The next lines specify how each video stream should be encoded
-            ...bitrateConfigs
-              .map((item, index) =>
-                this.getHlsBitrateConfigByQuality(item, index),
-              )
-              .flat(),
-            `-c:a copy`, // Audio codec
-            '-master_pl_name master.m3u8',
-            '-f hls',
-            '-hls_time 6',
-            '-hls_list_size 0',
-            '-hls_segment_filename',
-            // Saved segments location
-            path.join(savePath, 'v%v/fileSequence%d.ts'),
-          ],
-        )
-        // Mapping each stream to master playlist
-        .outputOption(
-          '-var_stream_map',
-          bitrateConfigs
-            .map((item, index) => this.getStreamMapString(item, index))
-            .join(' '),
-        )
-        // And its playlist file's location
-        .output(path.join(savePath, 'v%v/playlist.m3u8'))
-        .on('codecData', (data) => {
-          // HERE YOU GET THE TOTAL TIME
-          totalTime = parseInt(data.duration.replace(/:/g, ''));
-        })
-        .on('start', function (commandLine) {
-          console.log('Spawned Ffmpeg with command: ' + commandLine);
-        })
-        .on('error', function (err, stdout, stderr) {
-          console.log('An error occurred: ' + err.message, err, stderr);
-          publisher.publish<{ currentProcessProgress: ProcessProgress }>(
-            publishEvent,
-            {
-              currentProcessProgress: {
-                status: 'failed',
-              },
-            },
-          );
+      savedThumbnailFileName = await this.ffmpegService.toThumbnail(
+        filePath,
+        hlsSavePath,
+      );
+    }
 
-          reject();
-        })
-        .on('progress', function (progress) {
-          const time = parseInt(progress.timemark.replace(/:/g, ''));
-          const percent = ((time / totalTime) * 100).toFixed(2);
+    publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+      publishEvent,
+      {
+        currentProcessProgress: {
+          status: 'processing',
+          message: 'TRANSCODING',
+        },
+      },
+    );
 
-          console.log('Processing: ' + percent + '% done');
-          publisher.publish<{ currentProcessProgress: ProcessProgress }>(
-            publishEvent,
-            {
-              currentProcessProgress: {
-                status: 'processing',
-                progress: parseFloat(percent),
-              },
+    await this.ffmpegService.toHls(filePath, hlsSavePath, {
+      onProgress: (percent) =>
+        publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+          publishEvent,
+          {
+            currentProcessProgress: {
+              status: 'processing',
+              progress: parseFloat(percent),
             },
-          );
-        })
-        .on('end', function (err, stdout, stderr) {
-          console.log('Finished processing!' /*, err, stdout, stderr*/);
-          publisher.publish<{ currentProcessProgress: ProcessProgress }>(
-            publishEvent,
-            {
-              currentProcessProgress: {
-                status: 'success',
-              },
-            },
-          );
-          resolve(playlistName);
-        })
-        .run();
+          },
+        ),
     });
+
+    return {
+      hlsPath: hlsSavePath,
+      thumbnailFileName: savedThumbnailFileName,
+    };
   }
 }

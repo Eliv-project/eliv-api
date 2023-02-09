@@ -144,7 +144,6 @@ export class LiveSessionsController {
 
     // Update video info
     // Create vod session (live record)
-    const videoInfo = await this.videosService.getVideoInfo(recordPath);
     const recordedDirId = recordInfo.name;
 
     const currentLiveSessions = await this.liveSessionsService.findFirst(
@@ -165,7 +164,6 @@ export class LiveSessionsController {
         id: currentLiveSessions.videoId,
       },
       {
-        duration: { set: videoInfo.format.duration },
         vodSession: {
           create: {
             status: VodStatus.empty,

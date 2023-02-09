@@ -9,6 +9,9 @@ export class ProcessProgress {
   // Current process status
   status: ProcessStatus;
 
+  @Field({ nullable: true })
+  message?: string;
+
   @Field((type) => Float, { nullable: true })
   progress?: number;
 }

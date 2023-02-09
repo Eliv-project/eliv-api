@@ -7,6 +7,7 @@ import { UploadService } from 'src/upload/upload.service';
 import { PubSubModule } from 'src/pub-sub/pub-sub.module';
 import { Mp42HlsProcessor } from './processors/mp42hls.processor';
 import { VotesService } from 'src/votes/votes.service';
+import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { VotesService } from 'src/votes/votes.service';
     PrismaService,
     Mp42HlsProcessor,
     UploadService,
+    FfmpegService,
   ],
   exports: [VideosService],
 })

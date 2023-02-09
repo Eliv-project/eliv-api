@@ -30,6 +30,7 @@ import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions
 import { ViewsModule } from './views/views.module';
 import { StreamKeysModule } from './stream-keys/stream-keys.module';
 import { LiveChatMessagesModule } from './live-chat-messages/live-chat-messages.module';
+import { FfmpegService } from './ffmpeg/ffmpeg.service';
 import ffmpegConfig from './config/ffmpeg.config';
 
 @Module({
@@ -97,6 +98,7 @@ import ffmpegConfig from './config/ffmpeg.config';
       useClass: PermissionsGuard,
     },
     UploadService,
+    FfmpegService,
   ],
 })
 export class AppModule {}

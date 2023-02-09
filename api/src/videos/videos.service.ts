@@ -27,9 +27,7 @@ export class VideosService {
     private readonly mp42hlsQueue: Queue<Mp42HlsConvertDto>,
     @InjectQueue('flv2mp4')
     private readonly flv2mp4Queue: Queue<Flv2Mp4ConvertDto>,
-  ) {
-    Ffmpeg.setFfmpegPath(ffprobe.path);
-  }
+  ) {}
 
   async toHls(filePath: string, dirId: string) {
     await this.mp42hlsQueue.add({
@@ -48,18 +46,6 @@ export class VideosService {
       dirId,
       saveDirPath: this.configService.get('recordingPath'),
       filePath,
-    });
-  }
-
-  getVideoInfo(filePath: string): Promise<Ffmpeg.FfprobeData> {
-    return new Promise((resolve, reject) => {
-      Ffmpeg.ffprobe(filePath, (err, data) => {
-        if (err) {
-          reject(err);
-        }
-
-        resolve(data);
-      });
     });
   }
 
