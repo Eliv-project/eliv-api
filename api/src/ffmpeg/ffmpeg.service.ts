@@ -65,7 +65,7 @@ export class FfmpegService {
           reject(err);
         })
         .on('end', function (err, stdout, stderr) {
-          resolve(savedFilePath);
+          resolve("thumbnail.png");
         })
         .run();
     });
@@ -79,11 +79,9 @@ export class FfmpegService {
     const qualityConfigs = [
       VideoQualityConfigs['360p'],
       // VideoQualityConfigs['480p'],
-      //   VideoQualityConfigs['720p'],
-      VideoQualityConfigs['1080p'],
+      VideoQualityConfigs['720p'],
+      // VideoQualityConfigs['1080p'],
     ];
-
-    console.log(this.getMaxThread());
 
     getOrCreateDir(savePath);
 

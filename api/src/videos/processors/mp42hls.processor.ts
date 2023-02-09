@@ -56,7 +56,7 @@ export class Mp42HlsProcessor {
           thumbnail: {
             provider: 'local',
             data: {
-              url: `/${result.hlsPath}/${result.thumbnailFileName}`,
+              url: `/${job.data.dirId}/${result.thumbnailFileName}`,
             },
           },
           vodSession: {
