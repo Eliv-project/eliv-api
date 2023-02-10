@@ -15,6 +15,7 @@ import { SubscriptionEvents } from 'src/common/constants/subscription-events.con
 import { LiveSession } from 'src/prisma/@generated/live-session/live-session.model';
 import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
 import { UsersService } from 'src/users/users.service';
+import { getOrCreateDir } from 'src/utils/getOrCreateDir';
 import { VideosService } from 'src/videos/videos.service';
 import { VodStatus } from 'src/vod-sessions/enums/status.enum';
 import { LiveSessionStatus } from './dto/live-session-status.output';
@@ -45,6 +46,16 @@ export class LiveSessionsController {
   async beforePublish(@Req() request: RequestWithLiveSession) {
     console.log('Stream info', request.body);
 
+    const hlsPath = this.configService.get('hlsPath');
+    const dirId = request.liveSession.video.dirId;
+    const publisher = this.pubSub;
+    const publishEvent = [SubscriptionEvents.LIVE_STATUS, dirId].join('_');
+    publisher.publish<{ currentLiveStatus: LiveSessionStatus }>(publishEvent, {
+      currentLiveStatus: {
+        status: LiveStatus.ON_LIVE,
+      },
+    });
+
     // Update live status on live
     await this.liveSessionsService.update(
       {
@@ -52,6 +63,16 @@ export class LiveSessionsController {
       },
       {
         status: { set: LiveStatus.ON_LIVE },
+        video: {
+          update: {
+            thumbnail: {
+              provider: 'local',
+              data: {
+                url: `/${dirId}/thumbnail.png`,
+              },
+            },
+          },
+        },
       },
     );
     // Update user status
@@ -62,14 +83,7 @@ export class LiveSessionsController {
       },
     );
 
-    const dirId = request.liveSession.video.dirId;
-    const publisher = this.pubSub;
-    const publishEvent = [SubscriptionEvents.LIVE_STATUS, dirId].join('_');
-    publisher.publish<{ currentLiveStatus: LiveSessionStatus }>(publishEvent, {
-      currentLiveStatus: {
-        status: LiveStatus.ON_LIVE,
-      },
-    });
+    getOrCreateDir(path.join(hlsPath, dirId));
 
     console.log(
       'An user started a live stream session with id',
@@ -83,7 +97,7 @@ export class LiveSessionsController {
 
   @Post('/on-publish-done')
   @IsPublic()
-  async afterPublish(@Req() request: RequestWithLiveSession) {
+  async afterPublish(@Req() request: Request) {
     const publishInfo: RtmpInput = request.body;
 
     // console.log(request.body);

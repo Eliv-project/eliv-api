@@ -47,18 +47,22 @@ export class Mp42HlsProcessor {
       const { filePath } = job.data;
       fs.unlinkSync(filePath);
 
+      const video = await this.videosService.findOne({ dirId: job.data.dirId });
+
       // Update vod status
       await this.videosService.update(
         {
           dirId: job.data.dirId,
         },
         {
-          thumbnail: {
-            provider: 'local',
-            data: {
-              url: `/${job.data.dirId}/${result.thumbnailFileName}`,
-            },
-          },
+          thumbnail: !video.thumbnail
+            ? {
+                provider: 'local',
+                data: {
+                  url: `/${result.hlsPath}/${result.thumbnailFileName}`,
+                },
+              }
+            : undefined,
           vodSession: {
             update: {
               status: { set: VodStatus.ready },
@@ -67,6 +71,7 @@ export class Mp42HlsProcessor {
         },
       );
     } catch (err) {
+
       console.error(err);
     }
   }
