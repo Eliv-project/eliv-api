@@ -17,6 +17,20 @@ export class FfmpegService {
     return Ffmpeg().setFfmpegPath(ffmpegPath).setFfprobePath(ffprobe.path);
   }
 
+  getVideoInfo(videoPath): Promise<Ffmpeg.FfprobeData> {
+    return new Promise((resolve, reject) => {
+      this.getFfmpeg()
+        .input(videoPath)
+        .ffprobe((err, data) => {
+          if (err) {
+            reject(err);
+          }
+
+          resolve(data);
+        });
+    });
+  }
+
   checkAccelerationSupport() {
     return !!this.configService.get('withFfmpegAcceleration');
   }
@@ -65,7 +79,7 @@ export class FfmpegService {
           reject(err);
         })
         .on('end', function (err, stdout, stderr) {
-          resolve("thumbnail.png");
+          resolve('thumbnail.png');
         })
         .run();
     });

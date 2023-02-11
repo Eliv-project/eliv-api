@@ -1,4 +1,9 @@
-import { Inject, InternalServerErrorException } from '@nestjs/common';
+import {
+  Inject,
+  InternalServerErrorException,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -27,6 +32,11 @@ import slugify from 'slugify';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from 'src/prisma/@generated/user/user.model';
 import { VideoOrderByWithRelationInput } from 'src/prisma/@generated/video/video-order-by-with-relation.input';
+import { IsValidVideo } from './guards/is-valid-video.guard';
+import { CurrentVideo } from './decorators/current-video.decorator';
+import { ConfigService } from '@nestjs/config';
+import path from 'path';
+import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -34,6 +44,8 @@ export class VideosResolver {
     @Inject(PUB_SUB) private pubSub: RedisPubSub,
     private readonly videosService: VideosService,
     private readonly uploadService: UploadService,
+    private readonly configService: ConfigService,
+    private readonly ffmpegService: FfmpegService,
   ) {}
 
   @Mutation(() => Video)
@@ -51,6 +63,8 @@ export class VideosResolver {
       filename,
     });
 
+    const videoInfo = await this.ffmpegService.getVideoInfo(uploadedFile.path);
+
     try {
       // Create private video with default vod session
       createdVideo = await this.videosService.create({
@@ -58,6 +72,7 @@ export class VideosResolver {
         user: {
           connect: { id: me.id },
         },
+        duration: videoInfo.format.duration,
         dirId,
         privacy: VideoPrivacy.private,
         vodSession: {
@@ -143,24 +158,42 @@ export class VideosResolver {
   }
 
   @Mutation(() => Video)
+  @UseGuards(IsValidVideo)
   updateVideo(
     @Args('where') where: VideoWhereUniqueInput,
     @Args('data')
     data: VideoUpdateInput,
+    @CurrentVideo() video: Video,
   ) {
     const searchableName = slugify(data.name.set, {
       strict: true,
       lower: true,
     });
-    return this.videosService.update(where, {
-      ...data,
-      searchableName: { set: searchableName },
-    });
+    return this.videosService.update(
+      {
+        id: video.id,
+      },
+      {
+        ...data,
+        searchableName: { set: searchableName },
+      },
+    );
   }
 
   @Mutation(() => Video)
-  removeVideo(@Args('where') where: VideoWhereUniqueInput) {
-    return this.videosService.remove(where);
+  @UseGuards(IsValidVideo)
+  removeVideo(
+    @Args('where') where: VideoWhereUniqueInput,
+    @CurrentVideo() video: Video,
+  ) {
+    const dirPath = path.join(this.configService.get('hlsPath'), video.dirId);
+    fs.rm(dirPath, { recursive: true, force: true }, (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+    return this.videosService.remove({ id: video.id });
   }
 
   @IsPublic()

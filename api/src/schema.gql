@@ -1010,7 +1010,6 @@ type LoginResponse {
 
 type Mutation {
   changePassword(newPassword: String!, oldPassword: String!): Boolean!
-  countView(where: VideoWhereUniqueInput!): View!
   createComment(data: CreateCommentInput!): Comment!
   createLiveChatMessage(data: LiveChatMessageCreateInput!): LiveChatMessage!
   createLiveSession(data: LiveSessionCreateInput!): LiveSession!
@@ -1527,6 +1526,7 @@ type Query {
   countComment(where: CommentWhereInput!): Int!
   countSubscriber(where: UserWhereUniqueInput!): Int!
   countVideo(where: VideoWhereInput!): Int!
+  countView(where: VideoWhereUniqueInput!): Int!
   countVote(where: VoteCountWhereInput!): VoteCountResponse!
   isSubscribing(user: UserWhereUniqueInput!): Boolean!
   isVoted(video: VideoWhereUniqueInput!): VoteResponse!

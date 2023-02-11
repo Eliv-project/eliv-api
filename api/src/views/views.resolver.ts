@@ -20,7 +20,7 @@ export class ViewsResolver {
     });
   }
 
-  @Mutation(() => View)
+  @Query(() => Int, { name: 'countView' })
   @IsPublic(true)
   countView(@Args('where') where: VideoWhereUniqueInput) {
     return this.viewsService.count({
