@@ -6,4 +6,5 @@ RUN apk add --no-cache bash
 
 
 # COPY nginx.conf /etc/nginx/nginx.conf.template
+
 COPY index.html /www/

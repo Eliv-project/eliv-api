@@ -91,7 +91,8 @@ export class FfmpegService {
     options?: FfmpegOptions,
   ): Promise<boolean> {
     const qualityConfigs = [
-      VideoQualityConfigs['360p'],
+      VideoQualityConfigs['144p'],
+      // VideoQualityConfigs['360p'],
       // VideoQualityConfigs['480p'],
       VideoQualityConfigs['720p'],
       // VideoQualityConfigs['1080p'],

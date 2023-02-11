@@ -1,6 +1,8 @@
 import { FfmpegQualityConfig } from '../dto/ffmpeg-quality-config.dto';
 
 interface FfmpegQualityConfigs {
+  '144p'?: FfmpegQualityConfig;
+  '240p'?: FfmpegQualityConfig;
   '360p'?: FfmpegQualityConfig;
   '480p'?: FfmpegQualityConfig;
   '720p'?: FfmpegQualityConfig;
@@ -8,6 +10,17 @@ interface FfmpegQualityConfigs {
 }
 
 export const VideoQualityConfigs: FfmpegQualityConfigs = {
+  '144p': {
+    size: {
+      width: 256,
+      height: 144,
+    },
+    videoBitrate: '200k',
+    audioBitrate: '64k',
+    fps: 24,
+    maxrate: '248k',
+    bufsize: '300k',
+  },
   '360p': {
     size: {
       width: 640,

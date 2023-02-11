@@ -1,5 +1,6 @@
 data/*
 upload/*
+static/*
 .DS_Store
 
 api/src/prisma/@generated
