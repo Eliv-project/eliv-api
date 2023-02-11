@@ -5,6 +5,7 @@ import { LiveSessionUpdateInput } from 'src/prisma/@generated/live-session/live-
 import { LiveSessionWhereUniqueInput } from 'src/prisma/@generated/live-session/live-session-where-unique.input';
 import { LiveSessionWhereInput } from 'src/prisma/@generated/live-session/live-session-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import fs from 'fs';
 
 @Injectable()
 export class LiveSessionsService {
@@ -45,5 +46,12 @@ export class LiveSessionsService {
 
   remove(where: LiveSessionWhereUniqueInput) {
     return this.prisma.liveSession.delete({ where });
+  }
+
+  endList(filePath) {
+    return fs.appendFile(filePath, '\n #EXT-X-ENDLIST', function (err) {
+      if (err) throw err;
+      console.log('Saved!', filePath);
+    });
   }
 }

@@ -42,27 +42,48 @@ export class Mp42HlsProcessor {
   async onComplete(job: Job<Mp42HlsConvertDto>, result: Mp42HlsResult) {
     console.log(`Complete job ${job.id}`, result);
 
+
+
     try {
       // Clean up tmp file
-      const { filePath } = job.data;
+      const { filePath, dirId } = job.data;
       fs.unlinkSync(filePath);
 
+      const publisher = this.pubSub;
+      const publishEvent = [
+        SubscriptionEvents.UPLOAD_VIDEO_PROGRESS,
+        dirId,
+      ].join('_');
+
+      const video = await this.videosService.findOne({ dirId: dirId });
+
       // Update vod status
+      // Only update local thumbnail when there's no thumbnail
       await this.videosService.update(
         {
-          dirId: job.data.dirId,
+          dirId,
         },
         {
-          thumbnail: {
-            provider: 'local',
-            data: {
-              url: `/${result.hlsPath}/${result.thumbnailFileName}`,
-            },
-          },
+          thumbnail: !video.thumbnail
+            ? {
+                provider: 'local',
+                data: {
+                  url: `/${dirId}/${result.thumbnailFileName}`,
+                },
+              }
+            : undefined,
           vodSession: {
             update: {
               status: { set: VodStatus.ready },
             },
+          },
+        },
+      );
+      publisher.publish<{ currentProcessProgress: ProcessProgress }>(
+        publishEvent,
+        {
+          currentProcessProgress: {
+            status: 'success',
           },
         },
       );

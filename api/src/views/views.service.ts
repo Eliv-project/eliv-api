@@ -26,6 +26,10 @@ export class ViewsService {
     return this.prisma.view.update({ where, data });
   }
 
+  count(where: ViewWhereInput) {
+    return this.prisma.view.count({ where });
+  }
+
   remove(where: ViewWhereUniqueInput) {
     return this.prisma.view.delete({ where });
   }
