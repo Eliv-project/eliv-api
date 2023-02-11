@@ -2,11 +2,15 @@ model LiveSession {
     id Int @id @default(autoincrement())
 
     status Int @default(0)
-    streamKey String @unique @default(uuid())
+    /// @HideField({ match: '@(StreamKey|LiveSession)Create*Input' })
+    streamKey StreamKey @relation(fields: [streamKeyId], references: [id], onDelete: Cascade)
+    streamKeyId Int
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
     videoId Int @unique
+
+    liveChatMessages LiveChatMessage[]
 }

@@ -14,4 +14,7 @@ export class OAuthInput {
 
   @Field()
   avatarUrl: string;
+
+  @Field()
+  name: string;
 }

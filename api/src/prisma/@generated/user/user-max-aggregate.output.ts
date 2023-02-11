@@ -18,6 +18,9 @@ export class UserMaxAggregate {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
+    @Field(() => String, {nullable:true})
+    name?: string;
+
     @HideField()
     password?: string;
 
@@ -29,4 +32,10 @@ export class UserMaxAggregate {
 
     @Field(() => Int, {nullable:true})
     roleId?: number;
+
+    @Field(() => Boolean, {nullable:true})
+    verified?: boolean;
+
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
 }

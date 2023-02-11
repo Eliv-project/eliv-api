@@ -8,10 +8,15 @@ async function main() {
 
   console.log(`Seeded ${permissions.length + 1} permissions`);
 
-  const [adminRole] = await seedRoles(prisma, { super: superPermission });
-  const [adminUser] = await seedUsers(prisma, { admin: adminRole });
+  const [adminRole, userRole] = await seedRoles(prisma, {
+    super: superPermission,
+  });
+  const [adminUser, users] = await seedUsers(prisma, {
+    admin: adminRole,
+    user: userRole,
+  });
 
-  console.log('Seeding completed!', adminUser);
+  console.log(`Seeding completed 1 admin and ${users.length} users!`);
 }
 main()
   .then(async () => {

@@ -1,29 +1,40 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { LiveSessionCreateInput } from 'src/prisma/@generated/live-session/live-session-create.input';
 import { LiveSessionUpdateInput } from 'src/prisma/@generated/live-session/live-session-update.input';
 import { LiveSessionWhereUniqueInput } from 'src/prisma/@generated/live-session/live-session-where-unique.input';
 import { LiveSessionWhereInput } from 'src/prisma/@generated/live-session/live-session-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import fs from 'fs';
 
 @Injectable()
 export class LiveSessionsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: LiveSessionCreateInput) {
+  create(data: LiveSessionCreateInput, include?: Prisma.LiveSessionInclude) {
     return this.prisma.liveSession.create({
       data,
-      include: {
-        video: true,
-      },
+      include,
     });
   }
 
-  findAll(where: LiveSessionWhereInput) {
-    return this.prisma.liveSession.findMany({ where });
+  findAll(args: Prisma.LiveSessionFindManyArgs) {
+    return this.prisma.liveSession.findMany(args);
   }
 
-  findOne(where: LiveSessionWhereUniqueInput) {
-    return this.prisma.liveSession.findUnique({ where });
+  findFirst(
+    where: LiveSessionWhereInput,
+    orderBy?: Prisma.LiveSessionOrderByWithRelationInput[],
+    include?: Prisma.LiveSessionInclude,
+  ) {
+    return this.prisma.liveSession.findFirst({ where, orderBy, include });
+  }
+
+  findOne(
+    where: LiveSessionWhereUniqueInput,
+    include?: Prisma.LiveSessionInclude,
+  ) {
+    return this.prisma.liveSession.findUnique({ where, include });
   }
 
   update(where: LiveSessionWhereUniqueInput, data: LiveSessionUpdateInput) {
@@ -35,5 +46,12 @@ export class LiveSessionsService {
 
   remove(where: LiveSessionWhereUniqueInput) {
     return this.prisma.liveSession.delete({ where });
+  }
+
+  endList(filePath) {
+    return fs.appendFile(filePath, '\n #EXT-X-ENDLIST', function (err) {
+      if (err) throw err;
+      console.log('Saved!', filePath);
+    });
   }
 }

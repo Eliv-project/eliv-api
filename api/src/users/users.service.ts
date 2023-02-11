@@ -11,20 +11,25 @@ import * as bcrypt from "bcrypt"
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  create({password, ...inputData}: UserCreateInput) {
-    return this.prisma.user.create({ 
+  create({ password, ...inputData }: UserCreateInput) {
+    return this.prisma.user.create({
       data: {
         password: bcrypt.hashSync(password, 10),
-        ...inputData
-      }});
+        ...inputData,
+      },
+    });
   }
 
-  findAll(where: UserWhereInput) {
-    return this.prisma.user.findMany({ where });
+  findAll(args: Prisma.UserFindManyArgs) {
+    return this.prisma.user.findMany(args);
   }
 
   findOne(where: UserWhereUniqueInput, include?: Prisma.UserInclude) {
     return this.prisma.user.findUnique({ where, include });
+  }
+
+  count(where: UserWhereInput) {
+    return this.prisma.user.count({ where });
   }
 
   update(where: UserWhereUniqueInput, data: UserUpdateInput) {

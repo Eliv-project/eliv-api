@@ -20,47 +20,71 @@ generator nestgraphql {
 }
 
 model Comment {
-    id Int @unique @default(autoincrement())
+    id      Int    @unique @default(autoincrement())
     content String
-    
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId Int @unique
-    video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
-    videoId Int @unique
 
-    parentComment Comment? @relation("childComments", fields: [parentCommentId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId  Int 
+    video   Video? @relation(fields: [videoId], references: [id], onDelete: Cascade)
+    videoId Int?
+
+    parentComment   Comment? @relation("childComments", fields: [parentCommentId], references: [id], onDelete: Cascade)
     parentCommentId Int?
 
     childComments Comment[] @relation("childComments")
+    votes         Vote[]
+}
+
+
+model LiveChatMessage{
+    id Int @id @default(autoincrement())
+
+    content String @default("")
+    createdAt DateTime @default(now())
+
+    /// @HideField({input: true, output: false})
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId Int
+
+    liveSession LiveSession @relation(fields: [liveSessionId], references: [id], onDelete: Cascade)
+    liveSessionId Int
+
 }
 
 model LiveSession {
     id Int @id @default(autoincrement())
 
     status Int @default(0)
-    streamKey String @unique @default(uuid())
+    /// @HideField({ match: '@(StreamKey|LiveSession)Create*Input' })
+    streamKey StreamKey @relation(fields: [streamKeyId], references: [id], onDelete: Cascade)
+    streamKeyId Int
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
     videoId Int @unique
+
+    liveChatMessages LiveChatMessage[]
 }
 
 model OAuthLink {
     provider String
     providerId String @unique
 
-    user User @relation(fields: [userId], references: [id])
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int
 
     @@id([provider, providerId])
 }
 
 model PermissionsOnRoles {
-    role         Role       @relation(fields: [roleId], references: [id])
+    role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
     roleId       Int // relation scalar field (used in the `@relation` attribute above)
-    permission   Permission @relation(fields: [permissionId], references: [id])
+    permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
     permissionId Int // relation scalar field (used in the `@relation` attribute above)
     createdAt    DateTime   @default(now())
 
@@ -85,25 +109,68 @@ model Role {
 }
 
 
-model User {
-    id        Int      @id @default(autoincrement())
-    email     String   @unique
-    username  String   @unique
-    gender    Boolean? @default(true)
+model StreamKey {
+    id Int @id @default(autoincrement())
 
-    /// @HideField({output: true, input: true})
-    password  String
-    
+    name String
+    desc String
+
+    key String @unique @default(uuid())
+    createdAt DateTime @default(now())
+    isDefault Boolean @default(false)
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId Int
+
+    liveSessions LiveSession[]
+}
+
+model UserSubscription {
+    user              User     @relation("subscribingBy", fields: [userId], references: [id], onDelete: Cascade)
+    userId            Int
+    subscribingUser   User     @relation("subscribingTo", fields: [subscribingUserId], references: [id], onDelete: Cascade)
+    subscribingUserId Int // relation scalar field (used in the `@relation` attribute above)
+    createdAt         DateTime @default(now())
+
+    @@id([userId, subscribingUserId])
+}
+
+
+model User {
+    id       Int      @id @default(autoincrement())
+    email    String   @unique
+    username String   @unique
+    gender   Boolean? @default(true)
+
+    name String @default("UNNAMED_USER")
+
+    /// @HideField({output: true, input: false})
+    password String
+
     avatar    Json?
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-    role   Role @relation(fields: [roleId], references: [id])
+    role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
     roleId Int
 
+    subscribingUsers UserSubscription[] @relation("subscribingBy")
+    subscribers      UserSubscription[] @relation("subscribingTo")
+
     oauthLinks OAuthLink[]
-    videos Video[]
-    comments Comment[]
+
+    videos     Video[]
+    comments   Comment[]
+    votes      Vote[]
+    views View[]
+
+    streamKeys StreamKey[]
+
+    liveChatMessages LiveChatMessage[]
+
+verified Boolean? @default(false)
+    onLive Boolean? @default(false)
+
 }
 
 
@@ -113,7 +180,7 @@ model Video {
     name String
     desc String?
 
-    /// @HideField({input: true, output: true})
+    /// @HideField({input: false, output: true})
     searchableName String?
 
     thumbnail Json?
@@ -123,18 +190,38 @@ model Video {
     privacy Int? @default(0) 
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+/// @HideField({input: true, output: false})
+    duration Float @default(0)
 
     /// @HideField({input: true, output: false})
     dirId String? @unique
 
-    user User @relation(fields: [userId], references: [id])
+    /// @HideField({match: 'VideoCreate*Input'})
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int
 
     liveSession LiveSession?
     vodSession VodSession?
-    
+
     comments Comment[]
+    votes Vote[] 
+    views View[]
+}
+
+model View {
+    id Int @id @default(autoincrement())
+
+    ip String 
+
+    user User? @relation(references: [id], fields: [userId], onDelete: Cascade)
+    userId Int?
+
+    video Video @relation(references: [id], fields: [videoId], onDelete: Cascade)
+    videoId Int
+
+    createdAt DateTime @default(now())
 }
 
 model VodSession {
@@ -143,8 +230,23 @@ model VodSession {
     status Int @default(0)
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
     videoId Int @unique
+}
+
+model Vote {
+    id            Int @id @default(autoincrement())
+    voteDirection Int
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    Int
+    comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+    commentId Int?
+    video     Video?   @relation(fields: [videoId], references: [id], onDelete: Cascade)
+    videoId   Int?
 }

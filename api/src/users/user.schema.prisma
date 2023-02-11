@@ -1,20 +1,36 @@
 model User {
-    id        Int      @id @default(autoincrement())
-    email     String   @unique
-    username  String   @unique
-    gender    Boolean? @default(true)
+    id       Int      @id @default(autoincrement())
+    email    String   @unique
+    username String   @unique
+    gender   Boolean? @default(true)
 
-    /// @HideField({output: true, input: true})
-    password  String
-    
+    name String @default("UNNAMED_USER")
+
+    /// @HideField({output: true, input: false})
+    password String
+
     avatar    Json?
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-    role   Role @relation(fields: [roleId], references: [id])
+    role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
     roleId Int
 
+    subscribingUsers UserSubscription[] @relation("subscribingBy")
+    subscribers      UserSubscription[] @relation("subscribingTo")
+
     oauthLinks OAuthLink[]
-    videos Video[]
-    comments Comment[]
+
+    videos     Video[]
+    comments   Comment[]
+    votes      Vote[]
+    views View[]
+
+    streamKeys StreamKey[]
+
+    liveChatMessages LiveChatMessage[]
+
+verified Boolean? @default(false)
+    onLive Boolean? @default(false)
+
 }

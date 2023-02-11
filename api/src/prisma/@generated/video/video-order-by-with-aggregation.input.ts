@@ -20,7 +20,7 @@ export class VideoOrderByWithAggregationInput {
     @Field(() => SortOrder, {nullable:true})
     desc?: keyof typeof SortOrder;
 
-    @HideField()
+    @Field(() => SortOrder, {nullable:true})
     searchableName?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -37,6 +37,9 @@ export class VideoOrderByWithAggregationInput {
 
     @Field(() => SortOrder, {nullable:true})
     updatedAt?: keyof typeof SortOrder;
+
+    @HideField()
+    duration?: keyof typeof SortOrder;
 
     @HideField()
     dirId?: keyof typeof SortOrder;

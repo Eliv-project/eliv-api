@@ -1,7 +1,6 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 
 @InputType()
@@ -19,7 +18,10 @@ export class UserCreateManyRoleInput {
     @Field(() => Boolean, {nullable:true})
     gender?: boolean;
 
-    @HideField()
+    @Field(() => String, {nullable:true})
+    name?: string;
+
+    @Field(() => String, {nullable:false})
     password!: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -30,4 +32,10 @@ export class UserCreateManyRoleInput {
 
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
+
+    @Field(() => Boolean, {nullable:true})
+    verified?: boolean;
+
+    @Field(() => Boolean, {nullable:true})
+    onLive?: boolean;
 }

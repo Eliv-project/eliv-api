@@ -1,7 +1,9 @@
-## Docker-NestJS production guide
-<https://www.tomray.dev/nestjs-docker-production>
-<https://www.tomray.dev/nestjs-docker-compose-postgres>
+## Backup and restore db data from docker
 
-## GraphQL (Code-first approach)
+### Backup
 
-> Specifically: it is not required for string and boolean types; it is required for number (which must be mapped to either a GraphQL Int or Float).
+`docker exec db pg_dump -d postgresql://eliv81222:dnntung@localhost:5432/eliv -f /eliv/backup/db.sql`
+
+### Restore backup
+
+`docker exec db psql postgresql://eliv81222:dnntung@localhost:5432/eliv -f /eliv/backup/db.sql`

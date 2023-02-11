@@ -11,7 +11,7 @@ export class LiveSessionCountAggregateInput {
     status?: true;
 
     @Field(() => Boolean, {nullable:true})
-    streamKey?: true;
+    streamKeyId?: true;
 
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;

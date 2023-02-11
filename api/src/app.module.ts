@@ -25,6 +25,13 @@ import { BullModule } from '@nestjs/bull';
 import { PubSubModule } from './pub-sub/pub-sub.module';
 import { VodSessionsModule } from './vod-sessions/vod-sessions.module';
 import { CommentsModule } from './comments/comments.module';
+import { VotesModule } from './votes/votes.module';
+import { UserSubscriptionsModule } from './user-subscriptions/user-subscriptions.module';
+import { ViewsModule } from './views/views.module';
+import { StreamKeysModule } from './stream-keys/stream-keys.module';
+import { LiveChatMessagesModule } from './live-chat-messages/live-chat-messages.module';
+import { FfmpegService } from './ffmpeg/ffmpeg.service';
+import ffmpegConfig from './config/ffmpeg.config';
 
 @Module({
   imports: [
@@ -33,7 +40,7 @@ import { CommentsModule } from './comments/comments.module';
       ignoreEnvFile: process.env.NODE_ENV === 'prod',
       cache: true,
       isGlobal: true,
-      load: [globalConfig, jwtConfig, pathConfig],
+      load: [globalConfig, jwtConfig, pathConfig, ffmpegConfig],
     }),
     // Code-first approach
     GraphQLModule.forRoot({
@@ -73,6 +80,11 @@ import { CommentsModule } from './comments/comments.module';
     PubSubModule,
     VodSessionsModule,
     CommentsModule,
+    VotesModule,
+    UserSubscriptionsModule,
+    ViewsModule,
+    StreamKeysModule,
+    LiveChatMessagesModule,
   ],
   controllers: [AppController],
   providers: [
@@ -86,6 +98,7 @@ import { CommentsModule } from './comments/comments.module';
       useClass: PermissionsGuard,
     },
     UploadService,
+    FfmpegService,
   ],
 })
 export class AppModule {}

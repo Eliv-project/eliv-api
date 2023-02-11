@@ -12,5 +12,8 @@ export class LiveSessionAvgAggregate {
     status?: number;
 
     @Field(() => Float, {nullable:true})
+    streamKeyId?: number;
+
+    @Field(() => Float, {nullable:true})
     videoId?: number;
 }

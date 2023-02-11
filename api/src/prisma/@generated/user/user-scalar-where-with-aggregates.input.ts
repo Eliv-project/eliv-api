@@ -3,7 +3,6 @@ import { InputType } from '@nestjs/graphql';
 import { IntWithAggregatesFilter } from '../prisma/int-with-aggregates-filter.input';
 import { StringWithAggregatesFilter } from '../prisma/string-with-aggregates-filter.input';
 import { BoolNullableWithAggregatesFilter } from '../prisma/bool-nullable-with-aggregates-filter.input';
-import { HideField } from '@nestjs/graphql';
 import { JsonNullableWithAggregatesFilter } from '../prisma/json-nullable-with-aggregates-filter.input';
 import { DateTimeWithAggregatesFilter } from '../prisma/date-time-with-aggregates-filter.input';
 
@@ -31,7 +30,10 @@ export class UserScalarWhereWithAggregatesInput {
     @Field(() => BoolNullableWithAggregatesFilter, {nullable:true})
     gender?: BoolNullableWithAggregatesFilter;
 
-    @HideField()
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
+    name?: StringWithAggregatesFilter;
+
+    @Field(() => StringWithAggregatesFilter, {nullable:true})
     password?: StringWithAggregatesFilter;
 
     @Field(() => JsonNullableWithAggregatesFilter, {nullable:true})
@@ -45,4 +47,10 @@ export class UserScalarWhereWithAggregatesInput {
 
     @Field(() => IntWithAggregatesFilter, {nullable:true})
     roleId?: IntWithAggregatesFilter;
+
+    @Field(() => BoolNullableWithAggregatesFilter, {nullable:true})
+    verified?: BoolNullableWithAggregatesFilter;
+
+    @Field(() => BoolNullableWithAggregatesFilter, {nullable:true})
+    onLive?: BoolNullableWithAggregatesFilter;
 }

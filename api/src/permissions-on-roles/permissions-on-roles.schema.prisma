@@ -1,7 +1,7 @@
 model PermissionsOnRoles {
-    role         Role       @relation(fields: [roleId], references: [id])
+    role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
     roleId       Int // relation scalar field (used in the `@relation` attribute above)
-    permission   Permission @relation(fields: [permissionId], references: [id])
+    permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
     permissionId Int // relation scalar field (used in the `@relation` attribute above)
     createdAt    DateTime   @default(now())
 

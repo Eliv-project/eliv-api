@@ -14,7 +14,7 @@ export class VideoMaxAggregateInput {
     @Field(() => Boolean, {nullable:true})
     desc?: true;
 
-    @HideField()
+    @Field(() => Boolean, {nullable:true})
     searchableName?: true;
 
     @Field(() => Boolean, {nullable:true})
@@ -28,6 +28,9 @@ export class VideoMaxAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     updatedAt?: true;
+
+    @HideField()
+    duration?: true;
 
     @HideField()
     dirId?: true;

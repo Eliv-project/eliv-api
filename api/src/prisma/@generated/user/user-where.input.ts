@@ -3,13 +3,17 @@ import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
 import { BoolNullableFilter } from '../prisma/bool-nullable-filter.input';
-import { HideField } from '@nestjs/graphql';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 import { RoleRelationFilter } from '../role/role-relation-filter.input';
+import { UserSubscriptionListRelationFilter } from '../user-subscription/user-subscription-list-relation-filter.input';
 import { OAuthLinkListRelationFilter } from '../o-auth-link/o-auth-link-list-relation-filter.input';
 import { VideoListRelationFilter } from '../video/video-list-relation-filter.input';
 import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
+import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
+import { ViewListRelationFilter } from '../view/view-list-relation-filter.input';
+import { StreamKeyListRelationFilter } from '../stream-key/stream-key-list-relation-filter.input';
+import { LiveChatMessageListRelationFilter } from '../live-chat-message/live-chat-message-list-relation-filter.input';
 
 @InputType()
 export class UserWhereInput {
@@ -35,7 +39,10 @@ export class UserWhereInput {
     @Field(() => BoolNullableFilter, {nullable:true})
     gender?: BoolNullableFilter;
 
-    @HideField()
+    @Field(() => StringFilter, {nullable:true})
+    name?: StringFilter;
+
+    @Field(() => StringFilter, {nullable:true})
     password?: StringFilter;
 
     @Field(() => JsonNullableFilter, {nullable:true})
@@ -53,6 +60,12 @@ export class UserWhereInput {
     @Field(() => IntFilter, {nullable:true})
     roleId?: IntFilter;
 
+    @Field(() => UserSubscriptionListRelationFilter, {nullable:true})
+    subscribingUsers?: UserSubscriptionListRelationFilter;
+
+    @Field(() => UserSubscriptionListRelationFilter, {nullable:true})
+    subscribers?: UserSubscriptionListRelationFilter;
+
     @Field(() => OAuthLinkListRelationFilter, {nullable:true})
     oauthLinks?: OAuthLinkListRelationFilter;
 
@@ -61,4 +74,22 @@ export class UserWhereInput {
 
     @Field(() => CommentListRelationFilter, {nullable:true})
     comments?: CommentListRelationFilter;
+
+    @Field(() => VoteListRelationFilter, {nullable:true})
+    votes?: VoteListRelationFilter;
+
+    @Field(() => ViewListRelationFilter, {nullable:true})
+    views?: ViewListRelationFilter;
+
+    @Field(() => StreamKeyListRelationFilter, {nullable:true})
+    streamKeys?: StreamKeyListRelationFilter;
+
+    @Field(() => LiveChatMessageListRelationFilter, {nullable:true})
+    liveChatMessages?: LiveChatMessageListRelationFilter;
+
+    @Field(() => BoolNullableFilter, {nullable:true})
+    verified?: BoolNullableFilter;
+
+    @Field(() => BoolNullableFilter, {nullable:true})
+    onLive?: BoolNullableFilter;
 }

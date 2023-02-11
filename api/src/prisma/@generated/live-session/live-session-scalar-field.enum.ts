@@ -3,7 +3,7 @@ import { registerEnumType } from '@nestjs/graphql';
 export enum LiveSessionScalarFieldEnum {
     id = "id",
     status = "status",
-    streamKey = "streamKey",
+    streamKeyId = "streamKeyId",
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     videoId = "videoId"

@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVodSessionInput } from './dto/create-vod-session.input';
-import { UpdateVodSessionInput } from './dto/update-vod-session.input';
+import { Prisma } from '@prisma/client';
+import { FindManyVodSessionArgs } from 'src/prisma/@generated/vod-session/find-many-vod-session.args';
+import { FindUniqueVodSessionArgs } from 'src/prisma/@generated/vod-session/find-unique-vod-session.args';
+import { VodSessionCreateInput } from 'src/prisma/@generated/vod-session/vod-session-create.input';
+import { VodSessionUpdateInput } from 'src/prisma/@generated/vod-session/vod-session-update.input';
+import { VodSessionWhereUniqueInput } from 'src/prisma/@generated/vod-session/vod-session-where-unique.input';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class VodSessionsService {
-  create(createVodSessionInput: CreateVodSessionInput) {
-    return 'This action adds a new vodSession';
+  constructor(private readonly prisma: PrismaService) {}
+
+  create(data: VodSessionCreateInput, include?: Prisma.VodSessionInclude) {
+    return this.prisma.vodSession.create({ data, include });
   }
 
-  findAll() {
-    return `This action returns all vodSessions`;
+  findAll(args: FindManyVodSessionArgs) {
+    return this.prisma.vodSession.findMany(args);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} vodSession`;
+  findOne(args: FindUniqueVodSessionArgs) {
+    return this.prisma.vodSession.findUnique(args);
   }
 
-  update(id: number, updateVodSessionInput: UpdateVodSessionInput) {
-    return `This action updates a #${id} vodSession`;
+  update(where: VodSessionWhereUniqueInput, data: VodSessionUpdateInput) {
+    return this.prisma.vodSession.update({ where, data });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} vodSession`;
+  remove(where: VodSessionWhereUniqueInput) {
+    return this.prisma.vodSession.delete({ where });
   }
 }

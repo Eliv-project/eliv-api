@@ -3,14 +3,17 @@ import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
 import { StringNullableFilter } from '../prisma/string-nullable-filter.input';
-import { HideField } from '@nestjs/graphql';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { FloatFilter } from '../prisma/float-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { UserRelationFilter } from '../user/user-relation-filter.input';
 import { LiveSessionRelationFilter } from '../live-session/live-session-relation-filter.input';
 import { VodSessionRelationFilter } from '../vod-session/vod-session-relation-filter.input';
 import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
+import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
+import { ViewListRelationFilter } from '../view/view-list-relation-filter.input';
 
 @InputType()
 export class VideoWhereInput {
@@ -33,7 +36,7 @@ export class VideoWhereInput {
     @Field(() => StringNullableFilter, {nullable:true})
     desc?: StringNullableFilter;
 
-    @HideField()
+    @Field(() => StringNullableFilter, {nullable:true})
     searchableName?: StringNullableFilter;
 
     @Field(() => JsonNullableFilter, {nullable:true})
@@ -52,6 +55,9 @@ export class VideoWhereInput {
     updatedAt?: DateTimeFilter;
 
     @HideField()
+    duration?: FloatFilter;
+
+    @HideField()
     dirId?: StringNullableFilter;
 
     @Field(() => UserRelationFilter, {nullable:true})
@@ -68,4 +74,10 @@ export class VideoWhereInput {
 
     @Field(() => CommentListRelationFilter, {nullable:true})
     comments?: CommentListRelationFilter;
+
+    @Field(() => VoteListRelationFilter, {nullable:true})
+    votes?: VoteListRelationFilter;
+
+    @Field(() => ViewListRelationFilter, {nullable:true})
+    views?: ViewListRelationFilter;
 }

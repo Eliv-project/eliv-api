@@ -4,7 +4,7 @@ model Video {
     name String
     desc String?
 
-    /// @HideField({input: true, output: true})
+    /// @HideField({input: false, output: true})
     searchableName String?
 
     thumbnail Json?
@@ -14,16 +14,22 @@ model Video {
     privacy Int? @default(0) 
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+/// @HideField({input: true, output: false})
+    duration Float @default(0)
 
     /// @HideField({input: true, output: false})
     dirId String? @unique
 
-    user User @relation(fields: [userId], references: [id])
+    /// @HideField({match: 'VideoCreate*Input'})
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int
 
     liveSession LiveSession?
     vodSession VodSession?
-    
+
     comments Comment[]
+    votes Vote[] 
+    views View[]
 }

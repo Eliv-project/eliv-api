@@ -12,5 +12,8 @@ export class LiveSessionAvgOrderByAggregateInput {
     status?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    streamKeyId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     videoId?: keyof typeof SortOrder;
 }

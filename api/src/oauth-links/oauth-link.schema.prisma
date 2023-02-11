@@ -2,7 +2,7 @@ model OAuthLink {
     provider String
     providerId String @unique
 
-    user User @relation(fields: [userId], references: [id])
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int
 
     @@id([provider, providerId])

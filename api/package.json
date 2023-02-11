@@ -9,8 +9,9 @@
     "schema": "src/prisma/schema.prisma"
   },
   "scripts": {
-    "prisma:seed:local": "dotenv -e .env.dev -- ts-node src/prisma/seed/index.ts",
-    "prisma:seed:docker": "dotenv -e .env.docker -- ts-node src/prisma/seed/index.ts",
+    "prisma:reset:local": "dotenv -e ../env/.env.dev --  prisma migrate reset",
+    "prisma:seed:local": "dotenv -e ../env/.env.dev -- ts-node src/prisma/seed/index.ts",
+    "prisma:seed:docker": "dotenv -e ../env/.env.prod -- ts-node src/prisma/seed/index.ts",
     "prisma:migrate:local": " dotenv -e .env.dev -- prisma migrate dev --name ''",
     "prisma:migrate:docker": " dotenv -e .env.docker -- prisma migrate deploy",
     "prisma:gen": " prisma-merge && prisma generate",
@@ -18,7 +19,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "dotenv -e .env.dev -- nest start --watch",
+    "start:dev": "dotenv -e ../env/.env.dev -- nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "dotenv -e .env.docker -- node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -31,6 +32,7 @@
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",
     "@ffmpeg/ffmpeg": "^0.11.6",
+    "@ffprobe-installer/ffprobe": "^1.4.1",
     "@nestjs/apollo": "^10.1.7",
     "@nestjs/bull": "^0.6.2",
     "@nestjs/cli": "^9.0.0",
@@ -70,6 +72,7 @@
     "ts-node": "^10.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@types/bcrypt": "^5.0.0",

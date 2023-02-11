@@ -3,6 +3,7 @@ import { ObjectType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
+import { Float } from '@nestjs/graphql';
 import { VideoCountAggregate } from './video-count-aggregate.output';
 import { VideoAvgAggregate } from './video-avg-aggregate.output';
 import { VideoSumAggregate } from './video-sum-aggregate.output';
@@ -38,6 +39,9 @@ export class VideoGroupBy {
 
     @Field(() => Date, {nullable:false})
     updatedAt!: Date | string;
+
+    @Field(() => Float, {nullable:false})
+    duration!: number;
 
     @Field(() => String, {nullable:true})
     dirId?: string;

@@ -1,11 +1,14 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { Int } from '@nestjs/graphql';
-import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
+import { Float } from '@nestjs/graphql';
+import { HideField } from '@nestjs/graphql';
 import { LiveSessionUncheckedCreateNestedOneWithoutVideoInput } from '../live-session/live-session-unchecked-create-nested-one-without-video.input';
 import { VodSessionUncheckedCreateNestedOneWithoutVideoInput } from '../vod-session/vod-session-unchecked-create-nested-one-without-video.input';
 import { CommentUncheckedCreateNestedManyWithoutVideoInput } from '../comment/comment-unchecked-create-nested-many-without-video.input';
+import { VoteUncheckedCreateNestedManyWithoutVideoInput } from '../vote/vote-unchecked-create-nested-many-without-video.input';
+import { ViewUncheckedCreateNestedManyWithoutVideoInput } from '../view/view-unchecked-create-nested-many-without-video.input';
 
 @InputType()
 export class VideoUncheckedCreateWithoutUserInput {
@@ -19,7 +22,7 @@ export class VideoUncheckedCreateWithoutUserInput {
     @Field(() => String, {nullable:true})
     desc?: string;
 
-    @HideField()
+    @Field(() => String, {nullable:true})
     searchableName?: string;
 
     @Field(() => GraphQLJSON, {nullable:true})
@@ -38,6 +41,9 @@ export class VideoUncheckedCreateWithoutUserInput {
     updatedAt?: Date | string;
 
     @HideField()
+    duration?: number;
+
+    @HideField()
     dirId?: string;
 
     @Field(() => LiveSessionUncheckedCreateNestedOneWithoutVideoInput, {nullable:true})
@@ -48,4 +54,10 @@ export class VideoUncheckedCreateWithoutUserInput {
 
     @Field(() => CommentUncheckedCreateNestedManyWithoutVideoInput, {nullable:true})
     comments?: CommentUncheckedCreateNestedManyWithoutVideoInput;
+
+    @Field(() => VoteUncheckedCreateNestedManyWithoutVideoInput, {nullable:true})
+    votes?: VoteUncheckedCreateNestedManyWithoutVideoInput;
+
+    @Field(() => ViewUncheckedCreateNestedManyWithoutVideoInput, {nullable:true})
+    views?: ViewUncheckedCreateNestedManyWithoutVideoInput;
 }

@@ -6,6 +6,8 @@ import { UserOrderByWithRelationInput } from '../user/user-order-by-with-relatio
 import { LiveSessionOrderByWithRelationInput } from '../live-session/live-session-order-by-with-relation.input';
 import { VodSessionOrderByWithRelationInput } from '../vod-session/vod-session-order-by-with-relation.input';
 import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-by-relation-aggregate.input';
+import { VoteOrderByRelationAggregateInput } from '../vote/vote-order-by-relation-aggregate.input';
+import { ViewOrderByRelationAggregateInput } from '../view/view-order-by-relation-aggregate.input';
 
 @InputType()
 export class VideoOrderByWithRelationInput {
@@ -19,7 +21,7 @@ export class VideoOrderByWithRelationInput {
     @Field(() => SortOrder, {nullable:true})
     desc?: keyof typeof SortOrder;
 
-    @HideField()
+    @Field(() => SortOrder, {nullable:true})
     searchableName?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
@@ -38,6 +40,9 @@ export class VideoOrderByWithRelationInput {
     updatedAt?: keyof typeof SortOrder;
 
     @HideField()
+    duration?: keyof typeof SortOrder;
+
+    @HideField()
     dirId?: keyof typeof SortOrder;
 
     @Field(() => UserOrderByWithRelationInput, {nullable:true})
@@ -54,4 +59,10 @@ export class VideoOrderByWithRelationInput {
 
     @Field(() => CommentOrderByRelationAggregateInput, {nullable:true})
     comments?: CommentOrderByRelationAggregateInput;
+
+    @Field(() => VoteOrderByRelationAggregateInput, {nullable:true})
+    votes?: VoteOrderByRelationAggregateInput;
+
+    @Field(() => ViewOrderByRelationAggregateInput, {nullable:true})
+    views?: ViewOrderByRelationAggregateInput;
 }

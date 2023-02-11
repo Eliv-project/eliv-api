@@ -4,10 +4,13 @@ import { ID } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Int } from '@nestjs/graphql';
+import { Float } from '@nestjs/graphql';
 import { User } from '../user/user.model';
 import { LiveSession } from '../live-session/live-session.model';
 import { VodSession } from '../vod-session/vod-session.model';
 import { Comment } from '../comment/comment.model';
+import { Vote } from '../vote/vote.model';
+import { View } from '../view/view.model';
 import { VideoCount } from './video-count.output';
 
 @ObjectType()
@@ -40,6 +43,9 @@ export class Video {
     @Field(() => Date, {nullable:false})
     updatedAt!: Date;
 
+    @Field(() => Float, {nullable:false,defaultValue:0})
+    duration!: number;
+
     @Field(() => String, {nullable:true})
     dirId!: string | null;
 
@@ -57,6 +63,12 @@ export class Video {
 
     @Field(() => [Comment], {nullable:true})
     comments?: Array<Comment>;
+
+    @Field(() => [Vote], {nullable:true})
+    votes?: Array<Vote>;
+
+    @Field(() => [View], {nullable:true})
+    views?: Array<View>;
 
     @Field(() => VideoCount, {nullable:false})
     _count?: VideoCount;
