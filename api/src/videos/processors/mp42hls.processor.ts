@@ -199,7 +199,8 @@ export class Mp42HlsProcessor {
     );
 
     await this.ffmpegService.toHls(filePath, hlsSavePath, {
-      onProgress: (percent) =>
+      onProgress: (percent) => {
+        console.log(percent)
         publisher.publish<{ currentProcessProgress: ProcessProgress }>(
           publishEvent,
           {
@@ -208,7 +209,8 @@ export class Mp42HlsProcessor {
               progress: parseFloat(percent),
             },
           },
-        ),
+        )
+      }
     });
 
     return {

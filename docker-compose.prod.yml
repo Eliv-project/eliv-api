@@ -6,6 +6,8 @@ services:
       - "1935:1935"
       # - "8080:8080"
       - "80:80"
+      - "443:443"
+    restart: unless-stopped
     container_name: rtmp_server
     env_file:
       - ./env/.env.prod
@@ -16,7 +18,7 @@ services:
       - "${RTMP_HLS_VOD_PATH}:${RTMP_HLS_VOD_PATH}"
       - "${RTMP_HLS_RECORD_PATH}:${RTMP_HLS_RECORD_PATH}"
       - "${RTMP_HLS_LIVE_PATH}:${RTMP_HLS_LIVE_PATH}"
-
+      - /eliv/certs:/eliv/certs
   api:
     depends_on:
       - postgres

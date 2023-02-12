@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaService } from './prisma/prisma.service';
+import { json } from 'body-parser';
 // @ts-ignore
 import { graphqlUploadExpress } from 'graphql-upload';
 
@@ -10,7 +11,7 @@ export let app = null;
 async function bootstrap() {
   app = await NestFactory.create(AppModule, { cors: true });
 
-  app.use(graphqlUploadExpress({ maxFileSize: 1000000000, maxFiles: 10 }));
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000000, maxFiles: 1 }));
 
   // Prevent prisma calling process.exit() before app's shutdown hooks fire
   const prismaService = app.get(PrismaService);
