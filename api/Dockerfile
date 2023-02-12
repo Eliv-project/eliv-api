@@ -30,19 +30,19 @@ CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:d
 
 FROM base As prod
 
-WORKDIR /usr/src/eliv-api
+WORKDIR /eliv/build
 
-RUN apt-get update
+RUN apt-get  update
 RUN apt-get install -y openssl
 
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node yarn*.lock ./
 
-RUN yarn install --production --frozen-lockfile
-
 COPY --chown=node:node . .
-
+RUN yarn install --production --frozen-lockfile
 RUN yarn prisma:gen
+
+
 
 RUN yarn build
 

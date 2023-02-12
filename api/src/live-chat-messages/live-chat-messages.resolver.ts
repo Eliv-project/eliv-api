@@ -23,6 +23,7 @@ import { User } from 'src/prisma/@generated/user/user.model';
 import { PUB_SUB } from 'src/pub-sub/pub-sub.module';
 import { LiveChatChangeData } from './dto/live-chat-change-data.dto';
 import { LiveChatMessagesService } from './live-chat-messages.service';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => LiveChatMessage)
 export class LiveChatMessagesResolver {
@@ -39,8 +40,8 @@ export class LiveChatMessagesResolver {
   ) {
     const newLiveChatMessage = await this.liveChatMessagesService.create({
       data: {
-        liveSession: data.liveSession,
-        content: data.content,
+        liveSession: (data as Prisma.LiveChatMessageCreateInput).liveSession,
+        content: (data as Prisma.LiveChatMessageCreateInput).content,
         user: {
           connect: {
             id: me.id,

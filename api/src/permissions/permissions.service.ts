@@ -1,34 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { PermissionCreateInput } from 'src/prisma/@generated/permission/permission-create.input';
-import { PermissionUpdateInput } from 'src/prisma/@generated/permission/permission-update.input';
-import { PermissionWhereUniqueInput } from 'src/prisma/@generated/permission/permission-where-unique.input';
-import { PermissionWhereInput } from 'src/prisma/@generated/permission/permission-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PermissionsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: PermissionCreateInput) {
+  create(data: Prisma.PermissionCreateInput) {
     return this.prisma.permission.create({ data });
   }
 
-  findAll(where: PermissionWhereInput) {
+  findAll(where: Prisma.PermissionWhereInput) {
     return this.prisma.permission.findMany({ where });
   }
 
-  findOne(where: PermissionWhereUniqueInput) {
+  findOne(where: Prisma.PermissionWhereUniqueInput) {
     return this.prisma.permission.findUnique({ where });
   }
 
-  update(where: PermissionWhereUniqueInput, data: PermissionUpdateInput) {
+  update(
+    where: Prisma.PermissionWhereUniqueInput,
+    data: Prisma.PermissionUpdateInput,
+  ) {
     return this.prisma.permission.update({
       where,
       data,
     });
   }
 
-  remove(where: PermissionWhereUniqueInput) {
+  remove(where: Prisma.PermissionWhereUniqueInput) {
     return this.prisma.permission.delete({ where });
   }
 }

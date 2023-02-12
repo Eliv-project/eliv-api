@@ -1,17 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { VoteCreateInput } from 'src/prisma/@generated/vote/vote-create.input';
-import { VoteUpdateInput } from 'src/prisma/@generated/vote/vote-update.input';
-import { VoteWhereUniqueInput } from 'src/prisma/@generated/vote/vote-where-unique.input';
-import { VoteWhereInput } from 'src/prisma/@generated/vote/vote-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { VoteCountWhereInput } from './dto/vote-count-where.input';
 
 @Injectable()
 export class VotesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: VoteCreateInput) {
+  create(data: Prisma.VoteCreateInput) {
     return this.prisma.vote.create({ data });
   }
 
@@ -19,10 +14,14 @@ export class VotesService {
     return this.prisma.vote.findMany(args);
   }
 
-  async count(where: VoteCountWhereInput) {
+  async count(args: Prisma.VoteCountArgs) {
     const [dislikes, likes] = await this.prisma.$transaction([
-      this.prisma.vote.count({ where: { ...where, voteDirection: { lt: 0 } } }),
-      this.prisma.vote.count({ where: { ...where, voteDirection: { gt: 0 } } }),
+      this.prisma.vote.count({
+        where: { ...args.where, voteDirection: { lt: 0 } },
+      }),
+      this.prisma.vote.count({
+        where: { ...args.where, voteDirection: { gt: 0 } },
+      }),
     ]);
 
     return {
@@ -31,19 +30,19 @@ export class VotesService {
     };
   }
 
-  findOne(where: VoteWhereUniqueInput, include?: Prisma.VoteInclude) {
+  findOne(where: Prisma.VoteWhereUniqueInput, include?: Prisma.VoteInclude) {
     return this.prisma.vote.findUnique({ where, include });
   }
 
-  findFirst(where: VoteWhereInput) {
+  findFirst(where: Prisma.VoteWhereInput) {
     return this.prisma.vote.findFirst({ where });
   }
 
-  update(where: VoteWhereUniqueInput, data: VoteUpdateInput) {
+  update(where: Prisma.VoteWhereUniqueInput, data: Prisma.VoteUpdateInput) {
     return this.prisma.vote.update({ where, data });
   }
 
-  remove(where: VoteWhereUniqueInput) {
+  remove(where: Prisma.VoteWhereUniqueInput) {
     return this.prisma.vote.delete({ where });
   }
 }

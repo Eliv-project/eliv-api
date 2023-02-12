@@ -60,7 +60,7 @@ export class VideosService {
     return nanoid(10);
   }
 
-  create(data: VideoCreateInput) {
+  create(data: Prisma.VideoCreateInput) {
     const searchableName = this.getSearchableName(data.name);
     const slug = this.getSlug();
 
@@ -69,26 +69,26 @@ export class VideosService {
     });
   }
 
-  findAll(args: FindManyVideoArgs, include?: Prisma.VideoInclude) {
+  findAll(args: Prisma.VideoFindManyArgs, include?: Prisma.VideoInclude) {
     return this.prisma.video.findMany({ ...args, include });
   }
 
-  findOne(where: VideoWhereUniqueInput, include?: Prisma.VideoInclude) {
+  findOne(where: Prisma.VideoWhereUniqueInput, include?: Prisma.VideoInclude) {
     return this.prisma.video.findUnique({ where, include });
   }
 
-  count(where: VideoWhereInput) {
+  count(where: Prisma.VideoWhereInput) {
     return this.prisma.video.count({ where });
   }
 
-  update(where: VideoWhereUniqueInput, data: VideoUpdateInput) {
+  update(where: Prisma.VideoWhereUniqueInput, data: Prisma.VideoUpdateInput) {
     return this.prisma.video.update({
       where,
       data,
     });
   }
 
-  remove(where: VideoWhereUniqueInput) {
+  remove(where: Prisma.VideoWhereUniqueInput) {
     return this.prisma.video.delete({ where });
   }
 }

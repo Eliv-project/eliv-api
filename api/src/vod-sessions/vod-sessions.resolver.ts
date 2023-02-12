@@ -7,6 +7,7 @@ import { User } from 'src/prisma/@generated/user/user.model';
 import { randomUUID } from 'crypto';
 import { VodStatus } from './enums/status.enum';
 import { VideoPrivacy } from 'src/videos/enums/privacy.enum';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => VodSession)
 export class VodSessionsResolver {
@@ -36,7 +37,7 @@ export class VodSessionsResolver {
             },
           },
         },
-      },
+      } as Prisma.VodSessionCreateInput,
       {
         video: true,
       },

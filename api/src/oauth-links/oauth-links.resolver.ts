@@ -5,6 +5,7 @@ import { OAuthLinkWhereUniqueInput } from 'src/prisma/@generated/o-auth-link/o-a
 import { OAuthLinkWhereInput } from 'src/prisma/@generated/o-auth-link/o-auth-link-where.input';
 import { OAuthLink } from 'src/prisma/@generated/o-auth-link/o-auth-link.model';
 import { OAuthLinksService } from './oauth-links.service';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => OAuthLink)
 export class OAuthLinksResolver {
@@ -15,7 +16,7 @@ export class OAuthLinksResolver {
     @Args('data')
     data: OAuthLinkCreateInput,
   ) {
-    return this.oauthLinksService.create(data);
+    return this.oauthLinksService.create(data as Prisma.OAuthLinkCreateInput);
   }
 
   @Query(() => [OAuthLink], { name: 'oauthLinks' })
@@ -37,7 +38,10 @@ export class OAuthLinksResolver {
     @Args('data')
     data: OAuthLinkUpdateInput,
   ) {
-    return this.oauthLinksService.update(where, data);
+    return this.oauthLinksService.update(
+      where,
+      data as Prisma.OAuthLinkCreateInput,
+    );
   }
 
   @Mutation(() => OAuthLink)

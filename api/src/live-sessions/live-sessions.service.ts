@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { LiveSessionCreateInput } from 'src/prisma/@generated/live-session/live-session-create.input';
-import { LiveSessionUpdateInput } from 'src/prisma/@generated/live-session/live-session-update.input';
-import { LiveSessionWhereUniqueInput } from 'src/prisma/@generated/live-session/live-session-where-unique.input';
-import { LiveSessionWhereInput } from 'src/prisma/@generated/live-session/live-session-where.input';
 import { PrismaService } from 'src/prisma/prisma.service';
 import fs from 'fs';
 
@@ -11,7 +7,10 @@ import fs from 'fs';
 export class LiveSessionsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: LiveSessionCreateInput, include?: Prisma.LiveSessionInclude) {
+  create(
+    data: Prisma.LiveSessionCreateInput,
+    include?: Prisma.LiveSessionInclude,
+  ) {
     return this.prisma.liveSession.create({
       data,
       include,
@@ -23,7 +22,7 @@ export class LiveSessionsService {
   }
 
   findFirst(
-    where: LiveSessionWhereInput,
+    where: Prisma.LiveSessionWhereInput,
     orderBy?: Prisma.LiveSessionOrderByWithRelationInput[],
     include?: Prisma.LiveSessionInclude,
   ) {
@@ -31,20 +30,23 @@ export class LiveSessionsService {
   }
 
   findOne(
-    where: LiveSessionWhereUniqueInput,
+    where: Prisma.LiveSessionWhereUniqueInput,
     include?: Prisma.LiveSessionInclude,
   ) {
     return this.prisma.liveSession.findUnique({ where, include });
   }
 
-  update(where: LiveSessionWhereUniqueInput, data: LiveSessionUpdateInput) {
+  update(
+    where: Prisma.LiveSessionWhereUniqueInput,
+    data: Prisma.LiveSessionUpdateInput,
+  ) {
     return this.prisma.liveSession.update({
       where,
       data,
     });
   }
 
-  remove(where: LiveSessionWhereUniqueInput) {
+  remove(where: Prisma.LiveSessionWhereUniqueInput) {
     return this.prisma.liveSession.delete({ where });
   }
 

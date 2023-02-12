@@ -3,4 +3,6 @@ upload/*
 static/*
 .DS_Store
 
-api/src/prisma/@generated
+api/src/prisma/@generated/*
+api/node_modules
+api/dist

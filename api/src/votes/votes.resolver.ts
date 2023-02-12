@@ -28,7 +28,7 @@ export class VotesResolver {
   countVote(
     @Args('where') where: VoteCountWhereInput,
   ): Promise<VoteCountResponse> {
-    return this.votesService.count(where);
+    return this.votesService.count({ where });
   }
 
   @Query(() => [Vote], { name: 'votes' })

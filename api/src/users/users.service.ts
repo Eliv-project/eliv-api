@@ -11,7 +11,7 @@ import * as bcrypt from "bcrypt"
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  create({ password, ...inputData }: UserCreateInput) {
+  create({ password, ...inputData }: Prisma.UserCreateInput) {
     return this.prisma.user.create({
       data: {
         password: bcrypt.hashSync(password, 10),
@@ -24,22 +24,22 @@ export class UsersService {
     return this.prisma.user.findMany(args);
   }
 
-  findOne(where: UserWhereUniqueInput, include?: Prisma.UserInclude) {
+  findOne(where: Prisma.UserWhereUniqueInput, include?: Prisma.UserInclude) {
     return this.prisma.user.findUnique({ where, include });
   }
 
-  count(where: UserWhereInput) {
+  count(where: Prisma.UserWhereInput) {
     return this.prisma.user.count({ where });
   }
 
-  update(where: UserWhereUniqueInput, data: UserUpdateInput) {
+  update(where: Prisma.UserWhereUniqueInput, data: Prisma.UserUpdateInput) {
     return this.prisma.user.update({
       where,
       data,
     });
   }
 
-  remove(where: UserWhereUniqueInput) {
+  remove(where: Prisma.UserWhereUniqueInput) {
     return this.prisma.user.delete({ where });
   }
 }

@@ -5,18 +5,19 @@ import { PermissionWhereUniqueInput } from 'src/prisma/@generated/permission/per
 import { PermissionWhereInput } from 'src/prisma/@generated/permission/permission-where.input';
 import { Permission } from 'src/prisma/@generated/permission/permission.model';
 import { PermissionsService } from './permissions.service';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => Permission)
 export class PermissionsResolver {
   constructor(private readonly permissionsService: PermissionsService) {}
 
-  @Mutation(() => Permission)
-  createPermission(
-    @Args('data')
-    data: PermissionCreateInput,
-  ) {
-    return this.permissionsService.create(data);
-  }
+  // @Mutation(() => Permission)
+  // createPermission(
+  //   @Args('data')
+  //   data: PermissionCreateInput,
+  // ) {
+  //   return this.permissionsService.create(data as Prisma.PermissionCreateInput);
+  // }
 
   @Query(() => [Permission], { name: 'permissions' })
   findAll(
@@ -37,7 +38,10 @@ export class PermissionsResolver {
     @Args('data')
     data: PermissionUpdateInput,
   ) {
-    return this.permissionsService.update(where, data);
+    return this.permissionsService.update(
+      where,
+      data as Prisma.PermissionUpdateInput,
+    );
   }
 
   @Mutation(() => Permission)

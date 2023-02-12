@@ -6,6 +6,7 @@ import { VideoWhereUniqueInput } from 'src/prisma/@generated/video/video-where-u
 import { ViewCreateInput } from 'src/prisma/@generated/view/view-create.input';
 import { View } from 'src/prisma/@generated/view/view.model';
 import { ViewsService } from './views.service';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => View)
 export class ViewsResolver {
@@ -17,7 +18,7 @@ export class ViewsResolver {
     return this.viewsService.create({
       ...data,
       user: me ? { connect: { id: me.id } } : undefined,
-    });
+    } as Prisma.ViewCreateInput);
   }
 
   @Query(() => Int, { name: 'countView' })

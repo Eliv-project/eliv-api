@@ -4,9 +4,18 @@ services:
     build: ./rtmp
     ports:
       - "1935:1935"
+      - "8080:8080"
     container_name: rtmp_server
+    env_file:
+      - ./env/.env.prod
     volumes:
-      - hls:/tmp/hls
+      - ./rtmp/nginx.conf:/etc/nginx/nginx.conf.template
+      - ./rtmp/stdout_http.log:/eliv/logs/stdout_http.log
+      - ./rtmp/stdout_rtmp.log:/eliv/logs/stdout_rtmp.log
+      - "${RTMP_HLS_VOD_PATH}:${RTMP_HLS_VOD_PATH}"
+      - "${RTMP_HLS_RECORD_PATH}:${RTMP_HLS_RECORD_PATH}"
+      - "${RTMP_HLS_LIVE_PATH}:${RTMP_HLS_LIVE_PATH}"
+
   api:
     depends_on:
       - postgres
@@ -18,12 +27,11 @@ services:
       target: prod
      # Enables the data to be persisted and is what makes the hot reloading possible.
     volumes:
-      - ./api:/usr/src/app
-      - /usr/src/app/node_modules
-      - hls:/tmp/hls
+      # - /usr/src/app/node_modules
+      - "${PATH_HLS}:${PATH_HLS}"
     # load the .env file into the container
     env_file:
-      - ./api/.env.docker
+      - ./env/.env.prod
     ports:
       - "${API_PORT}:${API_PORT}"
     container_name: api_server
@@ -32,13 +40,15 @@ services:
     container_name: db
     restart: always
     env_file:
-      - ./api/.env.docker
+      - ./env/.env.prod
     ports:
       - '5432:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - /eliv/backup:/eliv/backup
   redis:
     image: redis
+    container_name: redis
     ports:
       - 6379:6379
     volumes:
@@ -47,4 +57,3 @@ volumes:
   redis:
     driver: local
   pgdata:
-  hls:

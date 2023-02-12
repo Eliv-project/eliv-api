@@ -7,6 +7,7 @@ import { StreamKeyWhereInput } from 'src/prisma/@generated/stream-key/stream-key
 import { StreamKey } from 'src/prisma/@generated/stream-key/stream-key.model';
 import { User } from 'src/prisma/@generated/user/user.model';
 import { StreamKeysService } from './stream-keys.service';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => StreamKey)
 export class StreamKeysResolver {
@@ -18,7 +19,7 @@ export class StreamKeysResolver {
     @CurrentUser() me: User,
   ) {
     if (!data.isDefault) {
-      return this.streamKeysService.create(data);
+      return this.streamKeysService.create(data as Prisma.StreamKeyCreateInput);
     }
 
     const defaultStreamKey = await this.streamKeysService.findFirst({
@@ -29,7 +30,7 @@ export class StreamKeysResolver {
       throw new BadRequestException('DEFAULT_STREAM_KEY_EXISTED');
     }
 
-    return this.streamKeysService.create(data);
+    return this.streamKeysService.create(data as Prisma.StreamKeyCreateInput);
   }
 
   @Query(() => [StreamKey], { name: 'streamKeys' })

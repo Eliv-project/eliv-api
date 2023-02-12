@@ -43,7 +43,7 @@ export class LiveSessionsController {
   @IsPublic()
   @UseGuards(IsValidStream)
   @Redirect()
-  async beforePublish(@Req() request: RequestWithLiveSession) {
+  async beforePublish(@Req() request: Request & { liveSession: LiveSession }) {
     console.log('Stream info', request.body);
 
     const hlsPath = this.configService.get('hlsPath');
@@ -148,7 +148,7 @@ export class LiveSessionsController {
 
   @Post('/on-record-done')
   @IsPublic()
-  async afterRecord(@Req() request: RequestWithLiveSession) {
+  async afterRecord(@Req() request: Request & { liveSession: LiveSession }) {
     const recordInfo: RtmpRecord = request.body;
     let recordPath = recordInfo.path;
     if (this.configService.get('isDev')) {

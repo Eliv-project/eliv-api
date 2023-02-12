@@ -37,6 +37,7 @@ import { CurrentVideo } from './decorators/current-video.decorator';
 import { ConfigService } from '@nestjs/config';
 import path from 'path';
 import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -80,7 +81,7 @@ export class VideosResolver {
             status: VodStatus.empty,
           },
         },
-      });
+      } as Prisma.VideoCreateInput);
     } catch (err) {
       console.error(err);
       // Remove tmp file
@@ -176,7 +177,7 @@ export class VideosResolver {
       {
         ...data,
         searchableName: { set: searchableName },
-      },
+      } as Prisma.VideoUpdateInput,
     );
   }
 

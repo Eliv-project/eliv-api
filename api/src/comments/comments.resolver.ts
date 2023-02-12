@@ -37,7 +37,7 @@ export class CommentsResolver {
     @Args('data') data: CreateCommentInput,
     @CurrentUser() me: User,
   ) {
-    const { content, replyTo, video } = data;
+    const { content, replyTo, video } = data as (Prisma.CommentCreateInput & {replyTo: any});
     return this.commentsService.create(
       {
         content,
@@ -175,7 +175,10 @@ export class CommentsResolver {
     @CurrentUser() me: User,
   ) {
     await this.checkExistence(where.id, me);
-    return this.commentsService.update(where, data);
+    return this.commentsService.update(
+      where,
+      data as Prisma.CommentUpdateInput,
+    );
   }
 
   @Mutation(() => Comment)

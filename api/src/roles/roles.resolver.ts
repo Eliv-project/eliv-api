@@ -1,5 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { RoleCreateInput } from 'src/prisma/@generated/role/role-create.input';
+import { Prisma } from '@prisma/client';
 import { RoleUpdateInput } from 'src/prisma/@generated/role/role-update.input';
 import { RoleWhereUniqueInput } from 'src/prisma/@generated/role/role-where-unique.input';
 import { RoleWhereInput } from 'src/prisma/@generated/role/role-where.input';
@@ -15,7 +16,7 @@ export class RolesResolver {
     @Args('data')
     data: RoleCreateInput,
   ) {
-    return this.rolesService.create(data);
+    return this.rolesService.create(data as Prisma.RoleCreateInput);
   }
 
   @Query(() => [Role], { name: 'roles' })
@@ -37,7 +38,7 @@ export class RolesResolver {
     @Args('data')
     data: RoleUpdateInput,
   ) {
-    return this.rolesService.update(where, data);
+    return this.rolesService.update(where, data as Prisma.RoleUpdateInput);
   }
 
   @Mutation(() => Role)

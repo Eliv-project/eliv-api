@@ -1,17 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CommentCreateInput } from 'src/prisma/@generated/comment/comment-create.input';
-import { CommentUpdateInput } from 'src/prisma/@generated/comment/comment-update.input';
-import { CommentWhereUniqueInput } from 'src/prisma/@generated/comment/comment-where-unique.input';
-import { CommentWhereInput } from 'src/prisma/@generated/comment/comment-where.input';
-import { FindManyCommentArgs } from 'src/prisma/@generated/comment/find-many-comment.args';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CommentsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: CommentCreateInput, include?: Prisma.CommentInclude) {
+  create(data: Prisma.CommentCreateInput, include?: Prisma.CommentInclude) {
     return this.prisma.comment.create({ data, include });
   }
 
@@ -24,23 +19,29 @@ export class CommentsService {
     return result;
   }
 
-  count(where: CommentWhereInput) {
+  count(where: Prisma.CommentWhereInput) {
     return this.prisma.comment.count({ where });
   }
 
-  findOne(where: CommentWhereUniqueInput, include?: Prisma.CommentInclude) {
+  findOne(
+    where: Prisma.CommentWhereUniqueInput,
+    include?: Prisma.CommentInclude,
+  ) {
     return this.prisma.comment.findUnique({ where, include });
   }
 
-  findFirst(where: CommentWhereInput) {
+  findFirst(where: Prisma.CommentWhereInput) {
     return this.prisma.comment.findFirst({ where });
   }
 
-  update(where: CommentWhereUniqueInput, data: CommentUpdateInput) {
+  update(
+    where: Prisma.CommentWhereUniqueInput,
+    data: Prisma.CommentUpdateInput,
+  ) {
     return this.prisma.comment.update({ where, data });
   }
 
-  remove(where: CommentWhereUniqueInput) {
+  remove(where: Prisma.CommentWhereUniqueInput) {
     return this.prisma.comment.delete({ where });
   }
 }

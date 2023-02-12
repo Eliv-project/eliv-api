@@ -10,6 +10,7 @@ import { UserWhereInput } from 'src/prisma/@generated/user/user-where.input';
 import { User } from 'src/prisma/@generated/user/user.model';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -20,7 +21,7 @@ export class UsersResolver {
     @Args('data')
     data: UserCreateInput,
   ) {
-    return this.usersService.create(data);
+    return this.usersService.create(data as Prisma.UserCreateInput);
   }
 
   @Query(() => [User], { name: 'users' })
@@ -37,8 +38,8 @@ export class UsersResolver {
     take: number,
   ) {
     return this.usersService.findAll({
-      where,
-      orderBy,
+      where: where as Prisma.UserWhereInput,
+      orderBy: orderBy as Prisma.UserOrderByWithRelationInput[],
       take,
       include: { _count: { select: { subscribers: true } } },
     });
@@ -90,7 +91,10 @@ export class UsersResolver {
       data.password.set = bcrypt.hashSync(data.password.set, 10);
     }
 
-    return this.usersService.update({ id: me.id }, data);
+    return this.usersService.update(
+      { id: me.id },
+      data as Prisma.UserUpdateInput,
+    );
   }
 
   @Mutation(() => User)

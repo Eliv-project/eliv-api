@@ -30,6 +30,7 @@ import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { IsOnlyStream } from './guards/is-only-stream.guard';
 import { LiveChatMessage } from 'src/prisma/@generated/live-chat-message/live-chat-message.model';
 import { LiveSessionOrderByWithRelationInput } from 'src/prisma/@generated/live-session/live-session-order-by-with-relation.input';
+import { Prisma } from '@prisma/client';
 
 @Resolver(() => LiveSession)
 export class LiveSessionsResolver {
@@ -76,7 +77,7 @@ export class LiveSessionsResolver {
             },
           },
         },
-      },
+      } as Prisma.LiveSessionCreateInput,
       {
         video: true,
       },
@@ -113,7 +114,10 @@ export class LiveSessionsResolver {
     @Args('data')
     data: LiveSessionUpdateInput,
   ) {
-    return this.liveSessionsService.update(where, data);
+    return this.liveSessionsService.update(
+      where,
+      data as Prisma.LiveSessionUpdateInput,
+    );
   }
 
   @Mutation(() => LiveSession)
