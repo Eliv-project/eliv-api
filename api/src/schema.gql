@@ -494,6 +494,17 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
 input IntFieldUpdateOperationsInput {
   decrement: Int
   divide: Int
@@ -751,6 +762,7 @@ type LiveSession {
   _count: LiveSessionCount!
   createdAt: DateTime!
   id: ID!
+  liveAt: DateTime
   liveChatMessages: [LiveChatMessage!]
   status: Int!
   streamKey: StreamKey!
@@ -766,6 +778,7 @@ type LiveSessionCount {
 
 input LiveSessionCreateInput {
   createdAt: DateTime
+  liveAt: DateTime
   liveChatMessages: LiveChatMessageCreateNestedManyWithoutLiveSessionInput
   status: Int
   updatedAt: DateTime
@@ -775,6 +788,7 @@ input LiveSessionCreateInput {
 input LiveSessionCreateManyStreamKeyInput {
   createdAt: DateTime
   id: Int
+  liveAt: DateTime
   status: Int
   updatedAt: DateTime
   videoId: Int!
@@ -821,6 +835,7 @@ input LiveSessionCreateOrConnectWithoutVideoInput {
 
 input LiveSessionCreateWithoutLiveChatMessagesInput {
   createdAt: DateTime
+  liveAt: DateTime
   status: Int
   updatedAt: DateTime
   video: VideoCreateNestedOneWithoutLiveSessionInput!
@@ -828,6 +843,7 @@ input LiveSessionCreateWithoutLiveChatMessagesInput {
 
 input LiveSessionCreateWithoutStreamKeyInput {
   createdAt: DateTime
+  liveAt: DateTime
   liveChatMessages: LiveChatMessageCreateNestedManyWithoutLiveSessionInput
   status: Int
   updatedAt: DateTime
@@ -836,6 +852,7 @@ input LiveSessionCreateWithoutStreamKeyInput {
 
 input LiveSessionCreateWithoutVideoInput {
   createdAt: DateTime
+  liveAt: DateTime
   liveChatMessages: LiveChatMessageCreateNestedManyWithoutLiveSessionInput
   status: Int
   updatedAt: DateTime
@@ -854,6 +871,7 @@ input LiveSessionOrderByRelationAggregateInput {
 input LiveSessionOrderByWithRelationInput {
   createdAt: SortOrder
   id: SortOrder
+  liveAt: SortOrder
   liveChatMessages: LiveChatMessageOrderByRelationAggregateInput
   status: SortOrder
   streamKey: StreamKeyOrderByWithRelationInput
@@ -874,6 +892,7 @@ input LiveSessionScalarWhereInput {
   OR: [LiveSessionScalarWhereInput!]
   createdAt: DateTimeFilter
   id: IntFilter
+  liveAt: DateTimeNullableFilter
   status: IntFilter
   streamKeyId: IntFilter
   updatedAt: DateTimeFilter
@@ -886,6 +905,7 @@ type LiveSessionStatus {
 
 input LiveSessionUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  liveAt: NullableDateTimeFieldUpdateOperationsInput
   liveChatMessages: LiveChatMessageUpdateManyWithoutLiveSessionNestedInput
   status: IntFieldUpdateOperationsInput
   streamKey: StreamKeyUpdateOneRequiredWithoutLiveSessionsNestedInput
@@ -895,6 +915,7 @@ input LiveSessionUpdateInput {
 
 input LiveSessionUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  liveAt: NullableDateTimeFieldUpdateOperationsInput
   status: IntFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
@@ -943,6 +964,7 @@ input LiveSessionUpdateWithWhereUniqueWithoutStreamKeyInput {
 
 input LiveSessionUpdateWithoutLiveChatMessagesInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  liveAt: NullableDateTimeFieldUpdateOperationsInput
   status: IntFieldUpdateOperationsInput
   streamKey: StreamKeyUpdateOneRequiredWithoutLiveSessionsNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -951,6 +973,7 @@ input LiveSessionUpdateWithoutLiveChatMessagesInput {
 
 input LiveSessionUpdateWithoutStreamKeyInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  liveAt: NullableDateTimeFieldUpdateOperationsInput
   liveChatMessages: LiveChatMessageUpdateManyWithoutLiveSessionNestedInput
   status: IntFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -959,6 +982,7 @@ input LiveSessionUpdateWithoutStreamKeyInput {
 
 input LiveSessionUpdateWithoutVideoInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  liveAt: NullableDateTimeFieldUpdateOperationsInput
   liveChatMessages: LiveChatMessageUpdateManyWithoutLiveSessionNestedInput
   status: IntFieldUpdateOperationsInput
   streamKey: StreamKeyUpdateOneRequiredWithoutLiveSessionsNestedInput
@@ -987,6 +1011,7 @@ input LiveSessionWhereInput {
   OR: [LiveSessionWhereInput!]
   createdAt: DateTimeFilter
   id: IntFilter
+  liveAt: DateTimeNullableFilter
   liveChatMessages: LiveChatMessageListRelationFilter
   status: IntFilter
   streamKey: StreamKeyRelationFilter
@@ -1067,6 +1092,17 @@ input NestedDateTimeFilter {
   notIn: [DateTime!]
 }
 
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
 input NestedIntFilter {
   equals: Int
   gt: Int
@@ -1119,6 +1155,10 @@ input NestedStringNullableFilter {
 
 input NullableBoolFieldUpdateOperationsInput {
   set: Boolean
+}
+
+input NullableDateTimeFieldUpdateOperationsInput {
+  set: DateTime
 }
 
 input NullableIntFieldUpdateOperationsInput {
