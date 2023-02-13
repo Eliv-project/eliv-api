@@ -194,8 +194,8 @@ export class VideosResolver {
 
     // Remove queued job
     const job = await this.videosService.getJob(video.dirId);
-    if (job && !job.isActive) {
-      job.remove();
+    if (job && !(await job.isActive())) {
+      job.remove().then(() => console.log('Job removed'));
     }
 
     // Remove files
