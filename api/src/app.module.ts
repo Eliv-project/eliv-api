@@ -31,6 +31,7 @@ import { ViewsModule } from './views/views.module';
 import { StreamKeysModule } from './stream-keys/stream-keys.module';
 import { LiveChatMessagesModule } from './live-chat-messages/live-chat-messages.module';
 import { FfmpegService } from './ffmpeg/ffmpeg.service';
+import { ViewersModule } from './viewers/viewers.module';
 import ffmpegConfig from './config/ffmpeg.config';
 
 @Module({
@@ -85,6 +86,7 @@ import ffmpegConfig from './config/ffmpeg.config';
     ViewsModule,
     StreamKeysModule,
     LiveChatMessagesModule,
+    ViewersModule,
   ],
   controllers: [AppController],
   providers: [

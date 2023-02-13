@@ -10,4 +10,7 @@ export class UserAvgAggregate {
 
     @Field(() => Float, {nullable:true})
     roleId?: number;
+
+    @Field(() => Float, {nullable:true})
+    viewerId?: number;
 }

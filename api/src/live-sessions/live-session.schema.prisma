@@ -6,6 +6,8 @@ model LiveSession {
     streamKey StreamKey @relation(fields: [streamKeyId], references: [id], onDelete: Cascade)
     streamKeyId Int
 
+    liveAt DateTime?
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 

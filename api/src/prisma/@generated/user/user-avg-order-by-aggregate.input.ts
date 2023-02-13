@@ -10,4 +10,7 @@ export class UserAvgOrderByAggregateInput {
 
     @Field(() => SortOrder, {nullable:true})
     roleId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    viewerId?: keyof typeof SortOrder;
 }

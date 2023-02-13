@@ -15,6 +15,9 @@ export class LiveSessionCountAggregate {
     streamKeyId!: number;
 
     @Field(() => Int, {nullable:false})
+    liveAt!: number;
+
+    @Field(() => Int, {nullable:false})
     createdAt!: number;
 
     @Field(() => Int, {nullable:false})

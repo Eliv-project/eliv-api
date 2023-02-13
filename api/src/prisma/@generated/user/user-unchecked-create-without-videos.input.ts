@@ -7,7 +7,6 @@ import { UserSubscriptionUncheckedCreateNestedManyWithoutSubscribingUserInput } 
 import { OAuthLinkUncheckedCreateNestedManyWithoutUserInput } from '../o-auth-link/o-auth-link-unchecked-create-nested-many-without-user.input';
 import { CommentUncheckedCreateNestedManyWithoutUserInput } from '../comment/comment-unchecked-create-nested-many-without-user.input';
 import { VoteUncheckedCreateNestedManyWithoutUserInput } from '../vote/vote-unchecked-create-nested-many-without-user.input';
-import { ViewUncheckedCreateNestedManyWithoutUserInput } from '../view/view-unchecked-create-nested-many-without-user.input';
 import { StreamKeyUncheckedCreateNestedManyWithoutUserInput } from '../stream-key/stream-key-unchecked-create-nested-many-without-user.input';
 import { LiveChatMessageUncheckedCreateNestedManyWithoutUserInput } from '../live-chat-message/live-chat-message-unchecked-create-nested-many-without-user.input';
 
@@ -59,8 +58,8 @@ export class UserUncheckedCreateWithoutVideosInput {
     @Field(() => VoteUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     votes?: VoteUncheckedCreateNestedManyWithoutUserInput;
 
-    @Field(() => ViewUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
-    views?: ViewUncheckedCreateNestedManyWithoutUserInput;
+    @Field(() => Int, {nullable:true})
+    viewerId?: number;
 
     @Field(() => StreamKeyUncheckedCreateNestedManyWithoutUserInput, {nullable:true})
     streamKeys?: StreamKeyUncheckedCreateNestedManyWithoutUserInput;

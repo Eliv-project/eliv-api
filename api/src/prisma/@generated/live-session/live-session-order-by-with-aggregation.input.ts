@@ -20,6 +20,9 @@ export class LiveSessionOrderByWithAggregationInput {
     streamKeyId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    liveAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

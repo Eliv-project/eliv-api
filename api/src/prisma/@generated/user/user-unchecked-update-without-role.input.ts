@@ -11,7 +11,7 @@ import { OAuthLinkUncheckedUpdateManyWithoutUserNestedInput } from '../o-auth-li
 import { VideoUncheckedUpdateManyWithoutUserNestedInput } from '../video/video-unchecked-update-many-without-user-nested.input';
 import { CommentUncheckedUpdateManyWithoutUserNestedInput } from '../comment/comment-unchecked-update-many-without-user-nested.input';
 import { VoteUncheckedUpdateManyWithoutUserNestedInput } from '../vote/vote-unchecked-update-many-without-user-nested.input';
-import { ViewUncheckedUpdateManyWithoutUserNestedInput } from '../view/view-unchecked-update-many-without-user-nested.input';
+import { NullableIntFieldUpdateOperationsInput } from '../prisma/nullable-int-field-update-operations.input';
 import { StreamKeyUncheckedUpdateManyWithoutUserNestedInput } from '../stream-key/stream-key-unchecked-update-many-without-user-nested.input';
 import { LiveChatMessageUncheckedUpdateManyWithoutUserNestedInput } from '../live-chat-message/live-chat-message-unchecked-update-many-without-user-nested.input';
 
@@ -63,8 +63,8 @@ export class UserUncheckedUpdateWithoutRoleInput {
     @Field(() => VoteUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     votes?: VoteUncheckedUpdateManyWithoutUserNestedInput;
 
-    @Field(() => ViewUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
-    views?: ViewUncheckedUpdateManyWithoutUserNestedInput;
+    @Field(() => NullableIntFieldUpdateOperationsInput, {nullable:true})
+    viewerId?: NullableIntFieldUpdateOperationsInput;
 
     @Field(() => StreamKeyUncheckedUpdateManyWithoutUserNestedInput, {nullable:true})
     streamKeys?: StreamKeyUncheckedUpdateManyWithoutUserNestedInput;

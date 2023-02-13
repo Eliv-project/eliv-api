@@ -11,7 +11,7 @@ import { OAuthLinkUpdateManyWithoutUserNestedInput } from '../o-auth-link/o-auth
 import { VideoUpdateManyWithoutUserNestedInput } from '../video/video-update-many-without-user-nested.input';
 import { CommentUpdateManyWithoutUserNestedInput } from '../comment/comment-update-many-without-user-nested.input';
 import { VoteUpdateManyWithoutUserNestedInput } from '../vote/vote-update-many-without-user-nested.input';
-import { ViewUpdateManyWithoutUserNestedInput } from '../view/view-update-many-without-user-nested.input';
+import { ViewerUpdateOneWithoutUserNestedInput } from '../viewer/viewer-update-one-without-user-nested.input';
 import { StreamKeyUpdateManyWithoutUserNestedInput } from '../stream-key/stream-key-update-many-without-user-nested.input';
 import { LiveChatMessageUpdateManyWithoutUserNestedInput } from '../live-chat-message/live-chat-message-update-many-without-user-nested.input';
 
@@ -63,8 +63,8 @@ export class UserUpdateInput {
     @Field(() => VoteUpdateManyWithoutUserNestedInput, {nullable:true})
     votes?: VoteUpdateManyWithoutUserNestedInput;
 
-    @Field(() => ViewUpdateManyWithoutUserNestedInput, {nullable:true})
-    views?: ViewUpdateManyWithoutUserNestedInput;
+    @Field(() => ViewerUpdateOneWithoutUserNestedInput, {nullable:true})
+    viewer?: ViewerUpdateOneWithoutUserNestedInput;
 
     @Field(() => StreamKeyUpdateManyWithoutUserNestedInput, {nullable:true})
     streamKeys?: StreamKeyUpdateManyWithoutUserNestedInput;

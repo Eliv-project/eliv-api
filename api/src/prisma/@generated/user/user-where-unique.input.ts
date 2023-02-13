@@ -13,4 +13,7 @@ export class UserWhereUniqueInput {
 
     @Field(() => String, {nullable:true})
     username?: string;
+
+    @Field(() => Int, {nullable:true})
+    viewerId?: number;
 }

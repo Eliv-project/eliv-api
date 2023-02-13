@@ -1,5 +1,5 @@
 export default () => ({
-  hlsPath: process.env.PATH_HLS || '/eliv/upload/hls',
-  uploadPath: process.env.PATH_TMP || '/eliv/upload/tmp',
-  recordingPath: process.env.PATH_RECORD || '/eliv/upload/recordings',
+  hlsPath: process.env.API_VOD_PATH || '../static/videos/upload',
+  uploadPath: process.env.API_TMP_PATH || '../static/videos/tmp',
+  recordingPath: process.env.API_RECORD_PATH || '../static/videos/recordings',
 });

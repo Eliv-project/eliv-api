@@ -24,7 +24,8 @@ model User {
     videos     Video[]
     comments   Comment[]
     votes      Vote[]
-    views View[]
+    viewer Viewer? @relation(fields: [viewerId], references: [id])
+    viewerId Int? @unique
 
     streamKeys StreamKey[]
 

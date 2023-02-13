@@ -5,6 +5,7 @@ import { StringFilter } from '../prisma/string-filter.input';
 import { BoolNullableFilter } from '../prisma/bool-nullable-filter.input';
 import { JsonNullableFilter } from '../prisma/json-nullable-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 
 @InputType()
 export class UserScalarWhereInput {
@@ -47,6 +48,9 @@ export class UserScalarWhereInput {
 
     @Field(() => IntFilter, {nullable:true})
     roleId?: IntFilter;
+
+    @Field(() => IntNullableFilter, {nullable:true})
+    viewerId?: IntNullableFilter;
 
     @Field(() => BoolNullableFilter, {nullable:true})
     verified?: BoolNullableFilter;

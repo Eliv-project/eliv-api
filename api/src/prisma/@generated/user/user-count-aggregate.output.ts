@@ -37,6 +37,9 @@ export class UserCountAggregate {
     roleId!: number;
 
     @Field(() => Int, {nullable:false})
+    viewerId!: number;
+
+    @Field(() => Int, {nullable:false})
     verified!: number;
 
     @Field(() => Int, {nullable:false})

@@ -10,4 +10,7 @@ export class UserSumAggregate {
 
     @Field(() => Int, {nullable:true})
     roleId?: number;
+
+    @Field(() => Int, {nullable:true})
+    viewerId?: number;
 }

@@ -1,7 +1,7 @@
 daemon off;
 
 include /etc/nginx/sites-enabled/*.conf; # Include all the optional configuration files stored here.
-error_log /eliv/logs/stdout_rtmp info;
+error_log ${LOG_PATH}/stdout_rtmp info;
 
 events {
     worker_connections 1024;
@@ -16,10 +16,10 @@ rtmp {
             live on;
             record off;
 
-            on_publish http://api_server:27361/live-sessions/on-publish;
-            on_publish_done http://api_server:27361/live-sessions/on-publish-done;
+            on_publish http://${API_ENDPOINT}:${API_PORT}/live-sessions/on-publish;
+            on_publish_done http://${API_ENDPOINT}:${API_PORT}/live-sessions/on-publish-done;
 
-            push rtmp://localhost:1935/live_verified;
+            push rtmp://localhost:${RTMP_PORT}/live_verified;
         }
 
         application live_verified {
@@ -29,20 +29,20 @@ rtmp {
             allow publish 127.0.0.1;
             deny publish all;
 
-            exec_publish ffmpeg -i rtmp://localhost:1935/live_verified/$name -vf "scale=-2:300" -ss 00:00:01.000 -frames:v 1 ${RTMP_HLS_VOD_PATH}/$name/thumbnail.png;
+            exec_publish ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name -vf "scale=-2:300" -ss 00:00:01.000 -frames:v 1 ${RTMP_HLS_VOD_PATH}/$name/thumbnail.png;
 
-            exec_push ffmpeg -i rtmp://localhost:1935/live_verified/$name
-              -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 60 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline rtmp://localhost:1935/hls/$name_720p2628kbs
-              # -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 1000k -f flv -g 30 -r 30 -s 854x480 -preset superfast -profile:v baseline rtmp://localhost:1935/hls/$name_480p1128kbs
-              # -c:a libfdk_aac -b:a 96k -c:v libx264 -b:v 800k -f flv -g 30 -r 24 -filter:v "scale='min(640, iw)':'min(360, ih)'" -preset superfast -profile:v baseline rtmp://localhost:1935/hls/$name_360p878kbs
-              -c:a libfdk_aac -b:a 64k -c:v libx264 -b:v 200k -f flv -g 30 -r 24 -filter:v "scale='min(256, iw)':'min(144, ih)'" -preset superfast -profile:v baseline rtmp://localhost:1935/hls/$name_144p200kbs;
+            exec_push ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name
+              -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 60 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_720p2628kbs
+              # -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 1000k -f flv -g 30 -r 30 -s 854x480 -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_480p1128kbs
+              # -c:a libfdk_aac -b:a 96k -c:v libx264 -b:v 800k -f flv -g 30 -r 24 -filter:v "scale='min(640, iw)':'min(360, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_360p878kbs
+              -c:a libfdk_aac -b:a 64k -c:v libx264 -b:v 200k -f flv -g 30 -r 24 -filter:v "scale='min(256, iw)':'min(144, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_144p200kbs;
         }
 
         application hls {
             live on;
             hls on;
             hls_fragment 4;
-            hls_path ${RTMP_HLS_LIVE_PATH};
+            hls_path ${LIVE_PATH};
             hls_nested on;
             hls_cleanup off;
 
@@ -50,8 +50,8 @@ rtmp {
             # deny publish all;
 
             exec_publish_done bash -c 'echo "#EXT-X-ENDLIST" >> `
-              `${RTMP_HLS_LIVE_PATH}/$name/index.m3u8';
-            # on_publish_done http://host.docker.internal:27361/live-sessions/on-hls-done;
+              `${LIVE_PATH}/$name/index.m3u8';
+            # on_publish_done http://host.docker.internal:${API_PORT}/live-sessions/on-hls-done;
 
             hls_variant _720p2628kbs BANDWIDTH=3000000,RESOLUTION=1280x720;
             # hls_variant _480p1128kbs BANDWIDTH=1128000,RESOLUTION=854x480;
@@ -62,11 +62,10 @@ rtmp {
 }
 
 http {
-    root /www/static;
     sendfile off;
     tcp_nopush on;
     server_tokens off;
-    access_log /eliv/logs/stdout_http combined;
+    access_log ${LOG_PATH}/stdout_http combined;
 
     # Uncomment these lines to enable SSL.
     # ssl_protocols TLSv1.2 TLSv1.3;
@@ -98,7 +97,7 @@ http {
                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                  proxy_set_header X-Forwarded-Proto $scheme;
 
-                proxy_pass http://api_server:27361;
+                proxy_pass http://${API_ENDPOINT}:${API_PORT};
         }
     }
 
@@ -114,12 +113,12 @@ http {
         ssl_certificate     /eliv/certs/cert.pem;
         ssl_certificate_key /eliv/certs/privkey.pem;
 
-        location / {
-             root /www;
-         }
+        # location / {
+        #      root /www;
+        #  }
         
         location /vod {
-            alias ${RTMP_HLS_VOD_PATH};
+            alias ${VOD_PATH};
             types {
                 application/vnd.apple.mpegurl m3u8;
                 application/octet-stream ts;
@@ -130,7 +129,7 @@ http {
 
 
         location /live {
-          alias ${RTMP_HLS_LIVE_PATH};
+          alias ${LIVE_PATH};
           types {
               application/vnd.apple.mpegurl m3u8;
               application/octet-stream ts;

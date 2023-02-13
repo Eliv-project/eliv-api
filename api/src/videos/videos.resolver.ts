@@ -78,7 +78,7 @@ export class VideosResolver {
         privacy: VideoPrivacy.private,
         vodSession: {
           create: {
-            status: VodStatus.empty,
+            status: VodStatus.waiting,
           },
         },
       } as Prisma.VideoCreateInput);

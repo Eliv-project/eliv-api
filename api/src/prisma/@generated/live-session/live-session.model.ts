@@ -22,6 +22,9 @@ export class LiveSession {
     @Field(() => Int, {nullable:false})
     streamKeyId!: number;
 
+    @Field(() => Date, {nullable:true})
+    liveAt!: Date | null;
+
     @Field(() => Date, {nullable:false})
     createdAt!: Date;
 

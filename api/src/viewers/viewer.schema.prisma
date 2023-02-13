@@ -1,0 +1,7 @@
+model Viewer {
+    id Int @default(autoincrement()) @id
+
+    user User?
+
+    views View[]
+}

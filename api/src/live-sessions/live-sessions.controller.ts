@@ -63,6 +63,7 @@ export class LiveSessionsController {
       },
       {
         status: { set: LiveStatus.ON_LIVE },
+        liveAt: new Date(),
         video: {
           update: {
             thumbnail: {

@@ -1,0 +1,192 @@
+2023/02/13 01:49:39 [notice] 1#1: using the "epoll" event method
+2023/02/13 01:49:39 [notice] 1#1: nginx/1.23.1
+2023/02/13 01:49:39 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 01:49:39 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2023/02/13 01:49:39 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 01:49:39 [notice] 1#1: start worker processes
+2023/02/13 01:49:39 [notice] 1#1: start worker process 11
+2023/02/13 01:49:45 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 01:49:45 [notice] 11#11: exiting
+2023/02/13 01:49:45 [notice] 11#11: exit
+2023/02/13 01:49:45 [notice] 1#1: signal 14 (SIGALRM) received
+2023/02/13 01:49:46 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 01:49:46 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 01:49:46 [notice] 1#1: exit
+2023/02/13 01:49:53 [notice] 1#1: using the "epoll" event method
+2023/02/13 01:49:53 [notice] 1#1: nginx/1.23.1
+2023/02/13 01:49:53 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 01:49:53 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2023/02/13 01:49:53 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 01:49:53 [notice] 1#1: start worker processes
+2023/02/13 01:49:53 [notice] 1#1: start worker process 12
+2023/02/13 01:51:12 [error] 12#12: *1 open() "/eliv/videos/upload/735d3e1f-e092-406e-ae2c-85eec14caa86/thumbnail.png" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /vod//735d3e1f-e092-406e-ae2c-85eec14caa86/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 01:51:12 [info] 12#12: *1 client 172.23.0.1 closed keepalive connection
+2023/02/13 01:52:21 [error] 12#12: *2 open() "/eliv/videos/upload/a13ec47d-90ef-4926-bbd1-a3cd9b0aedcb/thumbnail.png" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /vod//a13ec47d-90ef-4926-bbd1-a3cd9b0aedcb/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 01:52:21 [error] 12#12: *3 open() "/eliv/videos/upload/735d3e1f-e092-406e-ae2c-85eec14caa86/thumbnail.png" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /vod//735d3e1f-e092-406e-ae2c-85eec14caa86/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 01:52:21 [info] 12#12: *2 client 172.23.0.1 closed keepalive connection
+2023/02/13 01:52:21 [info] 12#12: *3 client 172.23.0.1 closed keepalive connection
+2023/02/13 01:52:28 [error] 12#12: *4 open() "/eliv/videos/upload/ed12796a-d92a-4c70-b794-a3b592bd5df3/thumbnail.png" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /vod//ed12796a-d92a-4c70-b794-a3b592bd5df3/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 01:52:28 [info] 12#12: *4 client 172.23.0.1 closed keepalive connection
+2023/02/13 02:17:41 [error] 12#12: *7 open() "/eliv/videos/upload/02a92768-5ebe-4537-a225-bf5ac06e7212/thumbnail.png" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /vod//02a92768-5ebe-4537-a225-bf5ac06e7212/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:17:41 [info] 12#12: *7 client 172.23.0.1 closed keepalive connection
+2023/02/13 02:49:43 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:49:48 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:49:53 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:49:58 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:03 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:08 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:13 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:18 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:23 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:28 [info] 12#12: *34 client connected '172.23.0.1'
+2023/02/13 02:50:28 [info] 12#12: *34 connect: app='live' args='' flashver='FMLE/3.0 (compatible; FMSc/1.0)' swf_url='rtmp://localhost:1935/live' tc_url='rtmp://localhost:1935/live' page_url='' acodecs=0 vcodecs=0 object_encoding=0, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *34 createStream, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *34 publish: name='420be6e1-40b4-4e4f-a58c-d5bfd9b22c83' args='' type=live silent=0, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *34 notify: publish 'host.docker.internal:27361/live-sessions/on-publish', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *34 notify: publish redirect to '008e25bf-eb76-46a2-96c5-6bd66ebee8bd', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *34 relay: create push name='008e25bf-eb76-46a2-96c5-6bd66ebee8bd' app='' playpath='' url='localhost:1935/live_verified', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *37 client connected '127.0.0.1'
+2023/02/13 02:50:28 [info] 12#12: *37 connect: app='live_verified' args='' flashver='LNX.11,1,102,55' swf_url='' tc_url='rtmp://localhost:1935/live_verified' page_url='' acodecs=3575 vcodecs=252 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *37 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *37 publish: name='008e25bf-eb76-46a2-96c5-6bd66ebee8bd' args='' type=live silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *37 exec: starting unmanaged child 'ffmpeg', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [info] 12#12: *37 exec: starting managed child 'ffmpeg', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:28 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:29 [info] 12#12: *38 client connected '127.0.0.1'
+2023/02/13 02:50:29 [info] 12#12: *38 connect: app='live_verified' args='' flashver='LNX 9,0,124,2' swf_url='' tc_url='rtmp://localhost:1935/live_verified' page_url='' acodecs=4071 vcodecs=252 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:29 [info] 12#12: *38 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:29 [info] 12#12: *38 play: name='008e25bf-eb76-46a2-96c5-6bd66ebee8bd' args='' start=-2000 duration=0 reset=0 silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:29 [info] 12#12: *39 client connected '127.0.0.1'
+2023/02/13 02:50:29 [info] 12#12: *39 connect: app='live_verified' args='' flashver='LNX 9,0,124,2' swf_url='' tc_url='rtmp://localhost:1935/live_verified' page_url='' acodecs=4071 vcodecs=252 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:29 [info] 12#12: *39 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:29 [info] 12#12: *39 play: name='008e25bf-eb76-46a2-96c5-6bd66ebee8bd' args='' start=-2000 duration=0 reset=0 silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:33 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:38 [info] 12#12: *40 client connected '127.0.0.1'
+2023/02/13 02:50:38 [info] 12#12: *40 connect: app='hls' args='' flashver='FMLE/3.0 (compatible; Lavf59.27' swf_url='' tc_url='rtmp://localhost:1935/hls' page_url='' acodecs=0 vcodecs=0 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [info] 12#12: *40 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [info] 12#12: *40 publish: name='008e25bf-eb76-46a2-96c5-6bd66ebee8bd_720p2628kbs' args='' type=live silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [info] 12#12: *41 client connected '127.0.0.1'
+2023/02/13 02:50:38 [info] 12#12: *41 connect: app='hls' args='' flashver='FMLE/3.0 (compatible; Lavf59.27' swf_url='' tc_url='rtmp://localhost:1935/hls' page_url='' acodecs=0 vcodecs=0 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [info] 12#12: *41 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [info] 12#12: *41 publish: name='008e25bf-eb76-46a2-96c5-6bd66ebee8bd_144p200kbs' args='' type=live silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [notice] 12#12: signal 17 (SIGCHLD) received from 13
+2023/02/13 02:50:38 [notice] 12#12: unknown process 13 exited with code 0
+2023/02/13 02:50:38 [error] 12#12: *33 open() "/eliv/videos/live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/008e25bf-eb76-46a2-96c5-6bd66ebee8bd.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:50:38 [info] 12#12: *38 send() failed (104: Connection reset by peer), client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [info] 12#12: *38 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:50:38 [info] 12#12: *38 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 02:51:22 [info] 12#12: *44 client 172.23.0.1 closed keepalive connection
+2023/02/13 02:51:22 [info] 12#12: *45 writev() failed (32: Broken pipe) while sending response to client, client: 172.23.0.1, server: , request: "GET /vod//02a92768-5ebe-4537-a225-bf5ac06e7212/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:51:22 [info] 12#12: *46 writev() failed (32: Broken pipe) while sending response to client, client: 172.23.0.1, server: , request: "GET /vod//3592daac-a75d-4a1c-a79c-3ff45250feb9/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 02:51:22 [info] 12#12: *47 writev() failed (32: Broken pipe) while sending response to client, client: 172.23.0.1, server: , request: "GET /vod//187267a6-90f1-4777-9430-77c635700bdd/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 03:44:22 [info] 12#12: *34 deleteStream, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *34 notify: publish_done 'host.docker.internal:27361/live-sessions/on-publish-done', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *36 disconnect, client: localhost:1935/live_verified, server: ngx-relay
+2023/02/13 03:44:22 [info] 12#12: *36 deleteStream, client: localhost:1935/live_verified, server: ngx-relay
+2023/02/13 03:44:22 [info] 12#12: *34 disconnect, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *34 deleteStream, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *37 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *37 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *37 exec: terminating child 14, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [error] 12#12: recv() failed (111: Connection refused)
+2023/02/13 03:44:22 [info] 12#12: *41 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [notice] 12#12: signal 17 (SIGCHLD) received from 14
+2023/02/13 03:44:22 [alert] 12#12: unknown process 14 exited on signal 9
+2023/02/13 03:44:22 [info] 12#12: *41 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *41 exec: starting unmanaged child 'bash', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *39 recv() failed (104: Connection reset by peer), client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *40 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *40 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *40 exec: starting unmanaged child 'bash', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *39 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:22 [info] 12#12: *39 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 03:44:23 [notice] 12#12: signal 17 (SIGCHLD) received from 57
+2023/02/13 03:44:23 [notice] 12#12: unknown process 57 exited with code 0
+2023/02/13 03:44:23 [info] 12#12: epoll_wait() failed (4: Interrupted system call)
+2023/02/13 03:44:23 [notice] 12#12: signal 17 (SIGCHLD) received from 58
+2023/02/13 03:44:23 [notice] 12#12: unknown process 58 exited with code 0
+2023/02/13 03:44:23 [info] 12#12: epoll_wait() failed (4: Interrupted system call)
+2023/02/13 05:51:52 [error] 12#12: *73 open() "/eliv/videos/live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 05:51:57 [error] 12#12: *73 open() "/eliv/videos/live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 05:52:02 [error] 12#12: *73 open() "/eliv/videos/live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 05:52:07 [error] 12#12: *73 open() "/eliv/videos/live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 05:52:12 [error] 12#12: *73 open() "/eliv/videos/live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 05:52:13 [info] 12#12: *74 client connected '172.23.0.1'
+2023/02/13 05:52:13 [info] 12#12: *74 connect: app='live' args='' flashver='FMLE/3.0 (compatible; FMSc/1.0)' swf_url='rtmp://localhost:1935/live' tc_url='rtmp://localhost:1935/live' page_url='' acodecs=0 vcodecs=0 object_encoding=0, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *74 createStream, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *74 publish: name='64505f6a-2137-431f-8568-b248742328ec' args='' type=live silent=0, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *74 notify: publish 'host.docker.internal:27361/live-sessions/on-publish', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *74 notify: publish redirect to '1a7433e9-d48a-42c6-92a7-97ad6c1594a0', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *74 relay: create push name='1a7433e9-d48a-42c6-92a7-97ad6c1594a0' app='' playpath='' url='localhost:1935/live_verified', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *77 client connected '127.0.0.1'
+2023/02/13 05:52:13 [info] 12#12: *77 connect: app='live_verified' args='' flashver='LNX.11,1,102,55' swf_url='' tc_url='rtmp://localhost:1935/live_verified' page_url='' acodecs=3575 vcodecs=252 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *77 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *77 publish: name='1a7433e9-d48a-42c6-92a7-97ad6c1594a0' args='' type=live silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *77 exec: starting unmanaged child 'ffmpeg', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:13 [info] 12#12: *77 exec: starting managed child 'ffmpeg', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:14 [info] 12#12: *78 client connected '127.0.0.1'
+2023/02/13 05:52:14 [info] 12#12: *79 client connected '127.0.0.1'
+2023/02/13 05:52:14 [info] 12#12: *78 connect: app='live_verified' args='' flashver='LNX 9,0,124,2' swf_url='' tc_url='rtmp://localhost:1935/live_verified' page_url='' acodecs=4071 vcodecs=252 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:14 [info] 12#12: *79 connect: app='live_verified' args='' flashver='LNX 9,0,124,2' swf_url='' tc_url='rtmp://localhost:1935/live_verified' page_url='' acodecs=4071 vcodecs=252 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:14 [info] 12#12: *78 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:14 [info] 12#12: *79 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:14 [info] 12#12: *78 play: name='1a7433e9-d48a-42c6-92a7-97ad6c1594a0' args='' start=-2000 duration=0 reset=0 silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:14 [info] 12#12: *79 play: name='1a7433e9-d48a-42c6-92a7-97ad6c1594a0' args='' start=-2000 duration=0 reset=0 silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *80 client connected '127.0.0.1'
+2023/02/13 05:52:16 [info] 12#12: *80 connect: app='hls' args='' flashver='FMLE/3.0 (compatible; Lavf59.27' swf_url='' tc_url='rtmp://localhost:1935/hls' page_url='' acodecs=0 vcodecs=0 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *80 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *80 publish: name='1a7433e9-d48a-42c6-92a7-97ad6c1594a0_720p2628kbs' args='' type=live silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *81 client connected '127.0.0.1'
+2023/02/13 05:52:16 [info] 12#12: *81 connect: app='hls' args='' flashver='FMLE/3.0 (compatible; Lavf59.27' swf_url='' tc_url='rtmp://localhost:1935/hls' page_url='' acodecs=0 vcodecs=0 object_encoding=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *81 createStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *81 publish: name='1a7433e9-d48a-42c6-92a7-97ad6c1594a0_144p200kbs' args='' type=live silent=0, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [notice] 12#12: signal 17 (SIGCHLD) received from 63
+2023/02/13 05:52:16 [notice] 12#12: unknown process 63 exited with code 0
+2023/02/13 05:52:16 [info] 12#12: *78 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *78 send() failed (104: Connection reset by peer), client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *78 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:16 [info] 12#12: *78 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 05:52:17 [error] 12#12: *73 open() "/eliv/videos/live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8" failed (2: No such file or directory), client: 172.23.0.1, server: , request: "GET /live/1a7433e9-d48a-42c6-92a7-97ad6c1594a0.m3u8 HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 05:58:04 [info] 12#12: *85 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:25:02 [info] 12#12: *92 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:25:09 [info] 12#12: *95 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:25:31 [info] 12#12: *96 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:25:31 [info] 12#12: *97 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:26:00 [info] 12#12: *100 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:26:06 [info] 12#12: *101 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:28:01 [info] 12#12: *99 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:28:05 [info] 12#12: *88 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:32:52 [info] 12#12: *104 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:33:09 [info] 12#12: *107 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:33:42 [info] 12#12: *108 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:33:42 [info] 12#12: *110 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:39:09 [info] 12#12: *112 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:44:11 [info] 12#12: *115 client 172.23.0.1 closed keepalive connection
+2023/02/13 06:57:36 [info] 12#12: *124 writev() failed (32: Broken pipe) while sending response to client, client: 172.23.0.1, server: , request: "GET /vod//1a7433e9-d48a-42c6-92a7-97ad6c1594a0/thumbnail.png HTTP/1.1", host: "localhost", referrer: "http://localhost:3000/"
+2023/02/13 07:07:41 [info] 12#12: *127 client 172.23.0.1 closed keepalive connection
+2023/02/13 07:09:37 [info] 12#12: *74 deleteStream, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *74 notify: publish_done 'host.docker.internal:27361/live-sessions/on-publish-done', client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *76 disconnect, client: localhost:1935/live_verified, server: ngx-relay
+2023/02/13 07:09:37 [info] 12#12: *76 deleteStream, client: localhost:1935/live_verified, server: ngx-relay
+2023/02/13 07:09:37 [info] 12#12: *74 disconnect, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *74 deleteStream, client: 172.23.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *77 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *77 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *77 exec: terminating child 64, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *81 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [notice] 12#12: signal 17 (SIGCHLD) received from 64
+2023/02/13 07:09:37 [alert] 12#12: unknown process 64 exited on signal 9
+2023/02/13 07:09:37 [info] 12#12: *81 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *81 exec: starting unmanaged child 'bash', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *80 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *80 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *80 exec: starting unmanaged child 'bash', client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *79 recv() failed (104: Connection reset by peer), client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *79 disconnect, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [info] 12#12: *79 deleteStream, client: 127.0.0.1, server: 0.0.0.0:1935
+2023/02/13 07:09:37 [notice] 12#12: signal 17 (SIGCHLD) received from 107
+2023/02/13 07:09:37 [notice] 12#12: unknown process 107 exited with code 0
+2023/02/13 07:09:37 [info] 12#12: epoll_wait() failed (4: Interrupted system call)
+2023/02/13 07:09:37 [notice] 12#12: signal 17 (SIGCHLD) received from 108
+2023/02/13 07:09:37 [notice] 12#12: unknown process 108 exited with code 0
+2023/02/13 07:09:37 [info] 12#12: epoll_wait() failed (4: Interrupted system call)

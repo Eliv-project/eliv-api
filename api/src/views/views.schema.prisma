@@ -1,13 +1,15 @@
 model View {
     id Int @id @default(autoincrement())
 
-    ip String 
+    ip String
 
-    user User? @relation(references: [id], fields: [userId], onDelete: Cascade)
-    userId Int?
+    /// @HideField({output: false, input: true})
+    viewer Viewer @relation(references: [id], fields: [viewerId], onDelete: Cascade)
+    viewerId Int
 
+    /// @HideField({output: false, input: true})
     video Video @relation(references: [id], fields: [videoId], onDelete: Cascade)
     videoId Int
 
-    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

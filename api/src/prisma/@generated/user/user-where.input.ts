@@ -11,7 +11,8 @@ import { OAuthLinkListRelationFilter } from '../o-auth-link/o-auth-link-list-rel
 import { VideoListRelationFilter } from '../video/video-list-relation-filter.input';
 import { CommentListRelationFilter } from '../comment/comment-list-relation-filter.input';
 import { VoteListRelationFilter } from '../vote/vote-list-relation-filter.input';
-import { ViewListRelationFilter } from '../view/view-list-relation-filter.input';
+import { ViewerRelationFilter } from '../viewer/viewer-relation-filter.input';
+import { IntNullableFilter } from '../prisma/int-nullable-filter.input';
 import { StreamKeyListRelationFilter } from '../stream-key/stream-key-list-relation-filter.input';
 import { LiveChatMessageListRelationFilter } from '../live-chat-message/live-chat-message-list-relation-filter.input';
 
@@ -78,8 +79,11 @@ export class UserWhereInput {
     @Field(() => VoteListRelationFilter, {nullable:true})
     votes?: VoteListRelationFilter;
 
-    @Field(() => ViewListRelationFilter, {nullable:true})
-    views?: ViewListRelationFilter;
+    @Field(() => ViewerRelationFilter, {nullable:true})
+    viewer?: ViewerRelationFilter;
+
+    @Field(() => IntNullableFilter, {nullable:true})
+    viewerId?: IntNullableFilter;
 
     @Field(() => StreamKeyListRelationFilter, {nullable:true})
     streamKeys?: StreamKeyListRelationFilter;

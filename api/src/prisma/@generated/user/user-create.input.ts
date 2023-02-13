@@ -8,7 +8,7 @@ import { OAuthLinkCreateNestedManyWithoutUserInput } from '../o-auth-link/o-auth
 import { VideoCreateNestedManyWithoutUserInput } from '../video/video-create-nested-many-without-user.input';
 import { CommentCreateNestedManyWithoutUserInput } from '../comment/comment-create-nested-many-without-user.input';
 import { VoteCreateNestedManyWithoutUserInput } from '../vote/vote-create-nested-many-without-user.input';
-import { ViewCreateNestedManyWithoutUserInput } from '../view/view-create-nested-many-without-user.input';
+import { ViewerCreateNestedOneWithoutUserInput } from '../viewer/viewer-create-nested-one-without-user.input';
 import { StreamKeyCreateNestedManyWithoutUserInput } from '../stream-key/stream-key-create-nested-many-without-user.input';
 import { LiveChatMessageCreateNestedManyWithoutUserInput } from '../live-chat-message/live-chat-message-create-nested-many-without-user.input';
 
@@ -60,8 +60,8 @@ export class UserCreateInput {
     @Field(() => VoteCreateNestedManyWithoutUserInput, {nullable:true})
     votes?: VoteCreateNestedManyWithoutUserInput;
 
-    @Field(() => ViewCreateNestedManyWithoutUserInput, {nullable:true})
-    views?: ViewCreateNestedManyWithoutUserInput;
+    @Field(() => ViewerCreateNestedOneWithoutUserInput, {nullable:true})
+    viewer?: ViewerCreateNestedOneWithoutUserInput;
 
     @Field(() => StreamKeyCreateNestedManyWithoutUserInput, {nullable:true})
     streamKeys?: StreamKeyCreateNestedManyWithoutUserInput;

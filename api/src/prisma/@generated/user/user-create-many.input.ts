@@ -36,6 +36,9 @@ export class UserCreateManyInput {
     @Field(() => Int, {nullable:false})
     roleId!: number;
 
+    @Field(() => Int, {nullable:true})
+    viewerId?: number;
+
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 

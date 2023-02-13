@@ -10,7 +10,7 @@ import { OAuthLink } from '../o-auth-link/o-auth-link.model';
 import { Video } from '../video/video.model';
 import { Comment } from '../comment/comment.model';
 import { Vote } from '../vote/vote.model';
-import { View } from '../view/view.model';
+import { Viewer } from '../viewer/viewer.model';
 import { StreamKey } from '../stream-key/stream-key.model';
 import { LiveChatMessage } from '../live-chat-message/live-chat-message.model';
 import { UserCount } from './user-count.output';
@@ -69,8 +69,11 @@ export class User {
     @Field(() => [Vote], {nullable:true})
     votes?: Array<Vote>;
 
-    @Field(() => [View], {nullable:true})
-    views?: Array<View>;
+    @Field(() => Viewer, {nullable:true})
+    viewer?: Viewer | null;
+
+    @Field(() => Int, {nullable:true})
+    viewerId!: number | null;
 
     @Field(() => [StreamKey], {nullable:true})
     streamKeys?: Array<StreamKey>;

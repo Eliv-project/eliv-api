@@ -15,7 +15,8 @@ export class IsValidVideo implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
     const gqlRequest = ctx.getContext();
-    const videoWhere: VideoWhereUniqueInput = ctx.getArgs().where;
+    const videoWhere: VideoWhereUniqueInput =
+      ctx.getArgs().where || ctx.getArgs().videoWhere;
 
     const video = await this.videosService.findOne(videoWhere);
     if (!video) {

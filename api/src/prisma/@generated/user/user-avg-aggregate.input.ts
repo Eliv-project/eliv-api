@@ -9,4 +9,7 @@ export class UserAvgAggregateInput {
 
     @Field(() => Boolean, {nullable:true})
     roleId?: true;
+
+    @Field(() => Boolean, {nullable:true})
+    viewerId?: true;
 }

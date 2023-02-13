@@ -4,6 +4,7 @@ import {
   OnQueueActive,
   OnQueueCompleted,
   OnQueueFailed,
+  OnQueueWaiting,
 } from '@nestjs/bull';
 import fs from 'fs';
 import { Job } from 'bull';
@@ -91,6 +92,7 @@ export class Mp42HlsProcessor {
       console.error(err);
     }
   }
+
 
   @OnQueueFailed()
   async onFail(job: Job<Mp42HlsConvertDto>, err: Error) {

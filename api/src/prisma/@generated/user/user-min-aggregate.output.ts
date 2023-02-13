@@ -33,6 +33,9 @@ export class UserMinAggregate {
     @Field(() => Int, {nullable:true})
     roleId?: number;
 
+    @Field(() => Int, {nullable:true})
+    viewerId?: number;
+
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 

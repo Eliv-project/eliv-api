@@ -41,6 +41,9 @@ export class UserOrderByWithAggregationInput {
     roleId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    viewerId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     verified?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

@@ -7,7 +7,7 @@ import { OAuthLinkOrderByRelationAggregateInput } from '../o-auth-link/o-auth-li
 import { VideoOrderByRelationAggregateInput } from '../video/video-order-by-relation-aggregate.input';
 import { CommentOrderByRelationAggregateInput } from '../comment/comment-order-by-relation-aggregate.input';
 import { VoteOrderByRelationAggregateInput } from '../vote/vote-order-by-relation-aggregate.input';
-import { ViewOrderByRelationAggregateInput } from '../view/view-order-by-relation-aggregate.input';
+import { ViewerOrderByWithRelationInput } from '../viewer/viewer-order-by-with-relation.input';
 import { StreamKeyOrderByRelationAggregateInput } from '../stream-key/stream-key-order-by-relation-aggregate.input';
 import { LiveChatMessageOrderByRelationAggregateInput } from '../live-chat-message/live-chat-message-order-by-relation-aggregate.input';
 
@@ -65,8 +65,11 @@ export class UserOrderByWithRelationInput {
     @Field(() => VoteOrderByRelationAggregateInput, {nullable:true})
     votes?: VoteOrderByRelationAggregateInput;
 
-    @Field(() => ViewOrderByRelationAggregateInput, {nullable:true})
-    views?: ViewOrderByRelationAggregateInput;
+    @Field(() => ViewerOrderByWithRelationInput, {nullable:true})
+    viewer?: ViewerOrderByWithRelationInput;
+
+    @Field(() => SortOrder, {nullable:true})
+    viewerId?: keyof typeof SortOrder;
 
     @Field(() => StreamKeyOrderByRelationAggregateInput, {nullable:true})
     streamKeys?: StreamKeyOrderByRelationAggregateInput;

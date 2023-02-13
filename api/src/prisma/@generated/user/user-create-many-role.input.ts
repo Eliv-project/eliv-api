@@ -33,6 +33,9 @@ export class UserCreateManyRoleInput {
     @Field(() => Date, {nullable:true})
     updatedAt?: Date | string;
 
+    @Field(() => Int, {nullable:true})
+    viewerId?: number;
+
     @Field(() => Boolean, {nullable:true})
     verified?: boolean;
 

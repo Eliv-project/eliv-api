@@ -6,8 +6,12 @@ import { Prisma } from '@prisma/client';
 export class ViewsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(data: Prisma.ViewCreateInput) {
-    return this.prisma.view.create({ data });
+  create(args: Prisma.ViewCreateArgs) {
+    return this.prisma.view.create(args);
+  }
+
+  findFirst(args: Prisma.ViewFindFirstArgs) {
+    return this.prisma.view.findFirst(args);
   }
 
   findAll(args: Prisma.ViewFindManyArgs) {
