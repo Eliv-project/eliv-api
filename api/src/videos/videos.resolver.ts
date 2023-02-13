@@ -67,6 +67,11 @@ export class VideosResolver {
 
     const videoInfo = await this.ffmpegService.getVideoInfo(uploadedFile.path);
 
+    const MAX_DURATION = 60 * 3;
+    if (videoInfo.format.duration > MAX_DURATION) {
+      throw new BadRequestException('MEDIA_DURATION_TOO_LONG');
+    }
+
     try {
       // Create private video with default vod session
       createdVideo = await this.videosService.create({
