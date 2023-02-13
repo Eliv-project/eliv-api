@@ -11,12 +11,8 @@ import slugify from 'slugify';
 // @ts-ignore
 import nanoid from 'nanoid';
 import { Prisma } from '@prisma/client';
-import Ffmpeg from 'fluent-ffmpeg';
-import ffprobe from '@ffprobe-installer/ffprobe';
 import { Flv2Mp4ConvertDto } from './processors/flv2mp4.processor';
 import { Mp42HlsConvertDto } from './processors/mp42hls.processor';
-import { FindManyVideoArgs } from 'src/prisma/@generated/video/find-many-video.args';
-import { VideoWhereInput } from 'src/prisma/@generated/video/video-where.input';
 
 @Injectable()
 export class VideosService {
@@ -30,13 +26,20 @@ export class VideosService {
   ) {}
 
   async toHls(filePath: string, dirId: string) {
-    await this.mp42hlsQueue.add({
-      threadCount: this.configService.get('threadCount'),
-      dirId,
-      filePath,
-      hlsSaveDirname: dirId,
-      hlsSavePath: path.join(this.configService.get('hlsPath'), dirId),
-    });
+    await this.mp42hlsQueue.add(
+      {
+        threadCount: this.configService.get('threadCount'),
+        dirId,
+        filePath,
+        hlsSaveDirname: dirId,
+        hlsSavePath: path.join(this.configService.get('hlsPath'), dirId),
+      },
+      {
+        jobId: dirId,
+        removeOnComplete: true,
+        removeOnFail: true,
+      },
+    );
 
     return dirId;
   }
@@ -90,5 +93,9 @@ export class VideosService {
 
   remove(where: Prisma.VideoWhereUniqueInput) {
     return this.prisma.video.delete({ where });
+  }
+
+  getJob(dirId: string) {
+    return this.mp42hlsQueue.getJob(dirId);
   }
 }

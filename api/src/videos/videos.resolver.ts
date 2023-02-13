@@ -38,6 +38,7 @@ import { ConfigService } from '@nestjs/config';
 import path from 'path';
 import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
 import { Prisma } from '@prisma/client';
+import { BadRequestException } from '@nestjs/common/exceptions/bad-request.exception';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -183,10 +184,21 @@ export class VideosResolver {
 
   @Mutation(() => Video)
   @UseGuards(IsValidVideo)
-  removeVideo(
+  async removeVideo(
     @Args('where') where: VideoWhereUniqueInput,
     @CurrentVideo() video: Video,
   ) {
+    if (video.vodSession.status === VodStatus.processing) {
+      throw new BadRequestException('CANNOT_REMOVE_PROCESSING_VIDEO');
+    }
+
+    // Remove queued job
+    const job = await this.videosService.getJob(video.dirId);
+    if (job && !job.isActive) {
+      job.remove();
+    }
+
+    // Remove files
     const dirPath = path.join(this.configService.get('hlsPath'), video.dirId);
     fs.rm(dirPath, { recursive: true, force: true }, (err) => {
       if (err) {

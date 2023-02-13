@@ -18,7 +18,10 @@ export class IsValidVideo implements CanActivate {
     const videoWhere: VideoWhereUniqueInput =
       ctx.getArgs().where || ctx.getArgs().videoWhere;
 
-    const video = await this.videosService.findOne(videoWhere);
+    const video = await this.videosService.findOne(videoWhere, {
+      vodSession: true,
+      liveSession: true,
+    });
     if (!video) {
       throw new NotFoundException('VIDEO_NOT_FOUND');
     }
