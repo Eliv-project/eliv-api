@@ -23,13 +23,12 @@ services:
     depends_on:
       - postgres
       - redis
-      - nginx_server
-    build: 
+    build:
       dockerfile: Dockerfile
       context: ./api
       # Only will build development stage from our dockerfile
       target: prod
-     # Enables the data to be persisted and is what makes the hot reloading possible.
+    # Enables the data to be persisted and is what makes the hot reloading possible.
     volumes:
       - "${VOD_PATH}:${VOD_PATH}"
       - "${TMP_PATH}:${TMP_PATH}"
