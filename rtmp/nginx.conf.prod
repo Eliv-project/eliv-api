@@ -1,7 +1,8 @@
 daemon off;
 
 include /etc/nginx/sites-enabled/*.conf; # Include all the optional configuration files stored here.
-error_log ${LOG_PATH}/stdout_rtmp info;
+error_log ${LOG_PATH}/stdout_rtmp.log info;
+
 
 events {
     worker_connections 1024;
@@ -62,10 +63,11 @@ rtmp {
 }
 
 http {
+    root /www/static;
     sendfile off;
     tcp_nopush on;
     server_tokens off;
-    access_log ${LOG_PATH}/stdout_http combined;
+    access_log ${LOG_PATH}/stdout_http.log combined;
 
     # Uncomment these lines to enable SSL.
     # ssl_protocols TLSv1.2 TLSv1.3;

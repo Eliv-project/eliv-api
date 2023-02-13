@@ -10,6 +10,7 @@
   },
   "scripts": {
     "prisma:reset:local": "dotenv -e ../env/.env.dev --  prisma migrate reset",
+    "prisma:reset:prod": "dotenv -e ../env/.env.prod --  prisma migrate reset",
     "prisma:seed:local": "dotenv -e ../env/.env.dev -- ts-node src/prisma/seed/index.ts",
     "prisma:seed:docker": "dotenv -e ../env/.env.prod -- ts-node src/prisma/seed/index.ts",
     "prisma:migrate:local": " dotenv -e ../env/.env.dev -- prisma migrate dev --name ''",
