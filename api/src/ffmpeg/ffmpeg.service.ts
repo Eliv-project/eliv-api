@@ -42,7 +42,8 @@ export class FfmpegService {
   getVideoStreamConfig(qualityConfig: FfmpegQualityConfig, index: number) {
     return [
       `-filter:v:${index}`,
-      `scale='min(${qualityConfig.size.width}, iw)':'min(${qualityConfig.size.height}, ih)'`,
+      `scale=-2:${qualityConfig.size.height}`,
+      // `scale='min(${qualityConfig.size.width}, iw)':'min(${qualityConfig.size.height}, ih)':force_original_aspect_ratio=decrease`,
       //   `-s:v:${index} ${qualityConfig.size.width}x${qualityConfig.size.height}`,
       `-c:v:${index} libx264`, // Video codec
       `-r:v:${index} ${qualityConfig.fps}`, // Video fps
@@ -100,8 +101,39 @@ export class FfmpegService {
 
     getOrCreateDir(savePath);
 
+    // Check audio stream if existed
+    const videoInfo = await this.getVideoInfo(mp4Path);
+    const hasAudio = videoInfo.streams.find(
+      (stream) => stream.codec_type === 'audio',
+    );
+
+    const availableConfigs = qualityConfigs.filter(({size}) => {
+      const videoStream = videoInfo.streams.find(({codec_type}) => codec_type==="video")
+      if (!videoStream) {return false}
+
+      return videoStream.height >= size.height
+    })
+
+
+    
+
     return new Promise((resolve, reject) => {
       let totalTime;
+
+      const inputStreamMaps = ['-map 0:0'];
+      if (hasAudio) {
+        inputStreamMaps.push('-map 0:1');
+      }
+
+      const getOutputStreamMap = (index) => {
+        const outputStreamMaps = [`v:${index}`];
+        if (hasAudio) {
+          outputStreamMaps.push(`a:${index}`);
+        }
+
+        return outputStreamMaps.join(',');
+      };
+
       this.getFfmpeg()
         .input(mp4Path)
         .outputOption(`-threads ${this.getMaxThread()}`)
@@ -112,11 +144,9 @@ export class FfmpegService {
         // (If we wanted to generate 3 variants streams, we would need 6 map statements, assuming that each variant has a video and audio stream.)
         //   ...qualityConfigs.map(() => ['-map 0:0', '-map 0:1']).flat(),
         // Define stream codecs
+        .outputOptions(availableConfigs.map(() => inputStreamMaps).flat())
         .outputOptions(
-          qualityConfigs.map(() => ['-map 0:0', '-map 0:1']).flat(),
-        )
-        .outputOptions(
-          qualityConfigs
+          availableConfigs
             .map((item, index) => this.getVideoStreamConfig(item, index))
             .flat(),
         )
@@ -130,8 +160,8 @@ export class FfmpegService {
         ])
         .outputOption(
           '-var_stream_map',
-          qualityConfigs
-            .map((_, index) => [`v:${index}`, `a:${index}`].join(','))
+          availableConfigs
+            .map((_, index) => getOutputStreamMap(index))
             .join(' '),
         )
         .output(path.join(savePath, 'v%v/playlist.m3u8'))
