@@ -43,6 +43,7 @@ COPY --chown=node:node . .
 RUN yarn install --production --frozen-lockfile
 RUN yarn prisma:gen
 
+USER root
 
 
 RUN yarn build
