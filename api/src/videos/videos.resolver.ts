@@ -67,7 +67,7 @@ export class VideosResolver {
 
     const videoInfo = await this.ffmpegService.getVideoInfo(uploadedFile.path);
 
-    const MAX_DURATION = 60 * 3;
+    const MAX_DURATION = 60 * 5;
     if (videoInfo.format.duration > MAX_DURATION) {
       throw new BadRequestException('MEDIA_DURATION_TOO_LONG');
     }

@@ -3144,3 +3144,12 @@
 2023/02/15 12:10:20 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
 2023/02/15 12:10:20 [notice] 1#1: start worker processes
 2023/02/15 12:10:20 [notice] 1#1: start worker process 11
+2023/02/15 15:18:52 [notice] 1#1: using the "epoll" event method
+2023/02/15 15:18:52 [notice] 1#1: nginx/1.23.1
+2023/02/15 15:18:52 [notice] 1#1: built by gcc 11.2.1 20220219 (Alpine 11.2.1_git20220219) 
+2023/02/15 15:18:52 [notice] 1#1: OS: Linux 5.15.0-1028-aws
+2023/02/15 15:18:52 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/02/15 15:18:52 [notice] 1#1: start worker processes
+2023/02/15 15:18:52 [notice] 1#1: start worker process 11
+2023/02/15 15:19:18 [info] 11#11: *1 client 95.214.235.205 closed keepalive connection
+2023/02/15 15:19:18 [info] 11#11: *3 client 95.214.235.205 closed keepalive connection
