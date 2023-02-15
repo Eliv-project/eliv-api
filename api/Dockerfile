@@ -48,4 +48,4 @@ USER root
 
 RUN yarn build
 
-CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:prod"
+CMD sh -c "yarn prisma:migrate:docker && yarn start:prod"
