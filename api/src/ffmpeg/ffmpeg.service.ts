@@ -107,12 +107,20 @@ export class FfmpegService {
       (stream) => stream.codec_type === 'audio',
     );
 
-    const availableConfigs = qualityConfigs.filter(({size}) => {
-      const videoStream = videoInfo.streams.find(({codec_type}) => codec_type==="video")
-      if (!videoStream) {return false}
+    const availableConfigs = qualityConfigs.filter(({ size }) => {
+      const videoStream = videoInfo.streams.find(
+        ({ codec_type }) => codec_type === 'video',
+      );
+      if (!videoStream) {
+        return false;
+      }
 
-      return videoStream.height >= size.height
-    })
+      return (
+        videoStream.height >= size.height || videoStream.width >= size.width
+      );
+    });
+
+    console.log(availableConfigs);
 
 
     
