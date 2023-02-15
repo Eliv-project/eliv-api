@@ -1,4 +1,4 @@
-import { Controller, InternalServerErrorException } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import {
   Inject,
   Post,
@@ -56,12 +56,6 @@ export class LiveSessionsController {
       },
     });
 
-    try {
-      getOrCreateDir(path.join(hlsPath, dirId));
-    } catch (err) {
-      throw new InternalServerErrorException();
-    }
-
     // Update live status on live
     await this.liveSessionsService.update(
       {
@@ -89,6 +83,8 @@ export class LiveSessionsController {
         onLive: { set: true },
       },
     );
+
+    getOrCreateDir(path.join(hlsPath, dirId));
 
     console.log(
       'An user started a live stream session with id',
