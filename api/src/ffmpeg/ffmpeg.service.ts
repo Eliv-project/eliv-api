@@ -71,6 +71,8 @@ export class FfmpegService {
           `-threads ${this.getMaxThread()}`,
           '-ss 00:00:01.000',
           '-vframes 1',
+          `-filter:v`,
+          `scale=300:-2`,
         ])
         .output(savedFilePath)
         .on('start', function (commandLine) {
@@ -119,8 +121,6 @@ export class FfmpegService {
         videoStream.height >= size.height || videoStream.width >= size.width
       );
     });
-
-    console.log(availableConfigs);
 
 
     
