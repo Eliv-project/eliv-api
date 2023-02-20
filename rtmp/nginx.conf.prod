@@ -31,7 +31,7 @@ rtmp {
             allow publish 127.0.0.1;
             deny publish all;
 
-            exec_publish ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name -vf "scale=-2:300" -ss 00:00:01.000 -frames:v 1 ${RTMP_HLS_VOD_PATH}/$name/thumbnail.png;
+            exec_publish ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name -vf scale=-1:480 -ss 00:00:01.000 -frames:v 1 ${RTMP_HLS_VOD_PATH}/$name/thumbnail.png ;
 
             exec_push ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name
               -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 60 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_720p2628kbs

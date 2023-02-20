@@ -14,6 +14,7 @@ services:
       - ./rtmp/nginx.conf.prod:/etc/nginx/nginx.conf.template
       - ./rtmp/stdout_http.log:${LOG_PATH}/stdout_http.log
       - ./rtmp/stdout_rtmp.log:${LOG_PATH}/stdout_rtmp.log
+      - ./rtmp/stdout_thumbnail.log:${LOG_PATH}/stdout_thumbnail.log
       - "${VOD_PATH}:${VOD_PATH}"
       - "${TMP_PATH}:${TMP_PATH}"
       - "${RECORD_PATH}:${RECORD_PATH}"
