@@ -8,6 +8,7 @@ import { PubSubModule } from 'src/pub-sub/pub-sub.module';
 import { Mp42HlsProcessor } from './processors/mp42hls.processor';
 import { VotesService } from 'src/votes/votes.service';
 import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
+import { Flv2Mp4Processor } from './processors/flv2mp4.processor';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
     VideosService,
     PrismaService,
     Mp42HlsProcessor,
+    Flv2Mp4Processor,
     UploadService,
     FfmpegService,
   ],

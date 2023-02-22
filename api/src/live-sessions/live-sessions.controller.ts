@@ -25,7 +25,6 @@ import { LiveStatus } from './enums/status.enum';
 import { IsValidStream } from './guards/is-valid-stream.guard';
 import { LiveSessionsService } from './live-sessions.service';
 
-
 @Controller('live-sessions')
 export class LiveSessionsController {
   constructor(
@@ -149,6 +148,9 @@ export class LiveSessionsController {
   @IsPublic()
   async afterRecord(@Req() request: Request & { liveSession: LiveSession }) {
     const recordInfo: RtmpRecord = request.body;
+
+    console.log(recordInfo);
+
     let recordPath = recordInfo.path;
     if (this.configService.get('isDev')) {
       const fileName = path.basename(recordInfo.path);
@@ -178,14 +180,19 @@ export class LiveSessionsController {
       },
       {
         vodSession: {
-          create: {
-            status: VodStatus.empty,
+          connectOrCreate: {
+            create: {
+              status: VodStatus.waiting,
+            },
+            where: {
+              videoId: currentLiveSessions.videoId,
+            },
           },
         },
       },
     );
 
-    await this.videosService.toHls(recordPath, currentLiveSessions.video.dirId);
+    await this.videosService.toMp4(recordPath, currentLiveSessions.video.dirId);
 
     return true;
   }

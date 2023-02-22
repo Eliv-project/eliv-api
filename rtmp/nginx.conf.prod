@@ -34,10 +34,21 @@ rtmp {
             exec_publish ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name  -ss 00:00:01.000 -frames:v 1 -vf scale=-1:480 ${VOD_PATH}/$name/thumbnail.png ;
 
             exec_push ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name
-              -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 60 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_720p2628kbs
-              # -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 1000k -f flv -g 30 -r 30 -s 854x480 -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_480p1128kbs
-              # -c:a libfdk_aac -b:a 96k -c:v libx264 -b:v 800k -f flv -g 30 -r 24 -filter:v "scale='min(640, iw)':'min(360, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_360p878kbs
-              -c:a libfdk_aac -b:a 64k -c:v libx264 -b:v 200k -f flv -g 30 -r 24 -filter:v "scale='min(256, iw)':'min(144, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_144p200kbs;
+                -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 60 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_720p2628kbs
+                -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 30 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/recorder/$name
+                # -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 1000k -f flv -g 30 -r 30 -s 854x480 -preset superfast -profile:v baseline -f rtmp://localhost:${RTMP_PORT}/hls/$name_480p1128kbs
+                # -c:a libfdk_aac -b:a 96k -c:v libx264 -b:v 800k -f flv -g 30 -r 24 -filter:v "scale='min(640, iw)':'min(360, ih)'" -preset superfast -profile:v baseline -f flv rtmp://localhost:${RTMP_PORT}/hls/$name_360p878kbs
+                -c:a libfdk_aac -b:a 64k -c:v libx264 -b:v 200k -f flv -g 30 -r 24 -filter:v "scale='min(256, iw)':'min(144, ih)'" -preset superfast -profile:v baseline -f flv rtmp://localhost:${RTMP_PORT}/hls/$name_144p200kbs;
+        }
+
+        application recorder {
+            live on;
+            recorder all {		
+                record all;				# off|all|audio|video|keyframes|manual. These options speak for themselves.
+                record_path ${RECORD_PATH};	# Folder location that will be used to store the recordings.
+                # record_max_frames 30;		# Sets maximum number of video frames per recorded file. No default.
+            }
+            on_record_done http://${API_ENDPOINT}:${API_PORT}/live-sessions/on-record-done;
         }
 
         application hls {

@@ -45,11 +45,16 @@ export class VideosService {
   }
 
   async toMp4(filePath: string, dirId: string) {
-    await this.flv2mp4Queue.add({
-      dirId,
-      saveDirPath: this.configService.get('recordingPath'),
-      filePath,
-    });
+    await this.flv2mp4Queue.add(
+      {
+        dirId,
+        saveDirPath: this.configService.get('recordingPath'),
+        filePath,
+      },
+      { jobId: dirId, removeOnComplete: true, removeOnFail: true },
+    );
+
+    return dirId;
   }
 
   getSearchableName(name: string) {
