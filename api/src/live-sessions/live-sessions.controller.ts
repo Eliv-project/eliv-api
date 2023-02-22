@@ -25,9 +25,6 @@ import { LiveStatus } from './enums/status.enum';
 import { IsValidStream } from './guards/is-valid-stream.guard';
 import { LiveSessionsService } from './live-sessions.service';
 
-interface RequestWithLiveSession extends Request {
-  liveSession: LiveSession;
-}
 
 @Controller('live-sessions')
 export class LiveSessionsController {
@@ -123,6 +120,7 @@ export class LiveSessionsController {
       },
       {
         status: { set: LiveStatus.ENDED },
+        endLiveAt: new Date(),
       },
     );
     // Update user status

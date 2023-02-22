@@ -761,6 +761,7 @@ input LiveChatMessageWhereUniqueInput {
 type LiveSession {
   _count: LiveSessionCount!
   createdAt: DateTime!
+  endLiveAt: DateTime
   id: ID!
   liveAt: DateTime
   liveChatMessages: [LiveChatMessage!]
@@ -778,6 +779,7 @@ type LiveSessionCount {
 
 input LiveSessionCreateInput {
   createdAt: DateTime
+  endLiveAt: DateTime
   liveAt: DateTime
   liveChatMessages: LiveChatMessageCreateNestedManyWithoutLiveSessionInput
   status: Int
@@ -787,6 +789,7 @@ input LiveSessionCreateInput {
 
 input LiveSessionCreateManyStreamKeyInput {
   createdAt: DateTime
+  endLiveAt: DateTime
   id: Int
   liveAt: DateTime
   status: Int
@@ -835,6 +838,7 @@ input LiveSessionCreateOrConnectWithoutVideoInput {
 
 input LiveSessionCreateWithoutLiveChatMessagesInput {
   createdAt: DateTime
+  endLiveAt: DateTime
   liveAt: DateTime
   status: Int
   updatedAt: DateTime
@@ -843,6 +847,7 @@ input LiveSessionCreateWithoutLiveChatMessagesInput {
 
 input LiveSessionCreateWithoutStreamKeyInput {
   createdAt: DateTime
+  endLiveAt: DateTime
   liveAt: DateTime
   liveChatMessages: LiveChatMessageCreateNestedManyWithoutLiveSessionInput
   status: Int
@@ -852,6 +857,7 @@ input LiveSessionCreateWithoutStreamKeyInput {
 
 input LiveSessionCreateWithoutVideoInput {
   createdAt: DateTime
+  endLiveAt: DateTime
   liveAt: DateTime
   liveChatMessages: LiveChatMessageCreateNestedManyWithoutLiveSessionInput
   status: Int
@@ -870,6 +876,7 @@ input LiveSessionOrderByRelationAggregateInput {
 
 input LiveSessionOrderByWithRelationInput {
   createdAt: SortOrder
+  endLiveAt: SortOrder
   id: SortOrder
   liveAt: SortOrder
   liveChatMessages: LiveChatMessageOrderByRelationAggregateInput
@@ -891,6 +898,7 @@ input LiveSessionScalarWhereInput {
   NOT: [LiveSessionScalarWhereInput!]
   OR: [LiveSessionScalarWhereInput!]
   createdAt: DateTimeFilter
+  endLiveAt: DateTimeNullableFilter
   id: IntFilter
   liveAt: DateTimeNullableFilter
   status: IntFilter
@@ -905,6 +913,7 @@ type LiveSessionStatus {
 
 input LiveSessionUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  endLiveAt: NullableDateTimeFieldUpdateOperationsInput
   liveAt: NullableDateTimeFieldUpdateOperationsInput
   liveChatMessages: LiveChatMessageUpdateManyWithoutLiveSessionNestedInput
   status: IntFieldUpdateOperationsInput
@@ -915,6 +924,7 @@ input LiveSessionUpdateInput {
 
 input LiveSessionUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  endLiveAt: NullableDateTimeFieldUpdateOperationsInput
   liveAt: NullableDateTimeFieldUpdateOperationsInput
   status: IntFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -964,6 +974,7 @@ input LiveSessionUpdateWithWhereUniqueWithoutStreamKeyInput {
 
 input LiveSessionUpdateWithoutLiveChatMessagesInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  endLiveAt: NullableDateTimeFieldUpdateOperationsInput
   liveAt: NullableDateTimeFieldUpdateOperationsInput
   status: IntFieldUpdateOperationsInput
   streamKey: StreamKeyUpdateOneRequiredWithoutLiveSessionsNestedInput
@@ -973,6 +984,7 @@ input LiveSessionUpdateWithoutLiveChatMessagesInput {
 
 input LiveSessionUpdateWithoutStreamKeyInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  endLiveAt: NullableDateTimeFieldUpdateOperationsInput
   liveAt: NullableDateTimeFieldUpdateOperationsInput
   liveChatMessages: LiveChatMessageUpdateManyWithoutLiveSessionNestedInput
   status: IntFieldUpdateOperationsInput
@@ -982,6 +994,7 @@ input LiveSessionUpdateWithoutStreamKeyInput {
 
 input LiveSessionUpdateWithoutVideoInput {
   createdAt: DateTimeFieldUpdateOperationsInput
+  endLiveAt: NullableDateTimeFieldUpdateOperationsInput
   liveAt: NullableDateTimeFieldUpdateOperationsInput
   liveChatMessages: LiveChatMessageUpdateManyWithoutLiveSessionNestedInput
   status: IntFieldUpdateOperationsInput
@@ -1010,6 +1023,7 @@ input LiveSessionWhereInput {
   NOT: [LiveSessionWhereInput!]
   OR: [LiveSessionWhereInput!]
   createdAt: DateTimeFilter
+  endLiveAt: DateTimeNullableFilter
   id: IntFilter
   liveAt: DateTimeNullableFilter
   liveChatMessages: LiveChatMessageListRelationFilter

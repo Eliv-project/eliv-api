@@ -17,6 +17,9 @@ export class LiveSessionMaxAggregateInput {
     liveAt?: true;
 
     @Field(() => Boolean, {nullable:true})
+    endLiveAt?: true;
+
+    @Field(() => Boolean, {nullable:true})
     createdAt?: true;
 
     @Field(() => Boolean, {nullable:true})

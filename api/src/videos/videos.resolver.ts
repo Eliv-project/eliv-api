@@ -39,6 +39,7 @@ import path from 'path';
 import { FfmpegService } from 'src/ffmpeg/ffmpeg.service';
 import { Prisma } from '@prisma/client';
 import { BadRequestException } from '@nestjs/common/exceptions/bad-request.exception';
+import { LiveStatus } from 'src/live-sessions/enums/status.enum';
 
 @Resolver(() => Video)
 export class VideosResolver {
@@ -193,8 +194,12 @@ export class VideosResolver {
     @Args('where') where: VideoWhereUniqueInput,
     @CurrentVideo() video: Video,
   ) {
-    if (video.vodSession.status === VodStatus.processing) {
+    if (video.vodSession?.status === VodStatus.processing) {
       throw new BadRequestException('CANNOT_REMOVE_PROCESSING_VIDEO');
+    }
+
+    if (video.liveSession?.status === LiveStatus.ON_LIVE) {
+      throw new BadRequestException('CANNOT_REMOVE_LIVE_VIDEO');
     }
 
     // Remove queued job

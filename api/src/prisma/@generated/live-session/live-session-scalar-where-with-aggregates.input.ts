@@ -28,6 +28,9 @@ export class LiveSessionScalarWhereWithAggregatesInput {
     @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
     liveAt?: DateTimeNullableWithAggregatesFilter;
 
+    @Field(() => DateTimeNullableWithAggregatesFilter, {nullable:true})
+    endLiveAt?: DateTimeNullableWithAggregatesFilter;
+
     @Field(() => DateTimeWithAggregatesFilter, {nullable:true})
     createdAt?: DateTimeWithAggregatesFilter;
 

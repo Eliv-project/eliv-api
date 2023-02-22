@@ -5,6 +5,7 @@ export enum LiveSessionScalarFieldEnum {
     status = "status",
     streamKeyId = "streamKeyId",
     liveAt = "liveAt",
+    endLiveAt = "endLiveAt",
     createdAt = "createdAt",
     updatedAt = "updatedAt",
     videoId = "videoId"

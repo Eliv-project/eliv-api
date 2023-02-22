@@ -32,10 +32,26 @@ rtmp {
             exec_publish ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name  -ss 00:00:01.000 -frames:v 1 -vf scale=-1:480 ${VOD_PATH}/$name/thumbnail.png ;
 
             exec_push ffmpeg -i rtmp://localhost:${RTMP_PORT}/live_verified/$name
-              -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 60 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_720p2628kbs
+              -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 2800k -f flv -g 30 -r 60 -filter:v "scale='min(1280, iw)':'min(720, ih)'" -preset superfast -profile:v baseline -f tee "rtmp://localhost:${RTMP_PORT}/hls/$name_720p2628kbs|rtmp://localhost:${RTMP_PORT}/recorder/$name"
               # -c:a libfdk_aac -b:a 128k -c:v libx264 -b:v 1000k -f flv -g 30 -r 30 -s 854x480 -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_480p1128kbs
               # -c:a libfdk_aac -b:a 96k -c:v libx264 -b:v 800k -f flv -g 30 -r 24 -filter:v "scale='min(640, iw)':'min(360, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_360p878kbs
               -c:a libfdk_aac -b:a 64k -c:v libx264 -b:v 200k -f flv -g 30 -r 24 -filter:v "scale='min(256, iw)':'min(144, ih)'" -preset superfast -profile:v baseline rtmp://localhost:${RTMP_PORT}/hls/$name_144p200kbs;
+        }
+
+        application recorder {
+            live on;
+            recorder all {		
+                record all;				# off|all|audio|video|keyframes|manual. These options speak for themselves.
+                record_path ${RECORD_PATH};	# Folder location that will be used to store the recordings.
+                record_unique on;			# on|off. Appends timestamp to recorded files. Otherwise the same file is re-written each time. Default=-off
+                record_append off;			# on|off. When turned on recorder appends new data to the old file with no gap. Default=off
+                record_lock on;				# on|off. When turned on recorded file gets locked with 'fcntl' call. Default=off.
+                record_notify off;			# on|off. Toggles sending "NetStream.Record.Start" and "NetStream.Record.Stop" status messages. Default=off.
+                # record_max_size 4096M;		# Set maximum file size of the recorded files. No default.
+                # record_max_frames 200;		# Sets maximum number of video frames per recorded file. No default.
+                # record_interval 15m;			# Restart recording after this number of (milli)seconds/minutes. Zero means no delay. Default=off.
+            }
+            # on_record_done http://${API_ENDPOINT}:${API_PORT}/live-sessions/on-record-done;
         }
 
         application hls {

@@ -34,6 +34,9 @@ export class LiveSessionWhereInput {
     @Field(() => DateTimeNullableFilter, {nullable:true})
     liveAt?: DateTimeNullableFilter;
 
+    @Field(() => DateTimeNullableFilter, {nullable:true})
+    endLiveAt?: DateTimeNullableFilter;
+
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
 

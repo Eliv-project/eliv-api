@@ -25,6 +25,9 @@ export class LiveSession {
     @Field(() => Date, {nullable:true})
     liveAt!: Date | null;
 
+    @Field(() => Date, {nullable:true})
+    endLiveAt!: Date | null;
+
     @Field(() => Date, {nullable:false})
     createdAt!: Date;
 

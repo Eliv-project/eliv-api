@@ -18,6 +18,9 @@ export class LiveSessionUpdateWithoutVideoInput {
     @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
     liveAt?: NullableDateTimeFieldUpdateOperationsInput;
 
+    @Field(() => NullableDateTimeFieldUpdateOperationsInput, {nullable:true})
+    endLiveAt?: NullableDateTimeFieldUpdateOperationsInput;
+
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;
 

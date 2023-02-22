@@ -62,6 +62,7 @@ model LiveSession {
     streamKeyId Int
 
     liveAt DateTime?
+    endLiveAt DateTime?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

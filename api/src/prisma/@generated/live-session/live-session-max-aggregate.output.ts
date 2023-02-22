@@ -18,6 +18,9 @@ export class LiveSessionMaxAggregate {
     liveAt?: Date | string;
 
     @Field(() => Date, {nullable:true})
+    endLiveAt?: Date | string;
+
+    @Field(() => Date, {nullable:true})
     createdAt?: Date | string;
 
     @Field(() => Date, {nullable:true})

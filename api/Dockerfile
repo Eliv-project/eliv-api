@@ -22,7 +22,7 @@ COPY --chown=node:node . .
 
 RUN yarn prisma:gen
 
-CMD sh -c "yarn prisma:migrate:docker && yarn prisma:seed:docker && yarn start:dev"
+CMD sh -c "yarn prisma:migrate:docker && yarn start:dev"
 
 # ###################
 # BUILD FOR PRODUCTION

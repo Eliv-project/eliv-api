@@ -18,6 +18,9 @@ export class LiveSessionMinOrderByAggregateInput {
     liveAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    endLiveAt?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
