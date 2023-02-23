@@ -35,6 +35,7 @@ export class UserSubscriptionsResolver {
 
   @Query(() => [UserSubscription], { name: 'userSubscriptions' })
   userSubscriptions(@CurrentUser() me: User) {
+    console.log(me);
     return this.userSubscriptionsService.findAll({
       where: {
         userId: { equals: me.id },
