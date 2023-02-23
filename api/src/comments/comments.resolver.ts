@@ -37,7 +37,9 @@ export class CommentsResolver {
     @Args('data') data: CreateCommentInput,
     @CurrentUser() me: User,
   ) {
-    const { content, replyTo, video } = data as (Prisma.CommentCreateInput & {replyTo: any});
+    const { content, replyTo, video } = data as Prisma.CommentCreateInput & {
+      replyTo: any;
+    };
     return this.commentsService.create(
       {
         content,

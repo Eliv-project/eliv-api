@@ -182,7 +182,7 @@ export class LiveSessionsController {
         vodSession: {
           connectOrCreate: {
             create: {
-              status: VodStatus.waiting,
+              status: VodStatus.processing,
             },
             where: {
               videoId: currentLiveSessions.videoId,
