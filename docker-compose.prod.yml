@@ -33,6 +33,7 @@ services:
     volumes:
       - "${VOD_PATH}:${VOD_PATH}"
       - "${TMP_PATH}:${TMP_PATH}"
+      - "${RECORD_PATH}:${RECORD_PATH}"
     # load the .env file into the container
     restart: always
     env_file:
